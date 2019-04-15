@@ -2,6 +2,8 @@ package presentacion;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ArkaPOOBGUI extends JFrame{
 	private JPanel pantallaInicial;
@@ -10,6 +12,7 @@ public class ArkaPOOBGUI extends JFrame{
 	private JPanel pBotones;
 	private JPanel panelEast; //Mirar si dejamos estos o  no (son los paneles de  al lado de los botones para que no se vean tan grandes
 	private JPanel panelWest;
+	private JPanel mazo;
 	private JButton jugar;
 	private JButton salir;
 	private JButton opciones;
@@ -29,7 +32,9 @@ public class ArkaPOOBGUI extends JFrame{
 		prepareBotones();
 		pantallaInicial.add(logo);
 		pantallaInicial.add(botones);
-		contenedor.add(pantallaInicial);
+		mazo = new JPanel(new CardLayout());
+		mazo.add(pantallaInicial, "Inicio");
+		contenedor.add(mazo);
 	}
 	
 	public void prepareBotones() {
@@ -61,10 +66,6 @@ public class ArkaPOOBGUI extends JFrame{
 		panelWest.setBackground(Color.BLACK);
 		botones.add(panelEast,BorderLayout.EAST);
 		botones.add(panelWest,BorderLayout.WEST);
-		//botones.add(jugar);
-		//botones.add(opciones);
-		//botones.add(instrucciones);
-		//botones.add(salir);
 	}
 	
 	public void preparePantalla() {
@@ -87,14 +88,34 @@ public class ArkaPOOBGUI extends JFrame{
 	}
 	
 	public void prepareAcciones() {
-		
+		ActionListener comenzar = new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				juegoNuevo();
+			}
+		};
+		jugar.addActionListener(comenzar);
 	}
 	
+	
+	public void juegoNuevo(){
+		System.out.println("Entra en juego");
+		PantallaDeJuego pdj = new PantallaDeJuego();
+		mazo.add(pdj,"juega");
+		CardLayout c1 = (CardLayout)(mazo.getLayout());
+		c1.show(mazo,"juega");
+		pdj.setVisible(true);
+	}
+	
+	private void inicio() {
+		CardLayout c1 = (CardLayout)(mazo.getLayout());
+		c1.show(mazo,"Inicio");
+	}
 
 	public static void main(String[] args) {
 		ArkaPOOBGUI arka = new ArkaPOOBGUI();
 		arka.setVisible(true);
 
 	}
+	
 
 }
