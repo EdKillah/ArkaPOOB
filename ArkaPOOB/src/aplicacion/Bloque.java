@@ -22,7 +22,7 @@ public class Bloque {
 		prepareImagen();
 	}
 	
-	public void prepareImagen() {
+	private void prepareImagen() {
 		imagen = new ImageIcon(getClass().getResource("/imagenes/bloque_rojo.png"));
 	}
 	public int getX() {

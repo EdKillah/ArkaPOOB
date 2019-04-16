@@ -4,15 +4,17 @@ import java.util.*;
 
 public class ArkaPOOB {
 	private ArrayList<ArrayList<Bloque>> bloques; 
-	
+	private Plataforma nave;
 	
 	public ArkaPOOB() {
-		System.out.println("Entra en aplicacion");
 		prepareBloques();
-		
+		prepareNave();
 	}
 	
 	
+	public void prepareNave() {
+		nave = new Plataforma(300,"blue",120,40);
+	}
 	
 	public void prepareBloques() {
 		
@@ -22,32 +24,31 @@ public class ArkaPOOB {
 		for(int i=0;i<3;i++) {
 			int posX=1;
 			ArrayList<Bloque> blocks = new ArrayList<Bloque>();
-			for(int j=0;j<1;j++) {
+			for(int j=0;j<20;j++) {
 				if(i<1) {
-					bloque = new Bloque( j*posX+j*40, (i*posY+i*45)+35,20,40,1);
+					bloque = new Bloque( j*posX+j*75, (i*posY+i*45)+35,75,45,1);
 					blocks.add(bloque);
 				}
 				else if(i<=2) {
-					bloque = new Bloque( j*posX+j*40, (i*posY+i*45)+35,20,40,1);
+					bloque = new Bloque( j*posX+j*75, (i*posY+i*45)+35,75,45,1);
 					blocks.add(bloque);
 				}
 				else  {
-					System.out.println("DON'T ENTRY");
-					bloque = new Bloque( j*posX+j*40, (i*posY+i*45)+35,20,40,1);
+					bloque = new Bloque( j*posX+j*75, (i*posY+i*45)+35,75,45,1);
 					blocks.add(bloque);
 				}
 			}
 			bloques.add(blocks);
 		}
-		System.out.println("Me prepara los bloques");
 		
 	}
 
 
-
+	public Plataforma getPlataforma() {
+		return nave;
+	}
 
 	public ArrayList<ArrayList<Bloque>> getBloques() {
-		System.out.println("Me da los bloques");
 		return bloques;
 	}
 
