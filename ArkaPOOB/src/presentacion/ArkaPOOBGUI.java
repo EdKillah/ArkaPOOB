@@ -6,17 +6,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ArkaPOOBGUI extends JFrame{
-	private JPanel pantallaInicial;
+	private myPanel pantallaInicial;
 	private JPanel logo; 
 	private JPanel botones;
 	private JPanel pBotones;
 	private JPanel panelEast; //Mirar si dejamos estos o  no (son los paneles de  al lado de los botones para que no se vean tan grandes
 	private JPanel panelWest;
 	private JPanel mazo;
-	private JButton jugar;
-	private JButton salir;
-	private JButton instrucciones;
-	private JButton volverInstrucciones;
+	private Boton jugar;
+	private Boton salir;
+	private Boton instrucciones;
+	private Boton volverInstrucciones;
 	private Container contenedor;
 	
 	public ArkaPOOBGUI() {
@@ -41,6 +41,7 @@ public class ArkaPOOBGUI extends JFrame{
 	
 	public void prepareBotones() {
 		botones = new JPanel();
+		botones.setOpaque(false);//Los hace transparentes
 		botones.setLayout(new BorderLayout());//new GridLayout(4,1)
 		botones.setBackground(Color.BLACK);
 		creeBotones();
@@ -49,12 +50,16 @@ public class ArkaPOOBGUI extends JFrame{
 	public void creeBotones() {
 		pBotones = new JPanel();
 		pBotones.setLayout(new GridLayout(3,1));
-		jugar = new JButton("Jugar");
-		jugar.setBounds(new Rectangle(50, 20));
-		instrucciones = new JButton("Como jugar");
-		instrucciones.setBounds(new Rectangle(30, 20));
-		salir = new JButton("Salir");
-		salir.setBounds(new Rectangle(50, 20));
+		pBotones.setOpaque(false);
+		jugar = new Boton(new ImageIcon(getClass().getResource("/imagenes/jugar2.png")));
+		jugar.setTransparent();
+		//jugar.setBounds(new Rectangle(50, 20));
+		instrucciones = new Boton(new ImageIcon(getClass().getResource("/imagenes/como_jugar.png")));
+		instrucciones.setTransparent();
+		//instrucciones.setBounds(new Rectangle(30, 20));
+		salir = new Boton(new ImageIcon(getClass().getResource("/imagenes/salir.png")));
+		salir.setTransparent();
+		//salir.setBounds(new Rectangle(50, 20));
 		pBotones.add(jugar);
 		pBotones.add(instrucciones);
 		pBotones.add(salir);
@@ -62,14 +67,17 @@ public class ArkaPOOBGUI extends JFrame{
 		panelEast = new JPanel();
 		panelWest = new JPanel();
 		panelEast.setBackground(Color.BLACK);
+		panelEast.setOpaque(false);
 		panelWest.setBackground(Color.BLACK);
+		panelWest.setOpaque(false);
 		botones.add(panelEast,BorderLayout.EAST);
 		botones.add(panelWest,BorderLayout.WEST);
 	}
 	
 	public void preparePantalla() {
 		contenedor = getContentPane();
-		pantallaInicial = new JPanel();
+		pantallaInicial = new myPanel();
+		pantallaInicial.setBackground(new ImageIcon(getClass().getResource("/imagenes/fondo.png")));
 		pantallaInicial.setLayout(new GridLayout(2,1));
 	}
 	
@@ -81,6 +89,7 @@ public class ArkaPOOBGUI extends JFrame{
 	
 	private void prepareLogo() {
 		logo = new JPanel();
+		logo.setOpaque(false);
 		logo.setLayout(new FlowLayout());
 		logo.setBackground(Color.BLACK);
 		logo.add(new JLabel(new ImageIcon(getClass().getResource("/imagenes/ArkFont.png"))));		
@@ -93,13 +102,6 @@ public class ArkaPOOBGUI extends JFrame{
 			}
 		};
 		jugar.addActionListener(comenzar);
-		
-		/*ActionListener opcion = new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				//abrirOpciones();
-			}
-		};
-		opciones.addActionListener(opcion);*/
 		
 		ActionListener comoJugar = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -118,7 +120,6 @@ public class ArkaPOOBGUI extends JFrame{
 	
 	
 	public void juegoNuevo(){
-		System.out.println("Entra en juego");
 		jugadoresGUI a = new jugadoresGUI();
 		a.setVisible(true);
 	}
@@ -134,32 +135,35 @@ public class ArkaPOOBGUI extends JFrame{
 	}
 	
 	private void prepararInstrucciones() {
-		System.out.println("hola");
-		JPanel instruccion = new JPanel(new GridLayout(3,1));
-		
+		myPanel instruccion = new myPanel();
+		instruccion.setLayout(new GridLayout(3,1));
+		instruccion.setBackground(new ImageIcon(getClass().getResource("/imagenes/fondo.png")));
 		mazo.add(instruccion,"Instrucciones");
 		JPanel instruImg = new JPanel(new GridBagLayout());
-		
+		instruImg.setOpaque(false);
 		instruccion.add(instruImg);
 		JLabel logo = new JLabel(new ImageIcon(getClass().getResource("/imagenes/ArkFont.png")));
 		instruImg.add(logo);
 		instruImg.setBackground(Color.BLUE);
 		
 		JPanel contenido = new JPanel();
+		contenido.setOpaque(false);
 		JLabel texto = new JLabel("<html><center>Con el ratón moverás la barra hacia los lados con el<br/>"
 				+ "fin de recoger la pelota en su caída y hacerla subir<br/>"
 				+ "de nuevo. El objetivo de este juego es romper todos<br/> "
 				+ "los ladrillos que se encuentran en la parte superior, <br/>"
 				+ "cuando limpies la pantalla pasarás de nivel.</center></html>");
-		texto.setForeground(Color.WHITE);
+		texto.setForeground(Color.BLUE);
 		texto.setFont(new Font(null,Font.ITALIC,25));
 		contenido.add(texto);
 		contenido.setBackground(Color.BLACK);
 		instruccion.add(contenido);
 		JPanel boton = new JPanel(new GridLayout(3, 3));
+		boton.setOpaque(false);
 		boton.setBackground(Color.DARK_GRAY);
 		
-		volverInstrucciones = new JButton("Volver");
+		volverInstrucciones = new Boton(new ImageIcon(getClass().getResource("/imagenes/volver.png")));
+		volverInstrucciones.setTransparent();
 		boton.add(new JLabel());boton.add(new JLabel());boton.add(new JLabel());
 		boton.add(new JLabel());boton.add(volverInstrucciones);boton.add(new JLabel());
 		boton.add(new JLabel());boton.add(new JLabel());boton.add(new JLabel());
