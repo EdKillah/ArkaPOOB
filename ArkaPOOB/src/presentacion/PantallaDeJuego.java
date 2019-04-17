@@ -13,18 +13,22 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 	private ArkaPOOB ark;
 	private Dimension d;
 	private ArrayList<Integer> keysDown;
+	private String colorNave;
 	
-	public PantallaDeJuego() {
+	public PantallaDeJuego(String color) {
 		setLayout(null);
 		keysDown=new ArrayList<Integer>();
 		ark = new ArkaPOOB();
 		d = Toolkit.getDefaultToolkit().getScreenSize();
+		colorNave = color;
 		//this.repaint();
 		prepareElementos();
 		prepareAcciones();
 		setBackground(Color.BLACK);
 
 	}
+	
+	
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -38,17 +42,19 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 		}
 		Plataforma nave = ark.getPlataforma();
 		g.drawImage(nave.getImagen(), nave.getX(), (int)d.getHeight()-100,nave.getWidth(),nave.getHeight(), this);			
+		Bola bola = ark.getBola();
+		g.drawImage(bola.getImagen(), bola.getX(), (int)d.getHeight()-125,30,30, this);			
 		
 	}
 	
 	public void prepareElementos() {
-		
+		ark.getPlataforma().setImagen(new ImageIcon(getClass().getResource("/imagenes/vaus_"+colorNave+".gif")));
 	}
 	
 	public void prepareAcciones() {
 		System.out.println("entra en prepareAcciones");
-		//setFocusable(true);
 		addKeyListener(this);
+		setFocusable(true);
 	}
 	
 	@Override
@@ -60,6 +66,7 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 			}
 			
 			moverJugador();
+			moverBola();
 
 	}
 	
@@ -75,7 +82,6 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		System.out.println("Entra en released");
 		keysDown.remove(new Integer(e.getKeyCode()));
 		/*
 		if(ark.getBalas().size()==1 && new Integer(e.getKeyCode())==32) {
@@ -89,19 +95,29 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 		*/
 	}
 	
+	public void moverBola() {
+		
+	}
+	
 	public void moverJugador() {
 		
-		System.out.println("entra en moverJugador");
 		if(keysDown.contains(new Integer(KeyEvent.VK_LEFT))) {
-			System.out.println("CONTIENE");
 			if (ark.getPlataforma().getX()>0) { 
-				ark.getPlataforma().setX(2);
+				ark.getPlataforma().setX(2);				
+				if(!ark.getBola().isInAire()) {
+					ark.getBola().setX(2);
+				}
 			}
+			
+			
 		}
 			
 		if(keysDown.contains(new Integer(KeyEvent.VK_RIGHT))) {
 			if (ark.getPlataforma().getX()<d.getWidth()-100) { 
 				ark.getPlataforma().setX(1);
+				if(!ark.getBola().isInAire()) {
+					ark.getBola().setX(1);
+				}				
 			}
 		}
 		this.repaint();

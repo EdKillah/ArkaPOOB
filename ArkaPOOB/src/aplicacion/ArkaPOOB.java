@@ -5,15 +5,21 @@ import java.util.*;
 public class ArkaPOOB {
 	private ArrayList<ArrayList<Bloque>> bloques; 
 	private Plataforma nave;
+	private Bola bola;
 	
 	public ArkaPOOB() {
 		prepareBloques();
 		prepareNave();
+		prepareBola();
 	}
 	
 	
 	public void prepareNave() {
 		nave = new Plataforma(300,"blue",120,40);
+	}
+	
+	public void prepareBola(){
+		bola = new Bola(nave.getX()+nave.getWidth()/2-20,300,nave,45,1,45);
 	}
 	
 	public void prepareBloques() {
@@ -46,6 +52,10 @@ public class ArkaPOOB {
 
 	public Plataforma getPlataforma() {
 		return nave;
+	}
+	
+	public Bola getBola() {
+		return bola;
 	}
 
 	public ArrayList<ArrayList<Bloque>> getBloques() {
