@@ -22,7 +22,7 @@ public class Plataforma {
 	}
 	
 	private void prepareImagen() {
-		imagen = new ImageIcon(getClass().getResource("/imagenes/Arkanoid_Vaus.gif"));
+		imagen = new ImageIcon(getClass().getResource("/imagenes/vaus_purple.gif"));
 	}
 
 	public int getX() {

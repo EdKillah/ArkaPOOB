@@ -47,7 +47,7 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 	
 	public void prepareAcciones() {
 		System.out.println("entra en prepareAcciones");
-		setFocusable(true);
+		//setFocusable(true);
 		addKeyListener(this);
 	}
 	
