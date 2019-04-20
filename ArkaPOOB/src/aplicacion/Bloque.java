@@ -10,6 +10,7 @@ public class Bloque {
 	private int puntos;
 	private int width;
 	private int height;
+	private boolean isChocado;
 	private ImageIcon imagen;
 	
 	
@@ -19,6 +20,7 @@ public class Bloque {
 		this.width = width;
 		this.height = height;
 		this.puntos = puntos;
+		isChocado = false;
 		prepareImagen();
 	}
 	
@@ -61,6 +63,16 @@ public class Bloque {
 	public void setHeight(int height) {
 		this.height = height;
 	}
+	
+	public Rectangle getBounds() {
+        Rectangle borde = new Rectangle(this.getX(), this.getY(), 75, 45);
+        return borde;
+    }   
+	
+	public boolean isChocado(Bola bola) {
+        isChocado = bola.getBounds().intersects(this.getBounds());
+        return isChocado;
+    }
 	
 	public Image getImagen() {
 		return imagen.getImage();

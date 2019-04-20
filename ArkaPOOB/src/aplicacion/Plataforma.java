@@ -6,6 +6,7 @@ import javax.swing.*;
 
 public class Plataforma {
 	private int x;
+	private int y;
 	private int vidas;
 	private int balas;
 	private String color;
@@ -13,8 +14,9 @@ public class Plataforma {
 	private int height;
 	private ImageIcon imagen;
 	
-	public Plataforma(int x, String color, int width, int height) {
+	public Plataforma(int x,int y, String color, int width, int height) {
 		this.x = x;
+		this.y = y;
 		this.color = color;
 		this.width = width;
 		this.height = height;
@@ -22,11 +24,15 @@ public class Plataforma {
 	}
 	
 	private void prepareImagen() {
-		imagen = new ImageIcon(getClass().getResource("/imagenes/Arkanoid_Vaus.gif"));
+		imagen = new ImageIcon(getClass().getResource("/imagenes/vaus_"+color+".gif"));
 	}
 
 	public int getX() {
 		return x;
+	}
+	
+	public int getY() {
+		return y;
 	}
 
 	public void setX(int x) {
@@ -58,6 +64,7 @@ public class Plataforma {
 
 	public void setColor(String color) {
 		this.color = color;
+		actualizeImagen();
 	}
 
 	public int getWidth() {
@@ -78,6 +85,10 @@ public class Plataforma {
 
 	public Image getImagen() {
 		return imagen.getImage();
+	}
+	
+	private void actualizeImagen() {
+		imagen = new ImageIcon(getClass().getResource("/imagenes/vaus_"+color+".gif"));
 	}
 
 	public void setImagen(ImageIcon imagen) {

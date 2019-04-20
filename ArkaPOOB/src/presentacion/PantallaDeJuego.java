@@ -7,13 +7,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
+import java.util.Timer;
+
 import javax.swing.*;
 
-public class PantallaDeJuego extends JPanel implements ActionListener, KeyListener{
+public class PantallaDeJuego extends JPanel implements ActionListener, KeyListener, Runnable{
 	private ArkaPOOB ark;
 	private Dimension d;
 	private ArrayList<Integer> keysDown;
 	private String colorNave;
+	private Thread hilo;
+	private Timer myTimer;
+	private TimerTask task;
+	private int numero=0;
 	
 	public PantallaDeJuego(String color) {
 		setLayout(null);
@@ -21,7 +27,9 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 		ark = new ArkaPOOB();
 		d = Toolkit.getDefaultToolkit().getScreenSize();
 		colorNave = color;
-		//this.repaint();
+		hilo= new Thread(this);
+		myTimer = new Timer();
+		hilo.start();
 		prepareElementos();
 		prepareAcciones();
 		setBackground(Color.BLACK);
@@ -41,30 +49,36 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 			}
 		}
 		Plataforma nave = ark.getPlataforma();
-		g.drawImage(nave.getImagen(), nave.getX(), (int)d.getHeight()-100,nave.getWidth(),nave.getHeight(), this);			
+		g.drawImage(nave.getImagen(), nave.getX(), (int)d.getHeight()-120,nave.getWidth(),nave.getHeight(), this);			
 		Bola bola = ark.getBola();
-		g.drawImage(bola.getImagen(), bola.getX(), (int)d.getHeight()-125,30,30, this);			
+		if(bola.isVivo())
+			g.drawImage(bola.getImagen(), bola.getX(),bola.getY() ,Bola.getTamX(),Bola.getTamY(), this);			//(int)d.getHeight()-125
+		for(int i=0;i<ark.getVidas().size();i++) {
+			Plataforma vida = ark.getVidas().get(i);
+			g.drawImage(vida.getImagen(), vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);			
+		}
+		
+		
 		
 	}
 	
 	public void prepareElementos() {
-		ark.getPlataforma().setImagen(new ImageIcon(getClass().getResource("/imagenes/vaus_"+colorNave+".gif")));
+		ark.getPlataforma().setColor(colorNave);
+		for(Plataforma vida_N: ark.getVidas()) {
+			vida_N.setColor(ark.getPlataforma().getColor());
+		}
 	}
 	
 	public void prepareAcciones() {
-		System.out.println("entra en prepareAcciones");
-		addKeyListener(this);
 		setFocusable(true);
+		addKeyListener(this);
 	}
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-
-			System.out.println("Entra en key");
 			if(!keysDown.contains(e.getKeyCode())) {
 				keysDown.add(new Integer(e.getKeyCode()));
 			}
-			
 			moverJugador();
 			moverBola();
 
@@ -72,8 +86,6 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
-		System.out.println("Entra en typed");
-
 	}
 
 
@@ -83,76 +95,75 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 	@Override
 	public void keyReleased(KeyEvent e) {
 		keysDown.remove(new Integer(e.getKeyCode()));
-		/*
-		if(ark.getBalas().size()==1 && new Integer(e.getKeyCode())==32) {
-	
-			keysDown.remove(new Integer(e.getKeyCode()));
-		}
-		else {
-		
-			keysDown.remove(new Integer(e.getKeyCode()));
-		}
-		*/
 	}
 	
 	public void moverBola() {
-		
 	}
 	
 	public void moverJugador() {
-		
 		if(keysDown.contains(new Integer(KeyEvent.VK_LEFT))) {
-			if (ark.getPlataforma().getX()>0) { 
-				ark.getPlataforma().setX(2);				
-				if(!ark.getBola().isInAire()) {
-					ark.getBola().setX(2);
-				}
-			}
 			
+			if (ark.getPlataforma().getX()>0)  
+				ark.getPlataforma().setX(2);
+			if(ark.getBola().getX()>=ark.getPlataforma().getWidth()/2 && !ark.getBola().isInAire())
+				ark.getBola().setX(2); //esto puede meterse en el if de arriba
+		}
+		
+		if(keysDown.contains(new Integer(KeyEvent.VK_RIGHT))) {
+			if (ark.getPlataforma().getX()<d.getWidth()-ark.getPlataforma().getWidth()) 
+				ark.getPlataforma().setX(1);
+			
+			if(ark.getBola().getX()+15<d.getWidth()-ark.getPlataforma().getWidth()/2 && !ark.getBola().isInAire())
+				ark.getBola().setX(1); //ark.getBola().getX()+30 el +30 es el ancho de la bola, ponerlo así esta mal
 			
 		}
-			
-		if(keysDown.contains(new Integer(KeyEvent.VK_RIGHT))) {
-			if (ark.getPlataforma().getX()<d.getWidth()-100) { 
-				ark.getPlataforma().setX(1);
-				if(!ark.getBola().isInAire()) {
-					ark.getBola().setX(1);
-				}				
-			}
+		if(keysDown.contains(new Integer(KeyEvent.VK_SPACE))) {
+			ark.getBola().setInAire(true);
+			juegue();
 		}
 		this.repaint();
-		/*
-		if(keysDown.contains(new Integer(KeyEvent.VK_SPACE))) 
-		{
-			logica.disparo();
-			logica.getBalaJ().play();
-		}
-		*/
-		
-		/*
-		if(keysDown.contains(new Integer(KeyEvent.VK_X))) {
-			logica.disparoEspecial();
-			logica.getBalaJ().play();
-		}
-		
-		if(keysDown.contains(new Integer(KeyEvent.VK_P))) 
-		{
-			if(pausa) {
-				hilo.resume();
-				pausa=false;
-			}
-			else {
-				hilo.suspend();
-				pausa=true;
-			}
-		}
-		*/
 	}
-
+	
+	
+	public void juegue() {
+		
+		task = new TimerTask() {
+			@Override
+			public void run() {
+				//System.out.println("Cuantas veces entra en TimerTask: "+numero);
+				//numero++;
+				ark.juegue(d.getWidth(),d.getHeight()-120);
+			}
+		};
+		myTimer.scheduleAtFixedRate(task,0,7);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 	
+	@Override
+	public void run() {
+		while(true) {
+			try {
+				hilo.sleep(4);
+				this.repaint();
+				if(!ark.getBola().isVivo()) {
+					//System.out.println("Cuantas veces entra en bolaMuerta: "+numero);
+					//numero++;
+					//hilo.stop();
+					//task.wait();
+					//hilo.wait();
+					//myTimer.cancel();
+					//myTimer = new Timer();
+				}
+				this.repaint();
+			}
+			catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}	
+	}
 }
