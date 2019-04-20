@@ -33,10 +33,7 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 		prepareElementos();
 		prepareAcciones();
 		setBackground(Color.BLACK);
-
 	}
-	
-	
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -57,9 +54,6 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 			Plataforma vida = ark.getVidas().get(i);
 			g.drawImage(vida.getImagen(), vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);			
 		}
-		
-		
-		
 	}
 	
 	public void prepareElementos() {
@@ -87,10 +81,6 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
-
-
-
-
 
 	@Override
 	public void keyReleased(KeyEvent e) {

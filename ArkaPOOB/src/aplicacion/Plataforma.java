@@ -4,7 +4,7 @@ import java.awt.Image;
 
 import javax.swing.*;
 
-public class Plataforma {
+public class Plataforma implements Elemento{
 	private int x;
 	private int y;
 	private int vidas;
@@ -26,15 +26,18 @@ public class Plataforma {
 	private void prepareImagen() {
 		imagen = new ImageIcon(getClass().getResource("/imagenes/vaus_"+color+".gif"));
 	}
-
+	
+	@Override
 	public int getX() {
 		return x;
 	}
 	
+	@Override
 	public int getY() {
 		return y;
 	}
 
+	@Override
 	public void setX(int x) {
 		if(x==2)
 			this.x -= 20;
@@ -42,6 +45,11 @@ public class Plataforma {
 			this.x += 20;
 	}
 
+	@Override
+	public void setY(int y) {
+		this.y = y;
+	}
+	
 	public int getVidas() {
 		return vidas;
 	}
@@ -67,6 +75,7 @@ public class Plataforma {
 		actualizeImagen();
 	}
 
+	@Override
 	public int getWidth() {
 		return width;
 	}
@@ -83,6 +92,7 @@ public class Plataforma {
 		this.height = height;
 	}
 
+	@Override
 	public Image getImagen() {
 		return imagen.getImage();
 	}
@@ -94,6 +104,4 @@ public class Plataforma {
 	public void setImagen(ImageIcon imagen) {
 		this.imagen = imagen;
 	}
-	
-	
 }

@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 
-public class Bola {
+public class Bola implements Elemento{
 	private int x;
 	private int y;
 	private double dx;
@@ -120,22 +120,25 @@ public class Bola {
 		}
 		return false;
 	}
-
+	@Override
 	public int getX() {
 		return x;
 	}
-
+	
+	@Override
 	public void setX(int x) {
 		if(x==2)
 			this.x -= 20;
 		else
 			this.x += 20;
 	}
-
+	
+	@Override
 	public int getY() {
 		return y;
 	}
 
+	@Override
 	public void setY(int y) {
 		this.y = y;
 	}
@@ -180,6 +183,7 @@ public class Bola {
 		isInAire = enAire;
 	}
 	
+	@Override
 	public Image getImagen() {
 		return imagen.getImage();
 	}
@@ -190,5 +194,10 @@ public class Bola {
 
 	public static int getTamY() {
 		return TAMY;
+	}
+	
+	@Override
+	public int getWidth() {
+		return 25;
 	}
 }
