@@ -29,7 +29,7 @@ public class ArkaPOOB {
 		
 	}
 	
-	public void aux(double height) {
+	public void estatico(double height) {
 		borrarVidas((int)height);
 		if(vidas.size()>0)
 			prepareBola();
@@ -60,6 +60,20 @@ public class ArkaPOOB {
 			if(vidas.size()>0)
 				vidas.remove(vidas.size()-1);
 		}
+	}
+	
+	public boolean gano() {
+		int bloq=0;
+		for(int i=0;i<bloques.size();i++) 
+			if(bloques.get(i).size()>0)
+				bloq++;
+		if(bloq == 0) return true;
+		else return false;
+	}
+	
+	public boolean perdio() {
+		if(getVidas().size()==0) return true;
+		return false;
 	}
 	
 	public ArrayList<Plataforma> getVidas(){

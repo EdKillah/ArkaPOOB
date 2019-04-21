@@ -124,13 +124,19 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 				//numero++;
 				ark.juegue(d.getWidth(),d.getHeight()-120);
 
-				if(!ark.isVivo()) {
-					ark.aux(d.getHeight()-120);
+				if(!ark.isVivo() || ark.gano()) {
+					ark.estatico(d.getHeight()-120);
+					mensaje();
 					cancel();
 				}
 			}
 		};
 		myTimer.scheduleAtFixedRate(task,0,7);
+	}
+	
+	private void mensaje() {
+		if(ark.gano()) JOptionPane.showMessageDialog(this, "Ganaste!");
+		if(ark.perdio()) JOptionPane.showMessageDialog(this, "Perdiste!");
 	}
 	
 	@Override
