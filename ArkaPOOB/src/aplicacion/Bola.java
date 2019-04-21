@@ -21,6 +21,7 @@ public class Bola implements Elemento{
 	private boolean isInAire;
 	private boolean isChocado;
 	private ImageIcon imagen;
+	private boolean plat;
 
 	
 	public Bola(int x, int y, Plataforma nave, int velocidad, int damage,int angulo, ArkaPOOB ark) {
@@ -91,11 +92,13 @@ public class Bola implements Elemento{
 		
 		if(y + TAMY>=heightT){ 
 			System.out.println("Toca borde EN Y: ");
+			System.out.println("TGJA ");
 			if(isInNave()) {
 				y=(int)heightT-TAMY;
 				dy=-dy;
 			}
 			else setVivo(false);
+			//System.out.println(isVivo());
 		}
 		
 		Bloque b = confirmeChoque();
@@ -105,6 +108,7 @@ public class Bola implements Elemento{
 		}
 		
 	}
+	
 	
 	public boolean isVivo() {
 		return vivo;

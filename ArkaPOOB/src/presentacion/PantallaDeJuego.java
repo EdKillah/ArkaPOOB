@@ -108,21 +108,26 @@ public class PantallaDeJuego extends JPanel implements ActionListener, KeyListen
 			
 		}
 		if(keysDown.contains(new Integer(KeyEvent.VK_SPACE))) {
-			ark.getBola().setInAire(true);
-			juegue();
+			if(!ark.getBola().isInAire()) {
+				ark.getBola().setInAire(true);
+				juegue();
+			}
 		}
 		this.repaint();
 	}
 	
-	
 	public void juegue() {
-		
 		task = new TimerTask() {
 			@Override
 			public void run() {
 				//System.out.println("Cuantas veces entra en TimerTask: "+numero);
 				//numero++;
 				ark.juegue(d.getWidth(),d.getHeight()-120);
+
+				if(!ark.isVivo()) {
+					ark.aux(d.getHeight()-120);
+					cancel();
+				}
 			}
 		};
 		myTimer.scheduleAtFixedRate(task,0,7);

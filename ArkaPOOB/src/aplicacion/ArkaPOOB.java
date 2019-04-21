@@ -26,12 +26,14 @@ public class ArkaPOOB {
 				}
 			}
 		}
-		else {
-			borrarVidas((int)height);
-			if(vidas.size()>0)
-				prepareBola();
-				bola.setInAire(true);
-		}
+		
+	}
+	
+	public void aux(double height) {
+		borrarVidas((int)height);
+		if(vidas.size()>0)
+			prepareBola();
+			bola.setInAire(false);
 	}
 	
 	
@@ -47,6 +49,10 @@ public class ArkaPOOB {
 			vidas.add(vida);
 			pos+=40;
 		}
+	}
+	
+	public boolean isVivo() {
+		return bola.isVivo();
 	}
 	
 	public void borrarVidas(int height) {
