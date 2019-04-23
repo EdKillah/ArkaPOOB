@@ -32,7 +32,7 @@ public class Bola implements Elemento{
 		isInAire = false;
 		this.ark = ark;
 		this.x = x;
-		this.y = 630; //mirar como poner esto para que sea extensible 
+		this.y = y; //mirar como poner esto para que sea extensible 
 		this.nave = nave;
 		this.velocidad = velocidad;
 		this.damage = damage;

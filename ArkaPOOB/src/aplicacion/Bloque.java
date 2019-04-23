@@ -83,7 +83,7 @@ public class Bloque implements Elemento{
 	}
 	
 	public Rectangle getBounds() {
-        Rectangle borde = new Rectangle(this.getX(), this.getY(), 75, 45);
+        Rectangle borde = new Rectangle(this.getX(), this.getY(), 70, 50);
         return borde;
     }   
 	

@@ -204,16 +204,13 @@ public class jugadoresGUI extends JFrame{
 	}
 	
 	private void jugar(int jugadores) {
-		setTitle("Juego");
+		dispose();
 		PantallaDeJuego pdj = null;
 		if(jugadores == 1) {
+			System.out.println("ghola");
 			pdj = new PantallaDeJuego((String)naveColor.getSelectedItem());
-			mazo.add(pdj,"juega");
-			CardLayout c1 = (CardLayout)(mazo.getLayout());
-			c1.show(mazo,"juega");
-			pdj.setFocusable(true);
-			pdj.setVisible(true);
 		}
+		pdj.setVisible(true);
 	}
 	
 }

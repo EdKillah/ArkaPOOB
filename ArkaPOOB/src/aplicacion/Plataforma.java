@@ -15,7 +15,7 @@ public class Plataforma implements Elemento{
 	private ImageIcon imagen;
 	
 	public Plataforma(int x,int y, String color, int width, int height) {
-		this.x = x;
+		this.x = x-30;
 		this.y = y;
 		this.color = color;
 		this.width = width;
