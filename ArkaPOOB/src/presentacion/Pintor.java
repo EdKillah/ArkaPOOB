@@ -123,11 +123,14 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		task = new TimerTask() {
 			@Override
 			public void run() {
-				//System.out.println("Cuantas veces entra en TimerTask: "+ark.getScore());
+				System.out.println("Score: "+ark.getScore());
 				//numero++;
 				ark.juegue(width, ark.getPlataforma().getY());
-
-				if(!ark.isVivo() || ark.gano()) {
+				if(ark.gano()) {
+					mensaje();
+					cancel();
+				}
+				if(!ark.isVivo()) {
 					ark.estatico(height);
 					mensaje();
 					cancel();

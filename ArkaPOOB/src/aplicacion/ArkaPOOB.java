@@ -23,7 +23,7 @@ public class ArkaPOOB {
 			bola.muevase(width,height);
 			for(int i=0;i<bloques.size();i++) {
 				for(int j=0;j<bloques.get(i).size();j++) {
-					if(bola.isChocado(bloques.get(i).get(j))) {
+					if(bloques.get(i).get(j).isChocado(bola)) {
 						score+=bloques.get(i).get(j).getPuntos();
 						bloques.get(i).remove(j);
 					}
@@ -101,8 +101,15 @@ public class ArkaPOOB {
 			posX=20;
 			ArrayList<Bloque> blocks = new ArrayList<Bloque>();
 			for(int j=0;j<10;j++) {
-				bloque = new Bloque( posX, posY,70,35); //75 45
-				blocks.add(bloque);
+				if(i==0 || i==2) {
+					bloque = new BloqueRojo( posX, posY,70,35); //75 45
+					blocks.add(bloque);
+				}
+				
+				if(i==1) {
+					bloque = new BloqueVerde( posX, posY,70,35); //75 45
+					blocks.add(bloque);
+				}
 				posX += step;
 			}
 			posY += 38;

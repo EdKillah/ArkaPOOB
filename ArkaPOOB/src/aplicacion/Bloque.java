@@ -3,7 +3,7 @@ package aplicacion;
 import java.awt.*;
 import javax.swing.*;
 
-public class Bloque implements Elemento{
+public abstract class Bloque implements Elemento{
 	private int x;
 	private int y;
 	private int golpes;
@@ -13,20 +13,20 @@ public class Bloque implements Elemento{
 	private boolean isChocado;
 	private ImageIcon imagen;
 	
-	
+	/*
 	public Bloque(int x, int y, int width, int height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		isChocado = false;
-		prepareImagen();
+		//prepareImagen();
 	}
 	
 	private void prepareImagen() {
 		imagen = new ImageIcon(getClass().getResource("/imagenes/bloque_rojo.png"));
 	}
-	
+	*/
 	@Override
 	public int getX() {
 		return x;
@@ -72,25 +72,22 @@ public class Bloque implements Elemento{
 		return height;
 	}
 
-
+	public void setIsChocado(boolean isChocado) {
+		this.isChocado = isChocado;
+	}
+	
 	public void setHeight(int height) {
 		this.height = height;
 	}
 	
 	public Rectangle getBounds() {
-        Rectangle borde = new Rectangle(this.getX(), this.getY(), 70, 50);
+        Rectangle borde = new Rectangle(this.getX(), this.getY(), 70, 35);
         return borde;
     }   
 	
-	public boolean isChocado(Bola bola) {
-        isChocado = bola.getBounds().intersects(this.getBounds());
-        return isChocado;
-    }
+	public abstract boolean isChocado(Bola bola);
 	
-	@Override
-	public Image getImagen() {
-		return imagen.getImage();
-	}
+	
 	
 	
 }
