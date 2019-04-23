@@ -7,9 +7,11 @@ public class ArkaPOOB {
 	private ArrayList<Plataforma> vidas;
 	private Plataforma nave;
 	private Bola bola;
+	private int score;
 	
 	public ArkaPOOB() {
 		vidas = new ArrayList<Plataforma>();
+		score=0;
 		prepareBloques();
 		prepareNave();
 		prepareBola();
@@ -21,8 +23,10 @@ public class ArkaPOOB {
 			bola.muevase(width,height);
 			for(int i=0;i<bloques.size();i++) {
 				for(int j=0;j<bloques.get(i).size();j++) {
-					if(bola.isChocado(bloques.get(i).get(j)))	
+					if(bola.isChocado(bloques.get(i).get(j))) {
+						score+=bloques.get(i).get(j).getPuntos();
 						bloques.get(i).remove(j);
+					}
 				}
 			}
 		}
@@ -38,14 +42,14 @@ public class ArkaPOOB {
 	
 	
 	public void prepareNave() {
-		nave = new Plataforma(748/2,530,"red",90,20);
+		nave = new Plataforma(750/2,540,"red",90,20);
 	}
 	
 	public void prepareVidas() {
 		Plataforma vida;
 		int pos =0;
 		for(int i=0;i<3;i++) {
-			vida = new Plataforma(30+pos,550,nave.getColor(),40,15); //aqui podemos sacarle provecho al color que se le pasa
+			vida = new Plataforma(30+pos,560,nave.getColor(),40,15); //aqui podemos sacarle provecho al color que se le pasa
 			vidas.add(vida);
 			pos+=40;
 		}
@@ -60,6 +64,10 @@ public class ArkaPOOB {
 			if(vidas.size()>0)
 				vidas.remove(vidas.size()-1);
 		}
+	}
+	
+	public int getScore() {
+		return score;
 	}
 	
 	public boolean gano() {
@@ -85,16 +93,15 @@ public class ArkaPOOB {
 	}
 	
 	public void prepareBloques() {
-		
 		Bloque bloque;
 		bloques = new ArrayList<ArrayList<Bloque>>();
-		int posY=70,posX=0;
+		int posY=50,posX=0;
 		int step = 70;
 		for(int i=0;i<3;i++) {
 			posX=20;
 			ArrayList<Bloque> blocks = new ArrayList<Bloque>();
 			for(int j=0;j<10;j++) {
-				bloque = new Bloque( posX, posY,70,35,1); //75 45
+				bloque = new Bloque( posX, posY,70,35); //75 45
 				blocks.add(bloque);
 				posX += step;
 			}

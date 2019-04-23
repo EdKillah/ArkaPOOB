@@ -11,12 +11,15 @@ public class jugadoresGUI extends JFrame{
 	private Container contenedor;
 	private Boton Jugador;
 	private Boton dosJugadores;
+	private Boton jugadorCPU;
 	private JLabel panelLogo;
 	private JPanel mazo;
 	private Boton jugar1;
 	private Boton jugar2;
+	private Boton jugar3;
 	private Boton volver1;
 	private Boton volver2;
+	private Boton volver3;
 	private JTextField textNombre;
 	private JComboBox<String> naveColor;
 	private String[] colores = {"red","blue","orange","green","purple"};
@@ -45,10 +48,14 @@ public class jugadoresGUI extends JFrame{
 		pantalla.add(botones);
 		Jugador = new Boton(new ImageIcon(getClass().getResource("/imagenes/1_jugador.png")));
 		Jugador.setTransparent();
-		dosJugadores = new Boton(new ImageIcon(getClass().getResource("/imagenes/2_jugadores.png")));
+		dosJugadores = new  
+				Boton(new ImageIcon(getClass().getResource("/imagenes/2_jugadores.png")));
 		dosJugadores.setTransparent();
+		jugadorCPU = new Boton(new ImageIcon(getClass().getResource("/imagenes/jugador_vs_cpu.png")));
+		jugadorCPU.setTransparent();
 		botones.add(Jugador);
 		botones.add(dosJugadores);
+		botones.add(jugadorCPU);
 		setIconImage(new ImageIcon(getClass().getResource("/imagenes/icon.png")).getImage());
 		
 		mazo = new JPanel(new CardLayout());
@@ -56,6 +63,7 @@ public class jugadoresGUI extends JFrame{
 		mazo.add(pantalla,"Inicio");
 		prepareUnJugador();
 		prepareDosJugadores();
+		prepareJugadorCPU();
 	}
 	
 	private void prepareUnJugador() {
@@ -139,6 +147,37 @@ public class jugadoresGUI extends JFrame{
 		panelDosJugador.add(contenido);
 	}
 	
+	private void prepareJugadorCPU() {
+		myPanel panelJugadorCPU = new myPanel();
+		panelJugadorCPU.setBackground(new ImageIcon(getClass().getResource("/imagenes/fondo.png")));
+		panelJugadorCPU.setLayout(new GridLayout(2,1));
+		mazo.add(panelJugadorCPU,"JugadorCPU");
+		
+		JPanel dosJugadorLogo = new JPanel(new GridBagLayout());
+		dosJugadorLogo.setOpaque(false);//Los hace transparentes
+		panelJugadorCPU.add(dosJugadorLogo);
+		JLabel logo = new JLabel(new ImageIcon(getClass().getResource("/imagenes/ArkFont.png")));
+		dosJugadorLogo.add(logo);
+		dosJugadorLogo.setBackground(Color.BLACK);
+		
+		JPanel contenido = new JPanel();
+		contenido.setOpaque(false);//Los hace transparentes
+		contenido.setLayout(null);
+		contenido.setBackground(Color.BLACK);
+		
+		jugar3 = new Boton(new ImageIcon(getClass().getResource("/imagenes/jugar2.png")));
+		jugar3.setBounds(85, 150, 180, 60);
+		jugar3.setTransparent();
+		contenido.add(jugar3);
+		
+		volver3 = new Boton(new ImageIcon(getClass().getResource("/imagenes/volver.png")));
+		volver3.setBounds(300, 150, 200, 60);
+		volver3.setTransparent();
+		contenido.add(volver3);
+		
+		panelJugadorCPU.add(contenido);
+	}
+	
 	private void prepareAcciones() {
 		ActionListener juego = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -154,6 +193,13 @@ public class jugadoresGUI extends JFrame{
 		};
 		dosJugadores.addActionListener(juego1);
 		
+		ActionListener juego3 = new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				configuracionJugadorCPU();
+			}
+		};
+		jugadorCPU.addActionListener(juego3);
+		
 		ActionListener l = new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -164,19 +210,30 @@ public class jugadoresGUI extends JFrame{
 		
 		ActionListener jugarUno = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				jugar(1);
+				jugar(1,false);
 			}
 		};
 		jugar1.addActionListener(jugarUno);
 		
 		ActionListener jugarDos = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				jugar(2);
+				jugar(2,false);
 			}
 		};
+		
+		ActionListener jugarDosCPU = new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				jugar(2,true);
+			}
+		};
+		
 		jugar2.addActionListener(jugarDos);
 		
 		volver2.addActionListener(l);
+		
+		jugar3.addActionListener(jugarDosCPU);
+		
+		volver3.addActionListener(l);
 	}
 	
 	private void configuracionUnJugador() {
@@ -195,6 +252,14 @@ public class jugadoresGUI extends JFrame{
 		setLocationRelativeTo(null);
 	}
 	
+	private void configuracionJugadorCPU() {
+		setTitle("Configuracion");
+		CardLayout c1 = (CardLayout)(mazo.getLayout());
+		c1.show(mazo,"JugadorCPU");
+		setSize(600,500);;
+		setLocationRelativeTo(null);
+	}
+	
 	private void inicio() {
 		setTitle("Jugadores");
 		CardLayout c1 = (CardLayout)(mazo.getLayout());
@@ -203,11 +268,10 @@ public class jugadoresGUI extends JFrame{
 		setLocationRelativeTo(null);
 	}
 	
-	private void jugar(int jugadores) {
+	private void jugar(int jugadores,boolean cpu) {
 		dispose();
 		PantallaDeJuego pdj = null;
 		if(jugadores == 1) {
-			System.out.println("ghola");
 			pdj = new PantallaDeJuego((String)naveColor.getSelectedItem());
 		}
 		pdj.setVisible(true);

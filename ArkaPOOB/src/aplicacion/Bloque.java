@@ -7,19 +7,18 @@ public class Bloque implements Elemento{
 	private int x;
 	private int y;
 	private int golpes;
-	private int puntos;
+	private final int puntos = 100;
 	private int width;
 	private int height;
 	private boolean isChocado;
 	private ImageIcon imagen;
 	
 	
-	public Bloque(int x, int y, int width, int height, int puntos) {
+	public Bloque(int x, int y, int width, int height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.puntos = puntos;
 		isChocado = false;
 		prepareImagen();
 	}
@@ -58,10 +57,6 @@ public class Bloque implements Elemento{
 	
 	public int getPuntos() {
 		return puntos;
-	}
-	
-	public void setPuntos(int puntos) {
-		this.puntos = puntos;
 	}
 	
 	@Override

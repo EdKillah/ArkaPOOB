@@ -1,14 +1,8 @@
 package presentacion;
 
-import aplicacion.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.*;
-import java.util.Timer;
-
 import javax.swing.*;
 
 public class PantallaDeJuego extends JFrame{
@@ -24,20 +18,20 @@ public class PantallaDeJuego extends JFrame{
 	
 	public PantallaDeJuego(String color) {
 		super("Juego");
-		setSize(750,728);
+		setSize(750,660);
 		this.color = color;
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation(d.width/2-290,d.height/2-324);
+		setLocationRelativeTo(null);
+		//setLocation(d.width/2,d.height/2);
 		setResizable(false);
 		prepareElementos();
 		prepareAcciones();
 	}
 	
 	public void prepareElementos() {
-		pint = new Pintor(color);
+		pint = new Pintor(747,580,color);
 		container = getContentPane();
 		container.add(pint, BorderLayout.CENTER); //JUEGO
-		
 	}
 	
 	public void prepareAcciones() {

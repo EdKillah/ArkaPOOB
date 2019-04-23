@@ -23,11 +23,11 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 	private int width;
 	private int height;
 	
-	public Pintor(String color) {
+	public Pintor(int w, int h , String color) {
 		keysDown=new ArrayList<Integer>();
 		ark = new ArkaPOOB();
-		width = 700;
-		height = 600;
+		width = w;
+		height = h;
 		//d = Toolkit.getDefaultToolkit().getScreenSize();
 		colorNave = color;
 		hilo= new Thread(this);
@@ -123,7 +123,7 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		task = new TimerTask() {
 			@Override
 			public void run() {
-				//System.out.println("Cuantas veces entra en TimerTask: "+numero);
+				//System.out.println("Cuantas veces entra en TimerTask: "+ark.getScore());
 				//numero++;
 				ark.juegue(width, ark.getPlataforma().getY());
 
