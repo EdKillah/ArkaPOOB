@@ -9,6 +9,7 @@ public class BloqueVerde extends Bloque{
 	private int y;
 	private int width;
 	private int height;
+	private String tipo;
 	private boolean isChocado;
 	private final int puntos = 200;
 	private ImageIcon imagen;
@@ -22,10 +23,11 @@ public class BloqueVerde extends Bloque{
 		setHeight(height);
 		setIsChocado(false);
 		con=0;
+		tipo = "verde";
 		prepareImagen();
 	}
 	private void prepareImagen() {
-		imagen = new ImageIcon(getClass().getResource("/imagenes/bloque_amarillo.png"));
+		imagen = new ImageIcon(getClass().getResource("/imagenes/bloque_verde.png"));
 	}
 	
 	@Override
@@ -45,5 +47,10 @@ public class BloqueVerde extends Bloque{
 	@Override
 	public int getPuntos() {
 		return puntos;
+	}
+	
+	@Override
+	public String getTipo() {
+		return tipo;
 	}
 }

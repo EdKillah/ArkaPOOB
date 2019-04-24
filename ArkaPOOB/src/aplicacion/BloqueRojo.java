@@ -9,6 +9,7 @@ public class BloqueRojo extends Bloque{
 	private int y;
 	private int width;
 	private int height;
+	private String tipo;
 	private boolean isChocado;
 	private final int puntos = 100;
 	private ImageIcon imagen;
@@ -19,6 +20,7 @@ public class BloqueRojo extends Bloque{
 		setWidth(width);
 		setHeight(height);
 		setIsChocado(false);
+		tipo = "rojo";
 		prepareImagen();
 	}
 	private void prepareImagen() {
@@ -39,6 +41,11 @@ public class BloqueRojo extends Bloque{
 	@Override
 	public int getPuntos() {
 		return puntos;
+	}
+	
+	@Override
+	public String getTipo() {
+		return tipo;
 	}
 	
 }

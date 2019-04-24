@@ -7,6 +7,7 @@ public abstract class Bloque implements Elemento{
 	private int x;
 	private int y;
 	private int golpes;
+	private String tipo;
 	private final int puntos = 100;
 	private int width;
 	private int height;
@@ -58,6 +59,8 @@ public abstract class Bloque implements Elemento{
 	public int getPuntos() {
 		return puntos;
 	}
+	
+	public abstract String getTipo();
 	
 	@Override
 	public int getWidth() {

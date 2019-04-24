@@ -7,12 +7,14 @@ public class ArkaPOOB {
 	private ArrayList<Plataforma> vidas;
 	private Plataforma nave;
 	private Bola bola;
+	private Bloque ultimoBloque;
 	private int score;
 	
 	public ArkaPOOB() {
 		vidas = new ArrayList<Plataforma>();
 		score=0;
 		prepareBloques();
+		ultimoBloque = bloques.get(0).get(0);
 		prepareNave();
 		prepareBola();
 		prepareVidas();
@@ -25,12 +27,31 @@ public class ArkaPOOB {
 				for(int j=0;j<bloques.get(i).size();j++) {
 					if(bloques.get(i).get(j).isChocado(bola)) {
 						score+=bloques.get(i).get(j).getPuntos();
-						bloques.get(i).remove(j);
+						adicioneVida(bloques.get(i).get(j));
+						reemplazarBloque(bloques.get(i).get(j),i,j);
+						
+						//bloques.get(i).remove(j);
 					}
 				}
 			}
 		}
 		
+	}
+	
+	public void eliminarBloque(int i,int j) {
+		bloques.get(i).remove(j);
+	}
+	
+	public void reemplazarBloque(Bloque bloque, int i, int j) {
+		if(bloque.getTipo().equals("negro")) {
+			
+			bloques.get(i).set(j,ultimoBloque);
+			ultimoBloque = bloques.get(i).get(j);
+		}
+		else {
+			ultimoBloque = bloques.get(i).get(j);
+			eliminarBloque(i,j);
+		}
 	}
 	
 	public void estatico(double height) {
@@ -43,6 +64,13 @@ public class ArkaPOOB {
 	
 	public void prepareNave() {
 		nave = new Plataforma(750/2,540,"red",90,20);
+	}
+	
+	public void adicioneVida(Bloque bloque) {
+		if(bloque.getTipo().equals("amarillo")) {
+			Plataforma vida = vidas.get(vidas.size()-1);
+			vidas.add(new Plataforma(vida.getX()+70,vida.getY(),vida.getColor(),vida.getWidth(),vida.getHeight()));
+		}
 	}
 	
 	public void prepareVidas() {
@@ -75,7 +103,7 @@ public class ArkaPOOB {
 		for(int i=0;i<bloques.size();i++) 
 			if(bloques.get(i).size()>0)
 				bloq++;
-		if(bloq == 0) return true;
+		if(bloq == 0 || ultimoBloque.getTipo().equals("rosa")) return true;
 		else return false;
 	}
 	
@@ -101,15 +129,23 @@ public class ArkaPOOB {
 			posX=20;
 			ArrayList<Bloque> blocks = new ArrayList<Bloque>();
 			for(int j=0;j<10;j++) {
-				if(i==0 || i==2) {
-					bloque = new BloqueRojo( posX, posY,70,35); //75 45
-					blocks.add(bloque);
+				if(i==0) 
+					bloque = new BloqueGris(posX, posY,70,35);
+				else if(i==1) {
+					if(j==5)
+						bloque = new BloqueRosa(posX,posY,70,35); //poner esto random
+					else
+						bloque = new BloqueVerde( posX, posY,70,35);
 				}
-				
-				if(i==1) {
-					bloque = new BloqueVerde( posX, posY,70,35); //75 45
-					blocks.add(bloque);
+				else {
+					if(j== 9)
+						bloque = new BloqueAmarillo(posX, posY, 70,35);
+					else if(j==0)
+						bloque = new BloqueNegro(posX,posY,70,35);
+					else
+						bloque = new BloqueRojo( posX, posY,70,35); //75 45
 				}
+				blocks.add(bloque);
 				posX += step;
 			}
 			posY += 38;

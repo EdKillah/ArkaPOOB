@@ -73,26 +73,21 @@ public class Bola implements Elemento{
 		x+=dx;
 		y+=dy;
 		if(x<=20){
-			System.out.println("X<=0: ");
 			x=20;
 			dx=-dx;
 		}
 		
 		if(x + TAMX>=widthT-10){
-			System.out.println("x>=1200: ");
 			x=(int)widthT-10 - TAMX;
 			dx=-dx;
 		}
 		
 		if(y<0){
-			System.out.println("Toca borde superior: ");
 			y=0;
 			dy=-dy;
 		}
 		
 		if(y + TAMY>=heightT){ 
-			System.out.println("Toca borde EN Y: ");
-			System.out.println("TGJA ");
 			if(isInNave()) {
 				y=(int)heightT-TAMY;
 				dy=-dy;
