@@ -10,8 +10,8 @@ public class Bola implements Elemento{
 	private int y;
 	private double dx;
 	private double dy;
-	private static final int TAMX=23;
-	private static final int TAMY=23;
+	private static final int TAMX=21;
+	private static final int TAMY=21;
 	private Plataforma nave;
 	private ArkaPOOB ark;
 	private int velocidad;
@@ -117,7 +117,7 @@ public class Bola implements Elemento{
 	}
 	
 	public boolean isInNave() {
-		if(getX()>=nave.getX() && getX()<=nave.getX()+nave.getWidth()) {
+		if(getX()>=nave.getX()-15 && getX()<=nave.getX()+nave.getWidth()) {
 			return true;
 		}
 		return false;

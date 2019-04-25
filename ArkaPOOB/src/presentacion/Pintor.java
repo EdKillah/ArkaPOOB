@@ -145,7 +145,7 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		if(pausa) {
 			pausa = false;
 			if(ark.getBola().isInAire()) 
-				juegue();	
+				juegue();
 				
 		}else {
 			pausa = true;
@@ -195,6 +195,19 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void reiniciar() {
+		task.cancel();
+		pausa = false;
+		keysDown=new ArrayList<Integer>();
+		ark = new ArkaPOOB();
+		hilo= new Thread(this);
+		myTimer = new Timer();
+		hilo.start();
+		prepareElementos();
+		prepareAcciones();
+		setBackground(Color.BLACK);
 	}
 
 }

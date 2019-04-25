@@ -16,6 +16,10 @@ public class PantallaDeJuego extends JFrame{
 	private Boton reiniciar;
 	private String color;
 	private boolean pausa;
+	private JMenuBar barraMenu;
+	private JMenu menu;	
+	private JMenuItem[] items;
+	private JFileChooser files;
 	
 	public PantallaDeJuego(String color) {
 		super("Juego");
@@ -48,6 +52,22 @@ public class PantallaDeJuego extends JFrame{
 		a.add(reiniciar);
 		
 		container.add(a, BorderLayout.SOUTH); //PUNTAJE
+		
+		items = new JMenuItem[3];
+		barraMenu = new JMenuBar();
+		container.add(barraMenu,BorderLayout.NORTH);
+		menu = new JMenu("Opciones");
+		barraMenu.add(menu);
+		
+		items[0] = new JMenuItem("Abrir");
+		items[1] = new JMenuItem("Guardar");
+		items[2] = new JMenuItem("Salir");
+		
+		menu.add(items[0]);
+		menu.addSeparator();
+		menu.add(items[1]);
+		menu.addSeparator();
+		menu.add(items[2]);
 	}
 	
 	public void prepareAcciones() {
@@ -73,8 +93,40 @@ public class PantallaDeJuego extends JFrame{
 		};
 		reiniciar.addActionListener(e);
 		
+		items[0].addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				abrir();
+			}
+		});
+		items[1].addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				guardar();
+			}
+		});
+		items[2].addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				salir();
+			}
+		});
+	}
+	private void abrir(){
+		files = new JFileChooser();
 	}
 	
+	private void guardar(){
+		files = new JFileChooser();
+	}
+	
+	private void salir() {
+		int salir = JOptionPane.showConfirmDialog(this, "Realmente Quieres Salir?");
+		if(salir == JOptionPane.YES_OPTION) {
+			setVisible(false);
+			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		}
+		else {
+			setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		}
+	}
 	public void pausar() {
 		if (pausa) pausa = false;
 		else pausa = true;
@@ -82,8 +134,7 @@ public class PantallaDeJuego extends JFrame{
 	}
 	
 	public void reiniciar() {
-		System.out.println("aaa");
-		pint = new Pintor(747,580,color);
+		pint.reiniciar();
 	}
 	
 }
