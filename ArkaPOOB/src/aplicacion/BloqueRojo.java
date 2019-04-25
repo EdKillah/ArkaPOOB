@@ -48,4 +48,9 @@ public class BloqueRojo extends Bloque{
 		return tipo;
 	}
 	
+	@Override
+	public void setTipo(String type) {
+		tipo = type;
+	}
+	
 }

@@ -14,20 +14,6 @@ public abstract class Bloque implements Elemento{
 	private boolean isChocado;
 	private ImageIcon imagen;
 	
-	/*
-	public Bloque(int x, int y, int width, int height) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-		isChocado = false;
-		//prepareImagen();
-	}
-	
-	private void prepareImagen() {
-		imagen = new ImageIcon(getClass().getResource("/imagenes/bloque_rojo.png"));
-	}
-	*/
 	@Override
 	public int getX() {
 		return x;
@@ -60,7 +46,7 @@ public abstract class Bloque implements Elemento{
 		return puntos;
 	}
 	
-	public abstract String getTipo();
+	
 	
 	@Override
 	public int getWidth() {
@@ -89,7 +75,8 @@ public abstract class Bloque implements Elemento{
     }   
 	
 	public abstract boolean isChocado(Bola bola);
-	
+	public abstract String getTipo();
+	public abstract void setTipo(String type);
 	
 	
 	

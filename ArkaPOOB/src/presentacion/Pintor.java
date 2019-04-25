@@ -16,7 +16,6 @@ import javax.swing.*;
 
 public class Pintor extends JPanel implements ActionListener, KeyListener, Runnable{
 	private ArkaPOOB ark;
-	//private Dimension d;
 	private ArrayList<Integer> keysDown;
 	private String colorNave;
 	private Thread hilo;
@@ -25,7 +24,6 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 	private int width;
 	private int height;
 	private boolean pausa;
-	private PantallaDeJuego pantalla;
 	
 	public Pintor(int w, int h , String color) {
 		pausa = false;
@@ -125,7 +123,6 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 			@Override
 			public void run() {
 				//System.out.println("Score: "+ark.getScore());
-				//numero++;
 				ark.juegue(width, ark.getPlataforma().getY());
 				if(ark.gano()) {
 					mensaje();
@@ -168,26 +165,7 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 	@Override
 	public void run() {
 		while(true) {
-			
 			this.repaint();
-			/*
-			try {
-				//hilo.sleep(4);
-				//this.repaint();
-				if(!ark.getBola().isVivo()) {
-					//System.out.println("Cuantas veces entra en bolaMuerta: "+numero);
-					//numero++;
-					//hilo.stop();
-					//task.wait();
-					//hilo.wait();
-					//myTimer.cancel();
-					//myTimer = new Timer();
-				}
-				this.repaint();
-			}
-			catch(InterruptedException e) {
-				e.printStackTrace();
-			}*/
 		}	
 	}
 	

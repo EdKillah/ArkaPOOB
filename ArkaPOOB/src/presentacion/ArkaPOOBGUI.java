@@ -53,13 +53,10 @@ public class ArkaPOOBGUI extends JFrame{
 		pBotones.setOpaque(false);
 		jugar = new Boton(new ImageIcon(getClass().getResource("/imagenes/jugar2.png")));
 		jugar.setTransparent();
-		//jugar.setBounds(new Rectangle(50, 20));
 		instrucciones = new Boton(new ImageIcon(getClass().getResource("/imagenes/como_jugar.png")));
 		instrucciones.setTransparent();
-		//instrucciones.setBounds(new Rectangle(30, 20));
 		salir = new Boton(new ImageIcon(getClass().getResource("/imagenes/salir.png")));
 		salir.setTransparent();
-		//salir.setBounds(new Rectangle(50, 20));
 		pBotones.add(jugar);
 		pBotones.add(instrucciones);
 		pBotones.add(salir);

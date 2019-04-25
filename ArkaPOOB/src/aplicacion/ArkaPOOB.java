@@ -44,9 +44,12 @@ public class ArkaPOOB {
 	
 	public void reemplazarBloque(Bloque bloque, int i, int j) {
 		if(bloque.getTipo().equals("negro")) {
-			
+			ultimoBloque.setX(bloque.getX());
+			ultimoBloque.setY(bloque.getY());
+			//ultimoBloque.setTipo(bloque.getTipo());
 			bloques.get(i).set(j,ultimoBloque);
 			ultimoBloque = bloques.get(i).get(j);
+			//eliminarBloque(i,j);
 		}
 		else {
 			ultimoBloque = bloques.get(i).get(j);
@@ -132,15 +135,15 @@ public class ArkaPOOB {
 				if(i==0) 
 					bloque = new BloqueGris(posX, posY,70,35);
 				else if(i==1) {
-					if(j==5)
-						bloque = new BloqueRosa(posX,posY,70,35); //poner esto random
+					if(j==5 || j == 7)
+						bloque = new BloqueNegro(posX,posY,70,35); //poner esto random
 					else
 						bloque = new BloqueVerde( posX, posY,70,35);
 				}
 				else {
-					if(j== 9)
+					if(j== 9 )
 						bloque = new BloqueAmarillo(posX, posY, 70,35);
-					else if(j==0)
+					else if(j==0|| j == 7)
 						bloque = new BloqueNegro(posX,posY,70,35);
 					else
 						bloque = new BloqueRojo( posX, posY,70,35); //75 45

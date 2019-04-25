@@ -48,4 +48,9 @@ public class BloqueNegro extends Bloque{
 	public String getTipo() {
 		return tipo;
 	}
+	
+	@Override
+	public void setTipo(String type) {
+		tipo = type;
+	}
 }
