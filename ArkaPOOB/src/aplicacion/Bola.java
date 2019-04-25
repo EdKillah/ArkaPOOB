@@ -87,7 +87,7 @@ public class Bola implements Elemento{
 			dy=-dy;
 		}
 		
-		if(y + TAMY>=heightT){ 
+		if(y + TAMY>heightT){ 
 			if(isInNave()) {
 				y=(int)heightT-TAMY;
 				dy=-dy;
@@ -98,7 +98,6 @@ public class Bola implements Elemento{
 		
 		Bloque b = confirmeChoque();
 		if(b!=null) {
-			//System.out.println((b.getX()+b.getWidth()) + " jkfjkasnfjka " + (this.getX()+1));
 			//y=b.getY()+b.getHeight()-3;//+TAMY //+b.getHeight())/2
 			if(this.getX()<=b.getX() || b.getX()+b.getWidth()<=this.getX()+1) {
 				dx=-dx;

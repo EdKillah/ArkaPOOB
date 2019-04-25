@@ -5,10 +5,12 @@ import aplicacion.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
 import java.util.Timer;
+
 
 import javax.swing.*;
 
@@ -22,13 +24,15 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 	private TimerTask task;
 	private int width;
 	private int height;
+	private boolean pausa;
+	private PantallaDeJuego pantalla;
 	
 	public Pintor(int w, int h , String color) {
+		pausa = false;
 		keysDown=new ArrayList<Integer>();
 		ark = new ArkaPOOB();
 		width = w;
 		height = h;
-		//d = Toolkit.getDefaultToolkit().getScreenSize();
 		colorNave = color;
 		hilo= new Thread(this);
 		myTimer = new Timer();
@@ -70,8 +74,6 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		setFocusable(true);
 		addKeyListener(this);
 	}
-	public void moverBola() {
-	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -79,7 +81,6 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 				keysDown.add(new Integer(e.getKeyCode()));
 			}
 			moverJugador();
-			moverBola();
 
 	}
 
@@ -96,22 +97,22 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 	public void moverJugador() {
 		if(keysDown.contains(new Integer(KeyEvent.VK_LEFT))) {
 			
-			if (ark.getPlataforma().getX()>15)  
+			if (ark.getPlataforma().getX()>15&& !pausa)  
 				ark.getPlataforma().setX(2);
-			if(ark.getBola().getX()>ark.getPlataforma().getWidth()/2 && !ark.getBola().isInAire())
+			if(ark.getBola().getX()>ark.getPlataforma().getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
 				ark.getBola().setX(2); //esto puede meterse en el if de arriba
 		}
 		
 		if(keysDown.contains(new Integer(KeyEvent.VK_RIGHT))) {
-			if (ark.getPlataforma().getX()<width-ark.getPlataforma().getWidth()) 
+			if (ark.getPlataforma().getX()<width-ark.getPlataforma().getWidth()&& !pausa) 
 				ark.getPlataforma().setX(1);
 			
-			if(ark.getBola().getX()+15<width-ark.getPlataforma().getWidth()/2 && !ark.getBola().isInAire())
+			if(ark.getBola().getX()+15<width-ark.getPlataforma().getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
 				ark.getBola().setX(1); //ark.getBola().getX()+30 el +30 es el ancho de la bola, ponerlo así esta mal
 			
 		}
 		if(keysDown.contains(new Integer(KeyEvent.VK_SPACE))) {
-			if(!ark.getBola().isInAire()) {
+			if(!ark.getBola().isInAire() && !pausa) {
 				ark.getBola().setInAire(true);
 				juegue();
 			}
@@ -123,7 +124,7 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		task = new TimerTask() {
 			@Override
 			public void run() {
-				System.out.println("Score: "+ark.getScore());
+				//System.out.println("Score: "+ark.getScore());
 				//numero++;
 				ark.juegue(width, ark.getPlataforma().getY());
 				if(ark.gano()) {
@@ -138,6 +139,24 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 			}
 		};
 		myTimer.scheduleAtFixedRate(task,0,7);
+	}
+	
+	public void pausar() {
+		if(pausa) {
+			pausa = false;
+			if(ark.getBola().isInAire()) 
+				juegue();	
+				
+		}else {
+			pausa = true;
+			if(ark.getBola().isInAire()) 
+				task.cancel();	
+		}
+		
+	}
+	
+	public int getScore() {
+		return ark.getScore();
 	}
 	
 	private void mensaje() {

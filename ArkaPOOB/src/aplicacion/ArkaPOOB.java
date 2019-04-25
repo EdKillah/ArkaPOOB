@@ -63,7 +63,7 @@ public class ArkaPOOB {
 	
 	
 	public void prepareNave() {
-		nave = new Plataforma(750/2,540,"red",90,20);
+		nave = new Plataforma(750/2,500,"red",90,20);
 	}
 	
 	public void adicioneVida(Bloque bloque) {
@@ -77,7 +77,7 @@ public class ArkaPOOB {
 		Plataforma vida;
 		int pos =0;
 		for(int i=0;i<3;i++) {
-			vida = new Plataforma(30+pos,560,nave.getColor(),40,15); //aqui podemos sacarle provecho al color que se le pasa
+			vida = new Plataforma(30+pos,520,nave.getColor(),40,15); //aqui podemos sacarle provecho al color que se le pasa
 			vidas.add(vida);
 			pos+=40;
 		}
