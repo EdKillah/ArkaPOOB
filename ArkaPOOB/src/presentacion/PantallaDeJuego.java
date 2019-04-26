@@ -9,9 +9,6 @@ public class PantallaDeJuego extends JFrame{
 	
 	private Pintor pint;
 	private Container container;
-	private JPanel opciones;
-	private int jugadores; 
-	private Boton guardar;
 	private Boton pausaBoton;
 	private Boton reiniciar;
 	private String color;
@@ -28,7 +25,6 @@ public class PantallaDeJuego extends JFrame{
 		pausa =false;
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocationRelativeTo(null);
-		//setLocation(d.width/2,d.height/2);
 		setResizable(false);
 		prepareElementos();
 		prepareAcciones();

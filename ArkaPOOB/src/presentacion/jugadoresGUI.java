@@ -49,7 +49,7 @@ public class jugadoresGUI extends JFrame{
 		Jugador = new Boton(new ImageIcon(getClass().getResource("/imagenes/1_jugador.png")));
 		Jugador.setTransparent();
 		dosJugadores = new  
-				Boton(new ImageIcon(getClass().getResource("/imagenes/2_jugadores.png")));
+		Boton(new ImageIcon(getClass().getResource("/imagenes/2_jugadores.png")));
 		dosJugadores.setTransparent();
 		jugadorCPU = new Boton(new ImageIcon(getClass().getResource("/imagenes/jugador_vs_cpu.png")));
 		jugadorCPU.setTransparent();

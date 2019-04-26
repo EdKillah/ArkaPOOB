@@ -21,8 +21,6 @@ public class Bola implements Elemento{
 	private boolean isInAire;
 	private boolean isChocado;
 	private ImageIcon imagen;
-	private boolean plat;
-
 	
 	public Bola(int x, int y, Plataforma nave, int velocidad, int damage,int angulo, ArkaPOOB ark) {
 		dy = 1;
