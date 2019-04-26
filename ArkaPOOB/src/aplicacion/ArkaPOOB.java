@@ -2,6 +2,13 @@ package aplicacion;
 
 import java.util.*;
 
+/**
+ * Clase principal del paquete aplicación y del juego en general,
+ * es la encargada de almacenar los elementos e interactuar con ellos.
+ * @author Jimenez Eduard- Murillo Carlos
+ *
+ */
+
 public class ArkaPOOB {
 	private ArrayList<ArrayList<Bloque>> bloques;
 	private ArrayList<Plataforma> vidas;
@@ -10,6 +17,11 @@ public class ArkaPOOB {
 	private Bloque ultimoBloque;
 	private int score;
 	
+	
+	/**
+	 * Crea una instancia del tablero de juego
+	 * 
+	 */
 	public ArkaPOOB() {
 		vidas = new ArrayList<Plataforma>();
 		score=0;
@@ -19,6 +31,13 @@ public class ArkaPOOB {
 		prepareBola();
 		prepareVidas();
 	}
+	
+	
+	/**
+	 * Metodo encargado de activar el movimiento de la bola. 
+	 * @param width
+	 * @param height
+	 */
 	
 	public void juegue(double width, double height) {
 		if(bola.isVivo()) {
@@ -38,10 +57,23 @@ public class ArkaPOOB {
 		
 	}
 	
+	
+	/**
+	 * Metodo encargado de eliminar el bloque dado su posición en el arreglo de Bloques.
+	 * @param i
+	 * @param j
+	 */
 	public void eliminarBloque(int i,int j) {
 		bloques.get(i).remove(j);
 	}
 	
+	
+	/**
+	 * Metodo que reemplaza el bloque negro por el ultimo bloque chocado.
+	 * @param bloque
+	 * @param i
+	 * @param j
+	 */
 	public void reemplazarBloque(Bloque bloque, int i, int j) {
 		if(bloque.getTipo().equals("negro")) {
 			ultimoBloque.setX(bloque.getX());
@@ -57,6 +89,10 @@ public class ArkaPOOB {
 		}
 	}
 	
+	/**
+	 * Metodo que determina la creación de una nueva bola si esta fue eliminada. 
+	 * @param height
+	 */
 	public void estatico(double height) {
 		borrarVidas((int)height);
 		if(vidas.size()>0)
@@ -65,17 +101,28 @@ public class ArkaPOOB {
 	}
 	
 	
+	/**
+	 * Metodo que prepara la plataforma del juego dandole unos atributos iniciales.
+	 */
 	public void prepareNave() {
 		nave = new Plataforma(750/2,480,"red",90,20);
 	}
 	
-	public void adicioneVida(Bloque bloque) {
+	/**
+	 * Metodo que adiciona una vida si el bloqueAmarillo es golpeado.
+	 * @param bloque
+	 */
+	private void adicioneVida(Bloque bloque) {
 		if(bloque.getTipo().equals("amarillo")) {
 			Plataforma vida = vidas.get(vidas.size()-1);
 			vidas.add(new Plataforma(vida.getX()+70,vida.getY(),vida.getColor(),vida.getWidth(),vida.getHeight()));
 		}
 	}
 	
+	
+	/**
+	 * Metodo que prepara las vidas del jugador. 
+	 */
 	public void prepareVidas() {
 		Plataforma vida;
 		int pos =0;
@@ -86,10 +133,15 @@ public class ArkaPOOB {
 		}
 	}
 	
+	
 	public boolean isVivo() {
 		return bola.isVivo();
 	}
 	
+	/**
+	 * Metodo encargado de eliminar las vidas del arreglo de vidas dependiendo de si se cumplen las condiciones dadas.
+	 * @param height
+	 */
 	public void borrarVidas(int height) {
 		if (bola.getY()<=height) {
 			if(vidas.size()>0)
@@ -101,6 +153,11 @@ public class ArkaPOOB {
 		return score;
 	}
 	
+	/**
+	 * Metodo que determina si el jugador gano, cumpliendose las condiciones necesarias. 
+	 * Estas son que se elimine un bloque rosa o que se eliminen todos los bloques(que se pueden eliminar)
+	 * @return true si gano, false dlc.
+	 */
 	public boolean gano() {
 		int bloq=0;
 		for(int i=0;i<bloques.size();i++) 
@@ -110,19 +167,33 @@ public class ArkaPOOB {
 		else return false;
 	}
 	
+	/**
+	 * Metodo que determina si el jugador perdio.
+	 * El jugador pierde si esta no cuenta con vidas suficientes (mayor a 0).
+	 * @return
+	 */
 	public boolean perdio() {
 		if(getVidas().size()==0) return true;
 		return false;
 	}
 	
+	
 	public ArrayList<Plataforma> getVidas(){
 		return vidas;
 	}
 	
+	
+	/**
+	 * Metodo que prepara la bola dandole unos atributos iniciales.
+	 */
 	public void prepareBola(){
 		bola = new Bola(nave.getX()+nave.getWidth()/2-15,nave.getY()-nave.getHeight(),nave,45,1,45,this);
 	}
 	
+	
+	/**
+	 * Metodo que prepara los bloques iniciales del juego, distribuyendolos de una manera especifica.
+	 */
 	public void prepareBloques() {
 		Bloque bloque;
 		bloques = new ArrayList<ArrayList<Bloque>>();
@@ -136,7 +207,7 @@ public class ArkaPOOB {
 					bloque = new BloqueGris(posX, posY,70,35);
 				else if(i==1) {
 					if(j==5 || j == 7)
-						bloque = new BloqueNegro(posX,posY,70,35); //poner esto random
+						bloque = new BloqueRosa(posX,posY,70,35); //poner esto random
 					else
 						bloque = new BloqueVerde( posX, posY,70,35);
 				}

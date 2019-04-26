@@ -4,6 +4,11 @@ import java.awt.Image;
 
 import javax.swing.*;
 
+/**
+ * Clase que crea la plataforma del juego la cual es la que representa al jugador.
+ * @author Jimenez Eduard- Murillo Carlos.
+ *
+ */
 public class Plataforma implements Elemento{
 	private int x;
 	private int y;
@@ -14,6 +19,15 @@ public class Plataforma implements Elemento{
 	private int height;
 	private ImageIcon imagen;
 	
+	
+	/**
+	 * Crea la instancia de la plataforma.
+	 * @param x la posicion en el eje x.
+	 * @param y la posicion en el eje y.
+	 * @param color el color que tendrá la plataforma. 
+	 * @param width el ancho de la plataforma. 
+	 * @param height el alto de la plataforma.
+	 */
 	public Plataforma(int x,int y, String color, int width, int height) {
 		this.x = x-30;
 		this.y = y;
@@ -23,6 +37,9 @@ public class Plataforma implements Elemento{
 		prepareImagen();
 	}
 	
+	/**
+	 * Metodo que prepara la imagen de la plataforma dado su color. 
+	 */
 	private void prepareImagen() {
 		imagen = new ImageIcon(getClass().getResource("/imagenes/vaus_"+color+".gif"));
 	}
@@ -97,6 +114,9 @@ public class Plataforma implements Elemento{
 		return imagen.getImage();
 	}
 	
+	/**
+	 * Metodo que actualiza la imagen de la plataforma dependiendo del color que se le asigno.
+	 */
 	private void actualizeImagen() {
 		imagen = new ImageIcon(getClass().getResource("/imagenes/vaus_"+color+".gif"));
 	}

@@ -3,6 +3,9 @@ package aplicacion;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * clase abstracta Bloque es la cual los demás bloques heredan de ella. 
+*/
 public abstract class Bloque implements Elemento{
 	private int x;
 	private int y;

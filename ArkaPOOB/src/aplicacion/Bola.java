@@ -38,6 +38,9 @@ public class Bola implements Elemento{
 		prepareImagen();
 	}
 	
+	/**
+	 * Metodo encargado de preparar la imagen del bloque dependiendo de su tipo.
+	 */
 	private void prepareImagen() {
 		imagen = new ImageIcon(getClass().getResource("/imagenes/pelota.png"));
 	}
