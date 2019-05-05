@@ -17,11 +17,13 @@ public class PantallaDeJuego extends JFrame{
 	private JMenu menu;	
 	private JMenuItem[] items;
 	private JFileChooser files;
+	private int jugadores; 
 	
-	public PantallaDeJuego(String color) {
+	public PantallaDeJuego(int jugadores) {
 		super("Juego");
 		setSize(750,660);
-		this.color = color;
+		this.jugadores=jugadores;
+		//this.color = color;
 		pausa =false;
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocationRelativeTo(null);
@@ -30,8 +32,20 @@ public class PantallaDeJuego extends JFrame{
 		prepareAcciones();
 	}
 	
+	public PantallaDeJuego(int jugadores,String color,String color2) {
+		this(jugadores);
+		pint.colores(color,color2);
+		
+	}
+	
+	public PantallaDeJuego(int jugadores,String color) {
+		this(jugadores);
+		pint.colores(color,null);
+		
+	}
+	
 	public void prepareElementos() {
-		pint = new Pintor(747,580,color);
+		pint = new Pintor(747,580,jugadores);
 		container = getContentPane();
 		container.add(pint, BorderLayout.CENTER); //JUEGO
 		

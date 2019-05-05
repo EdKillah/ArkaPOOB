@@ -17,21 +17,23 @@ import javax.swing.*;
 public class Pintor extends JPanel implements ActionListener, KeyListener, Runnable{
 	private ArkaPOOB ark;
 	private ArrayList<Integer> keysDown;
-	private String colorNave;
+	//private String colorNave;
 	private Thread hilo;
 	private Timer myTimer;
 	private TimerTask task;
 	private int width;
 	private int height;
 	private boolean pausa;
+	private int jugadores;
 	
-	public Pintor(int w, int h , String color) {
+	public Pintor(int w, int h , int jugadores) {
+		this.jugadores = jugadores;
 		pausa = false;
 		keysDown=new ArrayList<Integer>();
-		ark = new ArkaPOOB();
+		ark = new ArkaPOOB(jugadores);
 		width = w;
 		height = h;
-		colorNave = color;
+		//colorNave = color;
 		hilo= new Thread(this);
 		myTimer = new Timer();
 		hilo.start();
@@ -50,21 +52,37 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 				g.drawImage(b.getImagen(), b.getX(), b.getY(),b.getWidth(),b.getHeight(), this);			
 			}
 		}
-		Plataforma nave = ark.getPlataforma();
-		g.drawImage(nave.getImagen(), nave.getX(), nave.getY(),nave.getWidth(),nave.getHeight(), this);			
+		Plataforma nave = ark.getPlataforma().get(0);
+		g.drawImage(nave.getImagen(), nave.getX(), nave.getY(),nave.getWidth(),nave.getHeight(), this);
+		if(jugadores == 2)  {
+			Plataforma nave2 = ark.getPlataforma().get(1);
+			g.drawImage(nave2.getImagen(), nave2.getX(), nave2.getY(),nave2.getWidth(),nave2.getHeight(), this);
+		}
 		Bola bola = ark.getBola();
 		if(bola.isVivo())
 			g.drawImage(bola.getImagen(), bola.getX(),bola.getY() ,Bola.getTamX(),Bola.getTamY(), this);			//(int)d.getHeight()-125
 		for(int i=0;i<ark.getVidas().size();i++) {
-			Plataforma vida = ark.getVidas().get(i);
-			g.drawImage(vida.getImagen(), vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);			
+			for(int j=0;j<ark.getVidas().get(i).size();j++) {
+				Plataforma vida = ark.getVidas().get(i).get(j);
+				g.drawImage(vida.getImagen(), vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);		
+			}
 		}
 	}
 	
+	public void colores(String color1,String color2) {
+		ArrayList<Plataforma> naves = ark.getPlataforma();
+		if(color1 != null) naves.get(0).setColor(color1);
+		if(color2 != null) naves.get(1).setColor(color2);
+		ark.prepareVidas();
+	}
+	
 	public void prepareElementos() {
-		ark.getPlataforma().setColor(colorNave);
-		for(Plataforma vida_N: ark.getVidas()) {
-			vida_N.setColor(ark.getPlataforma().getColor());
+		//ark.getPlataforma().setColor(colorNave);
+		for(int i=0;i<ark.getVidas().size();i++) {
+			for(Plataforma vida_N: ark.getVidas().get(i)) {
+				if(i==1) vida_N.setColor(ark.getPlataforma().get(1).getColor());
+				else vida_N.setColor(ark.getPlataforma().get(0).getColor());
+			}
 		}
 	}
 	
@@ -94,22 +112,43 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 	
 	public void moverJugador() {
 		if(keysDown.contains(new Integer(KeyEvent.VK_LEFT))) {
-			
-			if (ark.getPlataforma().getX()>15&& !pausa)  
-				ark.getPlataforma().setX(2);
-			if(ark.getBola().getX()>ark.getPlataforma().getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
+			if (ark.getPlataforma().get(0).getX()>15&& !pausa)  
+				ark.getPlataforma().get(0).setX(2);
+			if(ark.getBola().getX()>ark.getPlataforma().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
 				ark.getBola().setX(2); //esto puede meterse en el if de arriba
 		}
 		
 		if(keysDown.contains(new Integer(KeyEvent.VK_RIGHT))) {
-			if (ark.getPlataforma().getX()<width-ark.getPlataforma().getWidth()&& !pausa) 
-				ark.getPlataforma().setX(1);
+			if (ark.getPlataforma().get(0).getX()<width-ark.getPlataforma().get(0).getWidth()&& !pausa) 
+				ark.getPlataforma().get(0).setX(1);
 			
-			if(ark.getBola().getX()+15<width-ark.getPlataforma().getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
+			if(ark.getBola().getX()+15<width-ark.getPlataforma().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
 				ark.getBola().setX(1); //ark.getBola().getX()+30 el +30 es el ancho de la bola, ponerlo así esta mal
 			
 		}
 		if(keysDown.contains(new Integer(KeyEvent.VK_SPACE))) {
+			if(!ark.getBola().isInAire() && !pausa) {
+				ark.getBola().setInAire(true);
+				juegue();
+			}
+		}
+		
+		if(keysDown.contains(new Integer(KeyEvent.VK_A))) {
+			if (ark.getPlataforma().get(1).getX()>15&& !pausa)  
+				ark.getPlataforma().get(1).setX(2);
+			//if(ark.getBola().getX()>ark.getPlataforma().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
+				//ark.getBola().setX(2); //esto puede meterse en el if de arriba
+		}
+		
+		if(keysDown.contains(new Integer(KeyEvent.VK_D))) {
+			if (ark.getPlataforma().get(1).getX()<width-ark.getPlataforma().get(1).getWidth()&& !pausa) 
+				ark.getPlataforma().get(1).setX(1);
+			
+			//if(ark.getBola().getX()+15<width-ark.getPlataforma().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
+				//ark.getBola().setX(1); //ark.getBola().getX()+30 el +30 es el ancho de la bola, ponerlo así esta mal
+			
+		}
+		if(keysDown.contains(new Integer(KeyEvent.VK_W))) {
 			if(!ark.getBola().isInAire() && !pausa) {
 				ark.getBola().setInAire(true);
 				juegue();
@@ -123,7 +162,11 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 			@Override
 			public void run() {
 				//System.out.println("Score: "+ark.getScore());
-				ark.juegue(width, ark.getPlataforma().getY());
+				ark.juegue(width, ark.getPlataforma().get(0).getY());
+				String c,c2=null;
+				//c = ark.getPlataforma().get(0).getColor();
+				//if(jugadores == 2) {c2 = ark.getPlataforma().get(1).getColor();}
+				//colores(c,c2);
 				if(ark.gano()) {
 					mensaje();
 					cancel();
@@ -179,7 +222,11 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		task.cancel();
 		pausa = false;
 		keysDown=new ArrayList<Integer>();
-		ark = new ArkaPOOB();
+		String c,c2=null;
+		c = ark.getPlataforma().get(0).getColor();
+		if(jugadores == 2) {c2 = ark.getPlataforma().get(1).getColor();}
+		ark = new ArkaPOOB(jugadores);
+		colores(c,c2);
 		hilo= new Thread(this);
 		myTimer = new Timer();
 		hilo.start();

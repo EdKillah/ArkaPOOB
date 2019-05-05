@@ -13,6 +13,7 @@ public class Bola implements Elemento{
 	private static final int TAMX=21;
 	private static final int TAMY=21;
 	private Plataforma nave;
+	private Plataforma nave2;
 	private ArkaPOOB ark;
 	private int velocidad;
 	private int damage;
@@ -22,7 +23,7 @@ public class Bola implements Elemento{
 	private boolean isChocado;
 	private ImageIcon imagen;
 	
-	public Bola(int x, int y, Plataforma nave, int velocidad, int damage,int angulo, ArkaPOOB ark) {
+	public Bola(int x, int y, Plataforma nave,Plataforma nave2, int velocidad, int damage,int angulo, ArkaPOOB ark) {
 		dy = 1;
 		dx = 1;
 		vivo = true;
@@ -32,6 +33,7 @@ public class Bola implements Elemento{
 		this.x = x;
 		this.y = y; //mirar como poner esto para que sea extensible 
 		this.nave = nave;
+		this.nave2 = nave2;
 		this.velocidad = velocidad;
 		this.damage = damage;
 		this.angulo = angulo;
@@ -118,10 +120,12 @@ public class Bola implements Elemento{
 	}
 	
 	public boolean isInNave() {
+		boolean ban = false;
 		if(getX()>=nave.getX()-15 && getX()<=nave.getX()+nave.getWidth()) {
-			return true;
-		}
-		return false;
+			ban = true;
+		}if(nave2!=null && getX()>=nave2.getX()-15 && getX()<=nave2.getX()+nave2.getWidth())
+			ban = true;
+		return ban;
 	}
 	@Override
 	public int getX() {

@@ -21,7 +21,10 @@ public class jugadoresGUI extends JFrame{
 	private Boton volver2;
 	private Boton volver3;
 	private JTextField textNombre;
+	private JTextField textNombre2;
 	private JComboBox<String> naveColor;
+	private JComboBox<String> naveColor1;
+	private JComboBox<String> naveColor2;
 	private String[] colores = {"red","blue","orange","green","purple"};
 	
 	public jugadoresGUI() {
@@ -134,6 +137,26 @@ public class jugadoresGUI extends JFrame{
 		contenido.setLayout(null);
 		contenido.setBackground(Color.BLACK);
 		
+		JLabel nombre = new JLabel("Jugador 1:");
+		nombre.setForeground(Color.BLACK);
+		nombre.setBounds(15, 20, 80, 18);
+		contenido.add(nombre);
+		
+		JLabel nombre2 = new JLabel("Jugador 2:");
+		nombre2.setForeground(Color.BLACK);
+		nombre2.setBounds(280, 20, 80, 18);
+		contenido.add(nombre2);
+		
+		JLabel nave = new JLabel("Color Nave:");
+		nave.setForeground(Color.BLACK);
+		nave.setBounds(15, 65, 80, 18);
+		contenido.add(nave);
+		
+		JLabel nave2 = new JLabel("Color Nave:");
+		nave2.setForeground(Color.BLACK);
+		nave2.setBounds(280, 65, 80, 18);
+		contenido.add(nave2);
+		
 		jugar2 = new Boton(new ImageIcon(getClass().getResource("/imagenes/jugar2.png")));
 		jugar2.setBounds(85, 150, 180, 60);
 		jugar2.setTransparent();
@@ -143,6 +166,25 @@ public class jugadoresGUI extends JFrame{
 		volver2.setBounds(300, 150, 200, 60);
 		volver2.setTransparent();
 		contenido.add(volver2);
+		
+		textNombre = new JTextField();
+		textNombre.setBounds(90, 19, 78, 18);
+		contenido.add(textNombre);
+		textNombre.setColumns(10);
+		
+		textNombre2 = new JTextField();
+		textNombre2.setBounds(355, 19, 78, 18);
+		contenido.add(textNombre2);
+		textNombre2.setColumns(10);
+		
+		naveColor1 = new JComboBox<>(colores);
+		naveColor1.setBounds(90, 65, 121, 20);
+		contenido.add(naveColor1);
+		
+		naveColor2 = new JComboBox<>(colores);
+		naveColor2.setBounds(355, 65, 121, 20);
+		contenido.add(naveColor2);
+
 		
 		panelDosJugador.add(contenido);
 	}
@@ -272,7 +314,9 @@ public class jugadoresGUI extends JFrame{
 		dispose();
 		PantallaDeJuego pdj = null;
 		if(jugadores == 1) {
-			pdj = new PantallaDeJuego((String)naveColor.getSelectedItem());
+			pdj = new PantallaDeJuego(jugadores,(String)naveColor.getSelectedItem());
+		}else if(jugadores == 2) {
+			pdj = new PantallaDeJuego(jugadores,(String)naveColor1.getSelectedItem(),(String)naveColor2.getSelectedItem());
 		}
 		pdj.setVisible(true);
 	}

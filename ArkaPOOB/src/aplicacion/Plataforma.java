@@ -28,10 +28,10 @@ public class Plataforma implements Elemento{
 	 * @param width el ancho de la plataforma. 
 	 * @param height el alto de la plataforma.
 	 */
-	public Plataforma(int x,int y, String color, int width, int height) {
+	public Plataforma(int x,int y, int width, int height) {
 		this.x = x-30;
 		this.y = y;
-		this.color = color;
+		this.color = "blue";
 		this.width = width;
 		this.height = height;
 		prepareImagen();

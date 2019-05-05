@@ -11,19 +11,21 @@ import java.util.*;
 
 public class ArkaPOOB {
 	private ArrayList<ArrayList<Bloque>> bloques;
-	private ArrayList<Plataforma> vidas;
-	private Plataforma nave;
+	private ArrayList< ArrayList<Plataforma>> vidas;
+	private ArrayList<Plataforma> naves;
 	private Bola bola;
 	private Bloque ultimoBloque;
 	private int score;
+	private int jugadores;
 	
 	
 	/**
 	 * Crea una instancia del tablero de juego
 	 * 
 	 */
-	public ArkaPOOB() {
-		vidas = new ArrayList<Plataforma>();
+	public ArkaPOOB(int jugadores) {
+		this.jugadores = jugadores;
+		naves = new ArrayList<Plataforma>();
 		score=0;
 		prepareBloques();
 		ultimoBloque = bloques.get(0).get(0);
@@ -105,7 +107,12 @@ public class ArkaPOOB {
 	 * Metodo que prepara la plataforma del juego dandole unos atributos iniciales.
 	 */
 	public void prepareNave() {
-		nave = new Plataforma(750/2,480,"red",90,20);
+		if(jugadores == 1)
+			naves.add(new Plataforma(750/2,480,90,20));
+		if(jugadores ==2 ) {
+			naves.add(new Plataforma(750/2 - 100,480,90,20));
+			naves.add(new Plataforma(750/2 + 100,480,90,20));
+		}
 	}
 	
 	/**
@@ -114,8 +121,10 @@ public class ArkaPOOB {
 	 */
 	private void adicioneVida(Bloque bloque) {
 		if(bloque.getTipo().equals("amarillo")) {
-			Plataforma vida = vidas.get(vidas.size()-1);
-			vidas.add(new Plataforma(vida.getX()+70,vida.getY(),vida.getColor(),vida.getWidth(),vida.getHeight()));
+			Plataforma vida = vidas.get(0).get(vidas.get(0).size()-1);
+			Plataforma temp = new Plataforma(vida.getX()+70,vida.getY(),vida.getWidth(),vida.getHeight());
+			temp.setColor(vida.getColor());
+			vidas.get(0).add(temp);
 		}
 	}
 	
@@ -124,12 +133,27 @@ public class ArkaPOOB {
 	 * Metodo que prepara las vidas del jugador. 
 	 */
 	public void prepareVidas() {
+		vidas = new ArrayList< ArrayList<Plataforma>>();
 		Plataforma vida;
 		int pos =0;
+		ArrayList<Plataforma> v = new ArrayList<Plataforma>();
 		for(int i=0;i<3;i++) {
-			vida = new Plataforma(30+pos,500,nave.getColor(),40,15); //aqui podemos sacarle provecho al color que se le pasa
-			vidas.add(vida);
+			vida = new Plataforma(30+pos,500,40,15); //aqui podemos sacarle provecho al color que se le pasa
+			vida.setColor(naves.get(0).getColor());
+			v.add(vida);
 			pos+=40;
+		}
+		vidas.add(v);
+		if(jugadores == 2) {
+			v = new ArrayList<Plataforma>();
+			pos = 750;
+			for(int i=0;i<3;i++) {
+				vida = new Plataforma(pos-30,500,40,15); //aqui podemos sacarle provecho al color que se le pasa
+				vida.setColor(naves.get(1).getColor());
+				v.add(vida);
+				pos-=40;
+			}
+		vidas.add(v);
 		}
 	}
 	
@@ -144,8 +168,10 @@ public class ArkaPOOB {
 	 */
 	public void borrarVidas(int height) {
 		if (bola.getY()<=height) {
-			if(vidas.size()>0)
-				vidas.remove(vidas.size()-1);
+			if(vidas.get(0).size()>0)
+				vidas.get(0).remove(vidas.get(0).size()-1);
+			if(vidas.get(1).size()>0)
+				vidas.get(1).remove(vidas.get(1).size()-1);
 		}
 	}
 	
@@ -178,7 +204,7 @@ public class ArkaPOOB {
 	}
 	
 	
-	public ArrayList<Plataforma> getVidas(){
+	public ArrayList<ArrayList<Plataforma>> getVidas(){
 		return vidas;
 	}
 	
@@ -187,7 +213,10 @@ public class ArkaPOOB {
 	 * Metodo que prepara la bola dandole unos atributos iniciales.
 	 */
 	public void prepareBola(){
-		bola = new Bola(nave.getX()+nave.getWidth()/2-15,nave.getY()-nave.getHeight(),nave,45,1,45,this);
+		if(jugadores==1)
+			bola = new Bola(naves.get(0).getX()+naves.get(0).getWidth()/2-15,naves.get(0).getY()-naves.get(0).getHeight(),naves.get(0),null,45,1,45,this);
+		else 
+			bola = new Bola(naves.get(0).getX()+naves.get(0).getWidth()/2-15,naves.get(0).getY()-naves.get(0).getHeight(),naves.get(0),naves.get(1),45,1,45,this);
 	}
 	
 	
@@ -229,8 +258,8 @@ public class ArkaPOOB {
 	}
 
 
-	public Plataforma getPlataforma() {
-		return nave;
+	public ArrayList<Plataforma> getPlataforma() {
+		return naves;
 	}
 	
 	public Bola getBola() {
