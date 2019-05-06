@@ -22,6 +22,7 @@ public class Bola implements Elemento{
 	private boolean isInAire;
 	private boolean isChocado;
 	private ImageIcon imagen;
+	private int ultimo;
 	
 	public Bola(int x, int y, Plataforma nave,Plataforma nave2, int velocidad, int damage,int angulo, ArkaPOOB ark) {
 		dy = 1;
@@ -37,6 +38,8 @@ public class Bola implements Elemento{
 		this.velocidad = velocidad;
 		this.damage = damage;
 		this.angulo = angulo;
+		this.ultimo = 0;
+		
 		prepareImagen();
 	}
 	
@@ -122,9 +125,12 @@ public class Bola implements Elemento{
 	public boolean isInNave() {
 		boolean ban = false;
 		if(getX()>=nave.getX()-15 && getX()<=nave.getX()+nave.getWidth()) {
+			setUltimo(0);
 			ban = true;
-		}if(nave2!=null && getX()>=nave2.getX()-15 && getX()<=nave2.getX()+nave2.getWidth())
+		}if(nave2!=null && getX()>=nave2.getX()-15 && getX()<=nave2.getX()+nave2.getWidth()) {
 			ban = true;
+			setUltimo(1);
+		}
 		return ban;
 	}
 	@Override
@@ -149,7 +155,16 @@ public class Bola implements Elemento{
 	public void setY(int y) {
 		this.y = y;
 	}
-
+	
+	public void setUltimo(int a) {
+		this.ultimo = a;
+	}
+	
+	public int getUltimo() {
+		return ultimo;
+	}
+	
+	
 	public Plataforma getNave() {
 		return nave;
 	}

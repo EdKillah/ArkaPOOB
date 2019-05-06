@@ -16,6 +16,7 @@ public class ArkaPOOB {
 	private Bola bola;
 	private Bloque ultimoBloque;
 	private int score;
+	private int score2;
 	private int jugadores;
 	
 	
@@ -27,6 +28,7 @@ public class ArkaPOOB {
 		this.jugadores = jugadores;
 		naves = new ArrayList<Plataforma>();
 		score=0;
+		score2=0;
 		prepareBloques();
 		ultimoBloque = bloques.get(0).get(0);
 		prepareNave();
@@ -47,10 +49,10 @@ public class ArkaPOOB {
 			for(int i=0;i<bloques.size();i++) {
 				for(int j=0;j<bloques.get(i).size();j++) {
 					if(bloques.get(i).get(j).isChocado(bola)) {
-						score+=bloques.get(i).get(j).getPuntos();
+						if(bola.getUltimo()==0) score+=bloques.get(i).get(j).getPuntos();
+						else score2+=bloques.get(i).get(j).getPuntos();
 						adicioneVida(bloques.get(i).get(j));
 						reemplazarBloque(bloques.get(i).get(j),i,j);
-						
 						//bloques.get(i).remove(j);
 					}
 				}
@@ -93,7 +95,7 @@ public class ArkaPOOB {
 	
 	/**
 	 * Metodo que determina la creación de una nueva bola si esta fue eliminada. 
-	 * @param height
+	 * @param heights
 	 */
 	public void estatico(double height) {
 		borrarVidas((int)height);
@@ -113,6 +115,10 @@ public class ArkaPOOB {
 			naves.add(new Plataforma(750/2 - 100,480,90,20));
 			naves.add(new Plataforma(750/2 + 100,480,90,20));
 		}
+	}
+	
+	public void eliminarJugador(int i) {
+		naves.remove(i);
 	}
 	
 	/**
@@ -167,16 +173,23 @@ public class ArkaPOOB {
 	 * @param height
 	 */
 	public void borrarVidas(int height) {
+		System.out.println(vidas.size());
 		if (bola.getY()<=height) {
-			if(vidas.get(0).size()>0)
+			if(bola.getUltimo() == 0 && vidas.get(0).size()>0)
+				if(bola.getUltimo() == 0 &&vidas.get(0).size()==1) vidas.get(0).add(0,null);
 				vidas.get(0).remove(vidas.get(0).size()-1);
-			if(vidas.get(1).size()>0)
+			if(bola.getUltimo() == 1 &&vidas.get(1).size()>0)
 				vidas.get(1).remove(vidas.get(1).size()-1);
+			System.out.println(vidas.size());
 		}
 	}
 	
-	public int getScore() {
+	public int getScore1() {
 		return score;
+	}
+	
+	public int getScore2() {
+		return score2;
 	}
 	
 	/**
@@ -198,9 +211,14 @@ public class ArkaPOOB {
 	 * El jugador pierde si esta no cuenta con vidas suficientes (mayor a 0).
 	 * @return
 	 */
-	public boolean perdio() {
-		if(getVidas().size()==0) return true;
-		return false;
+	public boolean perdio(int a,Plataforma p) {
+		if(jugadores == 1) {
+			if(getVidas().get(0).size()==0) return true;
+			else return false;
+		}else {
+			if(getVidas().get(0).get(0)==null) return true;
+			else return false;
+		}
 	}
 	
 	
