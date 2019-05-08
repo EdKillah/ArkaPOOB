@@ -54,7 +54,7 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 			}
 		}
 		Plataforma nave = ark.getPlataforma().get(0);
-		if(nave != null )g.drawImage(nave.getImagen(), nave.getX(), nave.getY(),nave.getWidth(),nave.getHeight(), this);
+		if(nave!= null) g.drawImage(nave.getImagen(), nave.getX(), nave.getY(),nave.getWidth(),nave.getHeight(), this);
 		if(jugadores == 2)  {
 			Plataforma nave2 = ark.getPlataforma().get(1);
 			if(nave2 != null ) g.drawImage(nave2.getImagen(), nave2.getX(), nave2.getY(),nave2.getWidth(),nave2.getHeight(), this);
@@ -121,44 +121,46 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 	}
 	
 	public void moverJugador() {
-		if(keysDown.contains(new Integer(KeyEvent.VK_LEFT))) {
-			if (ark.getPlataforma().get(0).getX()>15&& !pausa)  
-				ark.getPlataforma().get(0).setX(2);
-			if(ark.getBola().getX()>ark.getPlataforma().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
-				ark.getBola().setX(2); //esto puede meterse en el if de arriba
-		}
-		
-		if(keysDown.contains(new Integer(KeyEvent.VK_RIGHT))) {
-			if (ark.getPlataforma().get(0).getX()<width-ark.getPlataforma().get(0).getWidth()&& !pausa) 
-				ark.getPlataforma().get(0).setX(1);
+		if(ark.getPlataforma().get(0)!=null) {
+			if(keysDown.contains(new Integer(KeyEvent.VK_LEFT))) {
+				if (ark.getPlataforma().get(0).getX()>15&& !pausa)  
+					ark.getPlataforma().get(0).setX(2);
+				if(ark.getBola().getX()>ark.getPlataforma().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
+					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(0)))ark.getBola().setX(2); //esto puede meterse en el if de arriba
+			}
 			
-			if(ark.getBola().getX()+15<width-ark.getPlataforma().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
-				ark.getBola().setX(1); //ark.getBola().getX()+30 el +30 es el ancho de la bola, ponerlo así esta mal
-			
-		}
-		if(keysDown.contains(new Integer(KeyEvent.VK_SPACE))) {
-			if(!ark.getBola().isInAire() && !pausa) {
-				ark.getBola().setInAire(true);
-				juegue();
+			if(keysDown.contains(new Integer(KeyEvent.VK_RIGHT))) {
+				if (ark.getPlataforma().get(0).getX()<width-ark.getPlataforma().get(0).getWidth()&& !pausa) 
+					ark.getPlataforma().get(0).setX(1);
+				
+				if(ark.getBola().getX()+15<width-ark.getPlataforma().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
+					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(0))) ark.getBola().setX(1); //ark.getBola().getX()+30 el +30 es el ancho de la bola, ponerlo así esta mal
+				
+			}
+			if(keysDown.contains(new Integer(KeyEvent.VK_SPACE))) {
+				if(!ark.getBola().isInAire() && !pausa) {
+					ark.getBola().setInAire(true);
+					juegue();
+				}
 			}
 		}
 		if(jugadores == 2) {
 			if(keysDown.contains(new Integer(KeyEvent.VK_A))) {
 				if (ark.getPlataforma().get(1).getX()>15&& !pausa)  
 					ark.getPlataforma().get(1).setX(2);
-				//if(ark.getBola().getX()>ark.getPlataforma().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
-					//ark.getBola().setX(2); //esto puede meterse en el if de arriba
+				if(ark.getBola().getX()>ark.getPlataforma().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
+					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(1)))ark.getBola().setX(2); //esto puede meterse en el if de arriba
 			}
 			
 			if(keysDown.contains(new Integer(KeyEvent.VK_D))) {
 				if (ark.getPlataforma().get(1).getX()<width-ark.getPlataforma().get(1).getWidth()&& !pausa) 
 					ark.getPlataforma().get(1).setX(1);
 				
-				//if(ark.getBola().getX()+15<width-ark.getPlataforma().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
-					//ark.getBola().setX(1); //ark.getBola().getX()+30 el +30 es el ancho de la bola, ponerlo así esta mal
+				if(ark.getBola().getX()+15<width-ark.getPlataforma().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
+					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(1)))ark.getBola().setX(1); //ark.getBola().getX()+30 el +30 es el ancho de la bola, ponerlo así esta mal
 				
 			}
-			if(keysDown.contains(new Integer(KeyEvent.VK_W))) {
+			if(keysDown.contains(new Integer(KeyEvent.VK_SPACE))) {
 				if(!ark.getBola().isInAire() && !pausa) {
 					ark.getBola().setInAire(true);
 					juegue();
@@ -174,7 +176,7 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 			public void run() {
 				System.out.println("Score: "+ark.getScore1());
 				System.out.println("Score2: "+ark.getScore2());
-				ark.juegue(width, ark.getPlataforma().get(0).getY());
+				ark.juegue(width, ark.getPlataforma().get(1).getY());
 				
 				if(ark.gano()) {
 					mensaje();
@@ -183,6 +185,7 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 				if(!ark.isVivo()) {
 					ark.estatico(height);
 					mensaje();
+					ark.prepareBola();
 					cancel();
 				}
 				if(ark.getPoder() && ark.getBola().getY()+ ark.getBola().getTamY() >= ark.getPlataforma().get(0).getY()) {
@@ -218,10 +221,11 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 			if(ark.gano()) JOptionPane.showMessageDialog(this, "Ganaste!");
 			if(ark.perdio(0,ark.getPlataforma().get(0))) JOptionPane.showMessageDialog(this, "Perdiste!");
 		}else {
-			if(ark.perdio(0,ark.getPlataforma().get(0))) {
+			if(ark.getPlataforma().get(0) != null && ark.perdio(0,ark.getPlataforma().get(0))) {
+				System.out.println("asdsad");
 				ark.eliminarJugador(0);	
 				
-			}if(ark.perdio(1,ark.getPlataforma().get(1))) {
+			}if(ark.getPlataforma().get(1) != null && ark.perdio(1,ark.getPlataforma().get(1))) {
 				ark.eliminarJugador(1);	
 			}
 		}

@@ -157,6 +157,9 @@ public class Bola implements Elemento{
 		return ultimo;
 	}
 	
+	public Plataforma getPlataforma() {
+		return ultimo;
+	}
 	
 	public Plataforma getNave() {
 		return nave;

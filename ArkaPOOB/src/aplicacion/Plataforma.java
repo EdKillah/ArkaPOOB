@@ -21,6 +21,7 @@ public class Plataforma implements Elemento{
 	private int height;
 	private ImageIcon imagen;
 	private boolean poderActivo;
+	private boolean vivo;
 	
 	/**
 	 * Crea la instancia de la plataforma.
@@ -36,6 +37,7 @@ public class Plataforma implements Elemento{
 		this.color = "blue";
 		this.width = width;
 		this.height = height;
+		this.vivo = true;
 		prepareImagen();
 	}
 	
@@ -114,6 +116,16 @@ public class Plataforma implements Elemento{
 	
 	public Image getImagen() {
 		return imagen.getImage();
+	}
+	
+	public void setVIvo(boolean a) {
+		this.vivo = a;
+		
+	}
+	
+	public boolean isVivo() {
+		return vivo;
+		
 	}
 	
 	public Rectangle getBounds() {

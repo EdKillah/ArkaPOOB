@@ -52,7 +52,7 @@ public class ArkaPOOB {
 				for(int j=0;j<bloques.get(i).size();j++) {
 					activeSorpresa();
 					if(bloques.get(i).get(j).isChocado(bola)) {
-						if(bola.getUltimo()==naves.get(0)) score+=bloques.get(i).get(j).getPuntos();
+						if(bola.getUltimo().equals(naves.get(0))) score+=bloques.get(i).get(j).getPuntos();
 						else score2+=bloques.get(i).get(j).getPuntos();
 						adicioneVida(bloques.get(i).get(j));
 						reemplazarBloque(bloques.get(i).get(j),i,j);
@@ -122,6 +122,7 @@ public class ArkaPOOB {
 	}
 	
 	public void eliminarJugador(int i) {
+		naves.get(i).setVIvo(false);
 		naves.set(i,null);
 	}
 	
@@ -131,10 +132,19 @@ public class ArkaPOOB {
 	 */
 	private void adicioneVida(Bloque bloque) {
 		if(bloque.getTipo().equals("amarillo")) {
-			Plataforma vida = vidas.get(0).get(vidas.get(0).size()-1);
-			Plataforma temp = new Plataforma(vida.getX()+70,vida.getY(),vida.getWidth(),vida.getHeight());
-			temp.setColor(vida.getColor());
-			vidas.get(0).add(temp);
+			
+			
+			if(bola.getUltimo().equals(naves.get(0))) {
+				Plataforma vida = vidas.get(0).get(vidas.get(0).size()-1);
+				Plataforma temp = new Plataforma(vida.getX()+70,vida.getY(),vida.getWidth(),vida.getHeight());
+				temp.setColor(vida.getColor());
+				vidas.get(0).add(temp);
+			}else {
+				Plataforma vida = vidas.get(1).get(vidas.get(1).size()-1);
+				Plataforma temp = new Plataforma(vida.getX()-30,vida.getY(),vida.getWidth(),vida.getHeight());
+				temp.setColor(vida.getColor());
+				vidas.get(1).add(temp);
+			}
 		}
 	}
 	
@@ -177,12 +187,18 @@ public class ArkaPOOB {
 	 * @param height
 	 */
 	public void borrarVidas(int height) {
+		System.out.println(bola.getUltimo() + " " + naves.get(0));
+		System.out.println(bola.getUltimo() + " " + naves.get(1));
 		if (bola.getY()<=height) {
-			if(bola.getUltimo() == naves.get(0) && vidas.get(0).size()>0)
-				if(bola.getUltimo() == naves.get(0) &&vidas.get(0).size()==1) vidas.get(0).add(0,null);
+			if(bola.getUltimo().equals(naves.get(0)) && vidas.get(0).size()>0) {
+				if(bola.getUltimo().equals(naves.get(0)) &&vidas.get(0).size()==1) vidas.get(0).add(0,null);
 				vidas.get(0).remove(vidas.get(0).size()-1);
-			if(bola.getUltimo() == naves.get(1) &&vidas.get(1).size()>0)
+				System.out.println("www");
+			}
+			if(bola.getUltimo().equals(naves.get(1)) &&vidas.get(1).size()>0) {
 				vidas.get(1).remove(vidas.get(1).size()-1);
+				System.out.println("aaaaa");
+			}
 		}
 	}
 	
@@ -218,6 +234,7 @@ public class ArkaPOOB {
 			if(getVidas().get(0).size()==0) return true;
 			else return false;
 		}else {
+			System.out.println(vidas);
 			if(getVidas().get(a).size() == 1 && getVidas().get(a).get(0)==null) return true;
 			else return false;
 		}
@@ -237,7 +254,13 @@ public class ArkaPOOB {
 			bola = new Bola(naves.get(0).getX()+naves.get(0).getWidth()/2-15,naves.get(0).getY()-naves.get(0).getHeight(),naves.get(0),null,45,1,45,this);
 		else {
 			int numero = (int) (Math.random() * 2);
-			bola = new Bola(naves.get(numero).getX()+naves.get(numero).getWidth()/2-15,naves.get(numero).getY()-naves.get(numero).getHeight(),naves.get(numero),naves.get((numero==0?1:0)),45,1,45,this);
+			System.out.println(naves);
+			if(naves.get(numero) == null) { 
+				System.out.println("dlgfhasjbkjsdvkjñsd");
+				if(numero == 0) numero=1;
+				else numero = 0;
+			}
+			bola = new Bola(naves.get(numero).getX()+naves.get(numero).getWidth()/2-15,naves.get(numero).getY()-naves.get(numero).getHeight(),naves.get(numero),naves.get((numero)==0?1:0),45,1,45,this);
 		}
 	}
 	
@@ -283,7 +306,12 @@ public class ArkaPOOB {
 	
 	public void activeSorpresa() {
 		if(getSorpresa()!=null) {
-			if(sorpresa.isChocado(naves.get(0))){
+			if(naves.get(0)!= null && sorpresa.isChocado(naves.get(0))){
+				setPoder(true);
+				//prepareBola();
+				sorpresa = null;
+				//naves.get(0).setPoderActivado(false);
+			}else if(naves.get(1)!= null && sorpresa.isChocado(naves.get(1))) {
 				setPoder(true);
 				//prepareBola();
 				sorpresa = null;
