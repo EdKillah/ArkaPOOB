@@ -18,8 +18,7 @@ public class BloqueNegro extends Bloque{
 	private String tipo;
 	private boolean isChocado;
 	private final int puntos = 600;
-	private ImageIcon imagen;
-	
+	private ArkaPOOB ark;
 	
 	/**
 	 * Constructor de la clase, que instancia la misma. 
@@ -28,23 +27,18 @@ public class BloqueNegro extends Bloque{
 	 * @param width
 	 * @param height
 	 */
-	public BloqueNegro(int x, int y, int width, int height) {
+	public BloqueNegro(int x, int y, int width, int height, ArkaPOOB ark) {
 		setX(x);
 		setY(y);
 		setWidth(width);
 		setHeight(height);
 		setIsChocado(false);
 		tipo = "negro";
-		prepareImagen();
+		this.ark = ark;
 	}
 	
 	
-	/**
-	 * Metodo encargado de preparar la imagen del bloque dependiendo de su tipo.
-	 */
-	private void prepareImagen() {
-		imagen = new ImageIcon(getClass().getResource("/imagenes/bloque_negro.png"));
-	}
+
 	
 	
 	/**
@@ -56,10 +50,6 @@ public class BloqueNegro extends Bloque{
         return isChocado;
     }
 	
-	@Override
-	public Image getImagen() {
-		return imagen.getImage();
-	}
 	
 	@Override
 	public int getPuntos() {

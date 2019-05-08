@@ -1,6 +1,5 @@
 package aplicacion;
 
-import java.awt.Image;
 
 public interface Elemento {
 	
@@ -13,8 +12,6 @@ public interface Elemento {
 	void setY(int x);
 	
 	int getWidth();
-	
-	Image getImagen();
-	
+		
 	
 }

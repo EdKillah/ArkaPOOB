@@ -40,15 +40,8 @@ public class Bola implements Elemento{
 		this.angulo = angulo;
 		this.ultimo = 0;
 		
-		prepareImagen();
 	}
 	
-	/**
-	 * Metodo encargado de preparar la imagen del bloque dependiendo de su tipo.
-	 */
-	private void prepareImagen() {
-		imagen = new ImageIcon(getClass().getResource("/imagenes/pelota.png"));
-	}
 	
 	public Rectangle getBounds() {
         Rectangle borde = new Rectangle(this.getX(), this.getY(), TAMX, TAMY);
@@ -204,11 +197,7 @@ public class Bola implements Elemento{
 	public void setInAire(boolean enAire) {
 		isInAire = enAire;
 	}
-	
-	@Override
-	public Image getImagen() {
-		return imagen.getImage();
-	}
+
 
 	public static int getTamX() {
 		return TAMX;

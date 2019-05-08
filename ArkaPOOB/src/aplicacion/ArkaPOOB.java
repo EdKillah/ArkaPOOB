@@ -18,7 +18,8 @@ public class ArkaPOOB {
 	private int score;
 	private int score2;
 	private int jugadores;
-	
+	private Sorpresa sorpresa;
+	private boolean poderActivo;
 	
 	/**
 	 * Crea una instancia del tablero de juego
@@ -46,14 +47,17 @@ public class ArkaPOOB {
 	public void juegue(double width, double height) {
 		if(bola.isVivo()) {
 			bola.muevase(width,height);
+			if(getSorpresa() != null) sorpresa.muevase();
 			for(int i=0;i<bloques.size();i++) {
 				for(int j=0;j<bloques.get(i).size();j++) {
+					activeSorpresa();
 					if(bloques.get(i).get(j).isChocado(bola)) {
 						if(bola.getUltimo()==0) score+=bloques.get(i).get(j).getPuntos();
 						else score2+=bloques.get(i).get(j).getPuntos();
 						adicioneVida(bloques.get(i).get(j));
 						reemplazarBloque(bloques.get(i).get(j),i,j);
 						//bloques.get(i).remove(j);
+						
 					}
 				}
 			}
@@ -118,7 +122,7 @@ public class ArkaPOOB {
 	}
 	
 	public void eliminarJugador(int i) {
-		naves.remove(i);
+		naves.set(i,null);
 	}
 	
 	/**
@@ -212,11 +216,13 @@ public class ArkaPOOB {
 	 * @return
 	 */
 	public boolean perdio(int a,Plataforma p) {
+		System.out.println(vidas);
 		if(jugadores == 1) {
 			if(getVidas().get(0).size()==0) return true;
 			else return false;
 		}else {
-			if(getVidas().get(0).get(0)==null) return true;
+			System.out.println(getVidas().get(0).get(0));
+			if(getVidas().get(0).size() == 0 && getVidas().get(0).get(0)==null) {System.out.println(vidas); return true;}
 			else return false;
 		}
 	}
@@ -251,20 +257,22 @@ public class ArkaPOOB {
 			ArrayList<Bloque> blocks = new ArrayList<Bloque>();
 			for(int j=0;j<10;j++) {
 				if(i==0) 
-					bloque = new BloqueGris(posX, posY,70,35);
+					bloque = new BloqueGris(posX, posY,70,35,this);
 				else if(i==1) {
 					if(j==5 || j == 7)
-						bloque = new BloqueRosa(posX,posY,70,35); //poner esto random
+						bloque = new BloqueRojo(posX,posY,70,35,this); //poner esto random
 					else
-						bloque = new BloqueVerde( posX, posY,70,35);
+						bloque = new BloqueVerde( posX, posY,70,35,this);
 				}
 				else {
 					if(j== 9 )
-						bloque = new BloqueAmarillo(posX, posY, 70,35);
-					else if(j==0|| j == 7)
-						bloque = new BloqueNegro(posX,posY,70,35);
+						bloque = new BloqueAmarillo(posX, posY, 70,35,this);
+					else if(j==0)
+						bloque = new BloqueNegro(posX,posY,70,35,this);
+					else if(j == 7)
+						bloque = new BloqueAzul(posX,posY,70,35,this);
 					else
-						bloque = new BloqueRojo( posX, posY,70,35); //75 45
+						bloque = new BloqueRojo( posX, posY,70,35,this); //75 45
 				}
 				blocks.add(bloque);
 				posX += step;
@@ -274,7 +282,25 @@ public class ArkaPOOB {
 		}
 		
 	}
+	
+	public void activeSorpresa() {
+		if(getSorpresa()!=null) {
+			if(sorpresa.isChocado(naves.get(0))){
+				setPoder(true);
+				//prepareBola();
+				sorpresa = null;
+				//naves.get(0).setPoderActivado(false);
+			}
+		}
+	}
+	
+	public void setPoder(boolean a) {
+		poderActivo = a;
+	}
 
+	public boolean getPoder() {
+		return poderActivo;
+	}
 
 	public ArrayList<Plataforma> getPlataforma() {
 		return naves;
@@ -290,5 +316,15 @@ public class ArkaPOOB {
 	
 	public void setBloques(ArrayList<ArrayList<Bloque>> bloques) {
 		this.bloques = bloques;
+	}
+	
+	public void setSorpresa(Sorpresa a) {
+		sorpresa = a;
+		
+	}
+	
+	public Sorpresa getSorpresa() {
+		return sorpresa;
+		
 	}
 }

@@ -19,8 +19,7 @@ public class BloqueGris extends Bloque{
 	private String tipo;
 	private boolean isChocado;
 	private final int puntos = 0; //confirmar si deberia tener puntos o no
-	private ImageIcon imagen;
-
+	private ArkaPOOB ark;
 	
 	/**
 	 * Constructor de la clase, que instancia la misma. 
@@ -29,22 +28,16 @@ public class BloqueGris extends Bloque{
 	 * @param width
 	 * @param height
 	 */
-	public BloqueGris(int x, int y, int width, int height) {
+	public BloqueGris(int x, int y, int width, int height, ArkaPOOB ark) {
 		setX(x);
 		setY(y);
 		setWidth(width);
 		setHeight(height);
 		setIsChocado(false);
 		tipo = "gris";
-		prepareImagen();
+		this.ark = ark;
 	}
 	
-	/**
-	 * Metodo encargado de preparar la imagen del bloque dependiendo de su tipo.
-	 */
-	private void prepareImagen() {
-		imagen = new ImageIcon(getClass().getResource("/imagenes/bloque_gris.png"));
-	}
 	
 	/**
 	 * Metodo sobreescrito que realiza los procedimientos necesarios para considerar si fue chocado por una bola o no.
@@ -54,10 +47,6 @@ public class BloqueGris extends Bloque{
         return false;
     }
 	
-	@Override
-	public Image getImagen() {
-		return imagen.getImage();
-	}
 	
 	@Override
 	public int getPuntos() {

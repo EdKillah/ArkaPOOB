@@ -1,8 +1,10 @@
 package aplicacion;
 
-import java.awt.Image;
+import java.awt.*;
 
 import javax.swing.*;
+
+//import com.sun.javafx.geom.Rectangle;
 
 /**
  * Clase que crea la plataforma del juego la cual es la que representa al jugador.
@@ -18,7 +20,7 @@ public class Plataforma implements Elemento{
 	private int width;
 	private int height;
 	private ImageIcon imagen;
-	
+	private boolean poderActivo;
 	
 	/**
 	 * Crea la instancia de la plataforma.
@@ -109,10 +111,15 @@ public class Plataforma implements Elemento{
 		this.height = height;
 	}
 
-	@Override
+	
 	public Image getImagen() {
 		return imagen.getImage();
 	}
+	
+	public Rectangle getBounds() {
+        Rectangle borde = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        return borde;
+    }  
 	
 	/**
 	 * Metodo que actualiza la imagen de la plataforma dependiendo del color que se le asigno.
@@ -124,4 +131,21 @@ public class Plataforma implements Elemento{
 	public void setImagen(ImageIcon imagen) {
 		this.imagen = imagen;
 	}
+	
+	public void activePegajosa(ArkaPOOB ark) {
+		System.out.println("Entra en activar pegajosa");
+		//ark.estatico(0);
+		poderActivo = true;
+		if(isChocado(ark.getBola())) {
+			poderActivo = true;
+			System.out.println("Entra en activar IFFF ACTIVESORPRSSAPEAGAJOSA");
+			ark.estatico(0);
+			//ark.getBola().setInAire(false);
+		}
+	}
+	
+	public boolean isChocado(Bola bola) {
+        boolean isChocado = bola.getBounds().intersects(this.getBounds());
+        return isChocado;
+    }
 }

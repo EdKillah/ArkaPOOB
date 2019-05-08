@@ -1,20 +1,22 @@
 package aplicacion;
 
 import java.awt.*;
-import javax.swing.*;
+import javax.swing.ImageIcon;
 
-/**
- * clase abstracta Bloque es la cual los demás bloques heredan de ella. 
-*/
-public abstract class Bloque implements Elemento{
+
+public abstract class Sorpresa implements Elemento{
+	
 	private int x;
 	private int y;
-	private int golpes;
-	private String tipo;
-	private final int puntos = 100;
 	private int width;
 	private int height;
 	private boolean isChocado;
+	private ImageIcon imagen;
+	
+	public Image getImagen() {
+		imagen = new ImageIcon(getClass().getResource("/imagenes/sorpresa_especial.gif"));
+		return imagen.getImage();
+	}
 	
 	@Override
 	public int getX() {
@@ -33,23 +35,13 @@ public abstract class Bloque implements Elemento{
 	
 	@Override
 	public void setY(int y) {
-		this.y = y;
+		this.y += y;
 	}
 	
-	public int getGolpes() {
-		return golpes;
-	}
-	
-	public void setGolpes(int golpes) {
-		this.golpes = golpes;
-	}
-	
-	public int getPuntos() {
-		return puntos;
-	}
-	
-	
-	
+	public Rectangle getBounds() {
+        Rectangle borde = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        return borde;
+    }   
 	@Override
 	public int getWidth() {
 		return width;
@@ -71,15 +63,11 @@ public abstract class Bloque implements Elemento{
 		this.height = height;
 	}
 	
-	public Rectangle getBounds() {
-        Rectangle borde = new Rectangle(this.getX(), this.getY(), 70, 35);
-        return borde;
-    }   
+	public void muevase() {
+		setY(1);
+	}
 	
-	public abstract boolean isChocado(Bola bola);
+	public abstract boolean isChocado(Plataforma nave);
 	public abstract String getTipo();
 	public abstract void setTipo(String type);
-	
-	
-	
 }

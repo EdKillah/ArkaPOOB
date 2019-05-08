@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
  * @author Jimenez Eduard- Murillo Carlos
  *
  */
-public class BloqueAmarillo extends Bloque{
+public class BloqueAzul extends Bloque{
 	private int x;
 	private int y;
 	private int width;
@@ -27,13 +27,13 @@ public class BloqueAmarillo extends Bloque{
 	 * @param width
 	 * @param height
 	 */
-	public BloqueAmarillo(int x, int y, int width, int height, ArkaPOOB ark) {
+	public BloqueAzul(int x, int y, int width, int height, ArkaPOOB ark) {
 		setX(x);
 		setY(y);
 		setWidth(width);
 		setHeight(height);
 		setIsChocado(false);
-		tipo = "amarillo";
+		tipo = "azul";
 		this.ark = ark;
 	}
 	
@@ -44,8 +44,18 @@ public class BloqueAmarillo extends Bloque{
 	@Override
 	public boolean isChocado(Bola bola) {
         isChocado = bola.getBounds().intersects(this.getBounds());
+        creeSorpresa();
         return isChocado;
     }
+	
+	private void creeSorpresa() {
+		if(isChocado) {
+			Sorpresa poder = new SorpresaPlataforma(getX(),getY(),ark);
+			ark.setSorpresa(poder);
+		}
+	}
+	
+	
 	
 	
 	@Override

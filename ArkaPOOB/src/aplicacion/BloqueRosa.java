@@ -18,8 +18,7 @@ public class BloqueRosa extends Bloque{
 	private String tipo;
 	private boolean isChocado;
 	private final int puntos = 500;
-	private ImageIcon imagen;
-	
+	private ArkaPOOB ark;
 	
 	/**
 	 * Constructor de la clase, que instancia la misma. 
@@ -28,23 +27,17 @@ public class BloqueRosa extends Bloque{
 	 * @param width
 	 * @param height
 	 */
-	public BloqueRosa(int x, int y, int width, int height) {
+	public BloqueRosa(int x, int y, int width, int height, ArkaPOOB ark) {
 		setX(x);
 		setY(y);
 		setWidth(width);
 		setHeight(height);
 		setIsChocado(false);
 		tipo = "rosa";
-		prepareImagen();
+		this.ark = ark;
 	}
 	
 	
-	/**
-	 * Metodo encargado de preparar la imagen del bloque dependiendo de su tipo.
-	 */
-	private void prepareImagen() {
-		imagen = new ImageIcon(getClass().getResource("/imagenes/bloque_rosa.png"));
-	}
 	
 	
 	/**
@@ -56,10 +49,6 @@ public class BloqueRosa extends Bloque{
         return isChocado;
     }
 	
-	@Override
-	public Image getImagen() {
-		return imagen.getImage();
-	}
 	
 	@Override
 	public int getPuntos() {

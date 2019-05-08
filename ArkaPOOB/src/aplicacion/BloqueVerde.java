@@ -18,9 +18,8 @@ public class BloqueVerde extends Bloque{
 	private String tipo;
 	private boolean isChocado;
 	private final int puntos = 200;
-	private ImageIcon imagen;
 	private int con; 
-	
+	private ArkaPOOB ark;
 	
 	/**
 	 * Constructor de la clase, que instancia la misma. 
@@ -29,7 +28,7 @@ public class BloqueVerde extends Bloque{
 	 * @param width
 	 * @param height
 	 */
-	public BloqueVerde(int x, int y, int width, int height) {
+	public BloqueVerde(int x, int y, int width, int height, ArkaPOOB ark) {
 		setX(x);
 		setY(y);
 		setWidth(width);
@@ -37,16 +36,9 @@ public class BloqueVerde extends Bloque{
 		setIsChocado(false);
 		con=0;
 		tipo = "verde";
-		prepareImagen();
+		this.ark = ark;
 	}
 	
-	
-	/**
-	 * Metodo encargado de preparar la imagen del bloque dependiendo de su tipo.
-	 */
-	private void prepareImagen() {
-		imagen = new ImageIcon(getClass().getResource("/imagenes/bloque_verde.png"));
-	}
 	
 	
 	/**
@@ -61,10 +53,6 @@ public class BloqueVerde extends Bloque{
 	    else return false;
     }
 	
-	@Override
-	public Image getImagen() {
-		return imagen.getImage();
-	}
 	
 	@Override
 	public int getPuntos() {

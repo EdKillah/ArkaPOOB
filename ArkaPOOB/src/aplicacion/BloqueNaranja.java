@@ -10,15 +10,16 @@ import javax.swing.ImageIcon;
  * @author Jimenez Eduard- Murillo Carlos
  *
  */
-public class BloqueAmarillo extends Bloque{
+public class BloqueNaranja extends Bloque{
 	private int x;
 	private int y;
+	private int con;
 	private int width;
 	private int height;
 	private String tipo;
 	private boolean isChocado;
 	private final int puntos = 300;
-	private ArkaPOOB ark;
+	
 	
 	/**
 	 * Constructor de la clase, que instancia la misma. 
@@ -27,14 +28,14 @@ public class BloqueAmarillo extends Bloque{
 	 * @param width
 	 * @param height
 	 */
-	public BloqueAmarillo(int x, int y, int width, int height, ArkaPOOB ark) {
+	public BloqueNaranja(int x, int y, int width, int height, ArkaPOOB ark) {
 		setX(x);
 		setY(y);
 		setWidth(width);
 		setHeight(height);
 		setIsChocado(false);
-		tipo = "amarillo";
-		this.ark = ark;
+		tipo = "naranja";
+		con = 0;
 	}
 	
 	
@@ -43,10 +44,13 @@ public class BloqueAmarillo extends Bloque{
 	 */
 	@Override
 	public boolean isChocado(Bola bola) {
-        isChocado = bola.getBounds().intersects(this.getBounds());
-        return isChocado;
+	    isChocado = bola.getBounds().intersects(this.getBounds());
+	    if(isChocado) con++;
+	    if(con>3) return isChocado;
+	    else return false;
     }
 	
+
 	
 	@Override
 	public int getPuntos() {
