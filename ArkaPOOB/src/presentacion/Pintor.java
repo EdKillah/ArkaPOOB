@@ -54,7 +54,6 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 			}
 		}
 		Plataforma nave = ark.getPlataforma().get(0);
-		System.out.println(nave);
 		if(nave != null )g.drawImage(nave.getImagen(), nave.getX(), nave.getY(),nave.getWidth(),nave.getHeight(), this);
 		if(jugadores == 2)  {
 			Plataforma nave2 = ark.getPlataforma().get(1);
@@ -221,6 +220,7 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		}else {
 			if(ark.perdio(0,ark.getPlataforma().get(0))) {
 				ark.eliminarJugador(0);	
+				
 			}if(ark.perdio(1,ark.getPlataforma().get(1))) {
 				ark.eliminarJugador(1);	
 			}

@@ -52,7 +52,7 @@ public class ArkaPOOB {
 				for(int j=0;j<bloques.get(i).size();j++) {
 					activeSorpresa();
 					if(bloques.get(i).get(j).isChocado(bola)) {
-						if(bola.getUltimo()==0) score+=bloques.get(i).get(j).getPuntos();
+						if(bola.getUltimo()==naves.get(0)) score+=bloques.get(i).get(j).getPuntos();
 						else score2+=bloques.get(i).get(j).getPuntos();
 						adicioneVida(bloques.get(i).get(j));
 						reemplazarBloque(bloques.get(i).get(j),i,j);
@@ -177,14 +177,12 @@ public class ArkaPOOB {
 	 * @param height
 	 */
 	public void borrarVidas(int height) {
-		System.out.println(vidas.size());
 		if (bola.getY()<=height) {
-			if(bola.getUltimo() == 0 && vidas.get(0).size()>0)
-				if(bola.getUltimo() == 0 &&vidas.get(0).size()==1) vidas.get(0).add(0,null);
+			if(bola.getUltimo() == naves.get(0) && vidas.get(0).size()>0)
+				if(bola.getUltimo() == naves.get(0) &&vidas.get(0).size()==1) vidas.get(0).add(0,null);
 				vidas.get(0).remove(vidas.get(0).size()-1);
-			if(bola.getUltimo() == 1 &&vidas.get(1).size()>0)
+			if(bola.getUltimo() == naves.get(1) &&vidas.get(1).size()>0)
 				vidas.get(1).remove(vidas.get(1).size()-1);
-			System.out.println(vidas.size());
 		}
 	}
 	
@@ -216,13 +214,11 @@ public class ArkaPOOB {
 	 * @return
 	 */
 	public boolean perdio(int a,Plataforma p) {
-		System.out.println(vidas);
 		if(jugadores == 1) {
 			if(getVidas().get(0).size()==0) return true;
 			else return false;
 		}else {
-			System.out.println(getVidas().get(0).get(0));
-			if(getVidas().get(0).size() == 0 && getVidas().get(0).get(0)==null) {System.out.println(vidas); return true;}
+			if(getVidas().get(a).size() == 1 && getVidas().get(a).get(0)==null) return true;
 			else return false;
 		}
 	}
@@ -239,8 +235,10 @@ public class ArkaPOOB {
 	public void prepareBola(){
 		if(jugadores==1)
 			bola = new Bola(naves.get(0).getX()+naves.get(0).getWidth()/2-15,naves.get(0).getY()-naves.get(0).getHeight(),naves.get(0),null,45,1,45,this);
-		else 
-			bola = new Bola(naves.get(0).getX()+naves.get(0).getWidth()/2-15,naves.get(0).getY()-naves.get(0).getHeight(),naves.get(0),naves.get(1),45,1,45,this);
+		else {
+			int numero = (int) (Math.random() * 2);
+			bola = new Bola(naves.get(numero).getX()+naves.get(numero).getWidth()/2-15,naves.get(numero).getY()-naves.get(numero).getHeight(),naves.get(numero),naves.get((numero==0?1:0)),45,1,45,this);
+		}
 	}
 	
 	
