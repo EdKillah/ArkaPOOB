@@ -49,22 +49,32 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		for(int i=0;i<bloques.size();i++) {
 			for(int j=0;j<bloques.get(i).size();j++) {
 				b = bloques.get(i).get(j);
-				g.drawImage(b.getImagen(), b.getX(), b.getY(),b.getWidth(),b.getHeight(), this);			
+				Image img =  new ImageIcon(getClass().getResource("/imagenes/bloque_"+b.getTipo()+".png")).getImage();
+				g.drawImage(img, b.getX(), b.getY(),b.getWidth(),b.getHeight(), this);			
 			}
 		}
 		Plataforma nave = ark.getPlataforma().get(0);
-		g.drawImage(nave.getImagen(), nave.getX(), nave.getY(),nave.getWidth(),nave.getHeight(), this);
+		System.out.println(nave);
+		if(nave != null )g.drawImage(nave.getImagen(), nave.getX(), nave.getY(),nave.getWidth(),nave.getHeight(), this);
 		if(jugadores == 2)  {
 			Plataforma nave2 = ark.getPlataforma().get(1);
-			g.drawImage(nave2.getImagen(), nave2.getX(), nave2.getY(),nave2.getWidth(),nave2.getHeight(), this);
+			if(nave2 != null ) g.drawImage(nave2.getImagen(), nave2.getX(), nave2.getY(),nave2.getWidth(),nave2.getHeight(), this);
 		}
+		
+		Sorpresa poder = ark.getSorpresa();
+		if(poder!= null) {
+			g.drawImage(poder.getImagen(), poder.getX(),poder.getY() ,poder.getWidth(),poder.getHeight(), this);
+		}
+		
 		Bola bola = ark.getBola();
-		if(bola.isVivo())
-			g.drawImage(bola.getImagen(), bola.getX(),bola.getY() ,Bola.getTamX(),Bola.getTamY(), this);			//(int)d.getHeight()-125
+		if(bola.isVivo()) {
+			Image img =  new ImageIcon(getClass().getResource("/imagenes/pelota.png")).getImage();
+			g.drawImage(img, bola.getX(),bola.getY() ,Bola.getTamX(),Bola.getTamY(), this);			//(int)d.getHeight()-125
+		}
 		for(int i=0;i<ark.getVidas().size();i++) {
 			for(int j=0;j<ark.getVidas().get(i).size();j++) {
 				Plataforma vida = ark.getVidas().get(i).get(j);
-				g.drawImage(vida.getImagen(), vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);		
+				if(vida != null )g.drawImage(vida.getImagen(), vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);		
 			}
 		}
 	}
@@ -175,6 +185,11 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 					ark.estatico(height);
 					mensaje();
 					cancel();
+				}
+				if(ark.getPoder() && ark.getBola().getY()+ ark.getBola().getTamY() >= ark.getPlataforma().get(0).getY()) {
+					ark.estatico(0);
+					cancel();
+					ark.setPoder(false);
 				}
 			}
 		};
