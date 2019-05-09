@@ -68,7 +68,7 @@ public class Bola implements Elemento{
 		return null;
 	}
 	
-	public void muevase(double widthT, double heightT){ //tienen la T porque significa tablero.
+	public void muevase(double widthT, double heightT){ 
 		x+=dx;
 		y+=dy;
 		if(x<=20){
@@ -86,18 +86,17 @@ public class Bola implements Elemento{
 			dy=-dy;
 		}
 		
-		if(y + TAMY>heightT){ 
+		if(y + TAMY>heightT){
+			double aux =  TAMY +y;
 			if(isInNave()) {
 				y=(int)heightT-TAMY;
 				dy=-dy;
 			}
 			else setVivo(false);
-			//System.out.println(isVivo());
 		}
 		
 		Bloque b = confirmeChoque();
 		if(b!=null) {
-			//y=b.getY()+b.getHeight()-3;//+TAMY //+b.getHeight())/2
 			if(this.getX()<=b.getX() || b.getX()+b.getWidth()<=this.getX()+1) {
 				dx=-dx;
 			}
@@ -212,6 +211,6 @@ public class Bola implements Elemento{
 	
 	@Override
 	public int getWidth() {
-		return 25;
+		return TAMX;
 	}
 }

@@ -5,8 +5,8 @@ import java.util.*;
 /**
  * Clase principal del paquete aplicación y del juego en general,
  * es la encargada de almacenar los elementos e interactuar con ellos.
- * @author Jimenez Eduard- Murillo Carlos
- *
+ * @author Jimenez Eduard
+ * @author Murillo Carlos
  */
 
 public class ArkaPOOB {
@@ -51,6 +51,7 @@ public class ArkaPOOB {
 			for(int i=0;i<bloques.size();i++) {
 				for(int j=0;j<bloques.get(i).size();j++) {
 					activeSorpresa();
+					isPlataformaActiva();
 					if(bloques.get(i).get(j).isChocado(bola)) {
 						if(bola.getUltimo().equals(naves.get(0))) score+=bloques.get(i).get(j).getPuntos();
 						else score2+=bloques.get(i).get(j).getPuntos();
@@ -107,6 +108,8 @@ public class ArkaPOOB {
 			prepareBola();
 			bola.setInAire(false);
 	}
+	
+	
 	
 	
 	/**
@@ -252,9 +255,7 @@ public class ArkaPOOB {
 			bola = new Bola(naves.get(0).getX()+naves.get(0).getWidth()/2-15,naves.get(0).getY()-naves.get(0).getHeight(),naves.get(0),null,45,1,45,this);
 		else {
 			int numero = (int) (Math.random() * 2);
-			System.out.println(naves);
-			if(naves.get(numero) == null) { 
-				System.out.println("dlgfhasjbkjsdvkjñsd");
+			if(naves.get(numero) == null) {
 				if(numero == 0) numero=1;
 				else numero = 0;
 			}
@@ -262,6 +263,16 @@ public class ArkaPOOB {
 		}
 	}
 	
+	public void prepareBola(Plataforma plat){ 
+		int i = naves.indexOf(plat);
+		if(jugadores==1) {
+			System.out.println("ola");
+			bola = new Bola(naves.get(0).getX()+naves.get(0).getWidth()/2-15,naves.get(0).getY()-naves.get(0).getHeight(),naves.get(0),null,45,1,45,this);
+		}
+		else {
+			bola = new Bola(naves.get(i).getX()+naves.get(i).getWidth()/2-15,naves.get(i).getY()-naves.get(i).getHeight(),naves.get(i),naves.get(i),45,1,45,this);
+		}
+	}
 	
 	/**
 	 * Metodo que prepara los bloques iniciales del juego, distribuyendolos de una manera especifica.
@@ -302,6 +313,13 @@ public class ArkaPOOB {
 		
 	}
 	
+	public void isPlataformaActiva() {
+		if(naves.get(0).isPoderActivo()) {
+			System.out.println("eNTRA EN ACTIVO");
+			naves.get(0).hagaTalCosa(this);
+		}
+	}
+	
 	public void activeSorpresa() {
 		if(getSorpresa()!=null) {
 			if(naves.get(0)!= null && sorpresa.isChocado(naves.get(0))){
@@ -309,6 +327,7 @@ public class ArkaPOOB {
 				//prepareBola();
 				sorpresa = null;
 				//naves.get(0).setPoderActivado(false);
+				
 			}else if(jugadores == 2 && naves.get(1)!= null && sorpresa.isChocado(naves.get(1))) {
 				setPoder(true);
 				//prepareBola();
@@ -317,6 +336,7 @@ public class ArkaPOOB {
 			}
 		}
 	}
+
 	
 	public void setPoder(boolean a) {
 		poderActivo = a;

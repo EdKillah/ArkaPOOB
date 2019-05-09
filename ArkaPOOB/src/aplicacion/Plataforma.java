@@ -22,6 +22,8 @@ public class Plataforma implements Elemento{
 	private ImageIcon imagen;
 	private boolean poderActivo;
 	private boolean vivo;
+	private int contador;
+	
 	
 	/**
 	 * Crea la instancia de la plataforma.
@@ -38,6 +40,8 @@ public class Plataforma implements Elemento{
 		this.width = width;
 		this.height = height;
 		this.vivo = true;
+		contador = 0;
+		poderActivo = false;
 		prepareImagen();
 	}
 	
@@ -128,6 +132,27 @@ public class Plataforma implements Elemento{
 		
 	}
 	
+	public void setPoderActivo(boolean poder) {
+		poderActivo = poder;
+	}
+	
+	public boolean isPoderActivo() {
+		return poderActivo;
+	}
+	
+	
+	public void hagaTalCosa(ArkaPOOB ark) {
+		System.out.println("JAJAJAJAJA BUENO");
+		if(contador>3) {
+			setPoderActivo(false);
+		}
+		else {
+			contador++;
+			ark.prepareBola();
+		}
+	}
+	
+	
 	public Rectangle getBounds() {
         Rectangle borde = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         return borde;
@@ -144,15 +169,20 @@ public class Plataforma implements Elemento{
 		this.imagen = imagen;
 	}
 	
-	public void activePegajosa(ArkaPOOB ark) {
-		System.out.println("Entra en activar pegajosa");
-		//ark.estatico(0);
-		poderActivo = true;
-		if(isChocado(ark.getBola())) {
-			poderActivo = true;
-			System.out.println("Entra en activar IFFF ACTIVESORPRSSAPEAGAJOSA");
-			ark.estatico(0);
-			//ark.getBola().setInAire(false);
+	
+	
+	public void activeSorpresa(String tipo,ArkaPOOB ark) {
+		System.out.println("dfaaf");
+		if(tipo.equals("Pegajosa")) {
+			System.out.println((ark.getBola().getY() + ark.getBola().getTamY() + height)+ "EnPlataforma " +getY());
+			System.out.println("Poder: "+ark.getPoder());
+			if(ark.getPoder() && ark.getBola().getY()+ ark.getBola().getTamY() + height >= getY()-1) {
+				System.out.println("k?");
+				this.setPoderActivo(true);
+				System.out.println("ANDO DESTROY");
+				//ark.prepareBola(); //this
+				//ark.setPoder(false);
+			}
 		}
 	}
 	
@@ -160,4 +190,6 @@ public class Plataforma implements Elemento{
         boolean isChocado = bola.getBounds().intersects(this.getBounds());
         return isChocado;
     }
+
+
 }

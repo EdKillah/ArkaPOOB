@@ -174,8 +174,8 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		task = new TimerTask() {
 			@Override
 			public void run() {
-				System.out.println("Score: "+ark.getScore1());
-				System.out.println("Score2: "+ark.getScore2());
+				//System.out.println("Score: "+ark.getScore1());
+				//System.out.println("Score2: "+ark.getScore2());
 				ark.juegue(width, ark.getPlataforma().get(( ark.getPlataforma().get(0)!=null?0:1)).getY());
 				
 				if(ark.gano()) {
@@ -188,10 +188,9 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 					ark.prepareBola();
 					cancel();
 				}
-				if(ark.getPoder() && ark.getBola().getY()+ ark.getBola().getTamY() >= ark.getPlataforma().get(0).getY()) {
-					ark.estatico(0);
+				if(!ark.getBola().isInAire() && ark.getBola().isInNave()) {
+					System.out.println("olakase");
 					cancel();
-					ark.setPoder(false);
 				}
 			}
 		};

@@ -13,8 +13,17 @@ public class SorpresaPlataforma extends Sorpresa{
 	private boolean isChocado;
 	private int turnos;
 	private boolean activo;
+	private int nave;
 	
-	public SorpresaPlataforma(int x, int y,ArkaPOOB ark) {   }
+	public SorpresaPlataforma(int x, int y,ArkaPOOB ark) { 
+		setX(x);
+		setY(y);
+		setWidth(70);
+		setHeight(34);
+		setIsChocado(false);
+		tipo = "Pegajosa";
+		this.ark = ark;
+	}
 	
 	/**
 	 * Metodo encargado de preparar la imagen del bloque dependiendo de su tipo.
@@ -27,16 +36,16 @@ public class SorpresaPlataforma extends Sorpresa{
 	@Override
 	public boolean isChocado(Plataforma nave) { //mirar si le damos la nave o con arkgetPlataforma
         isChocado =nave.getBounds().intersects(this.getBounds());
-        if(isChocado)
-        {	
-        	//activeSorpresa();
-        	System.out.println("sadsadasdasdsa");
+        if(isChocado) {	
+        	ark.setPoder(true);
+        	activeSorpresa(nave);
         }	
         return isChocado;
     }
 	
-	private void activeSorpresa() {
-		ark.activeSorpresa();
+	private void activeSorpresa(Plataforma nave) {
+		nave.activeSorpresa(tipo,ark);
+		//ark.activeSorpresa();
 		//System.out.println("Entra en activar SOPRESA");
 		//System.out.println("Kolor nave "+ark.getPlataforma().get(0).getColor());
 		//nave.setWidth(138);
@@ -49,7 +58,13 @@ public class SorpresaPlataforma extends Sorpresa{
 	
 	
 	
+	public void setNave(int i) {
+		nave = i;
+	}
 	
+	public int getNave() {
+		return nave;
+	}
 	
 	@Override
 	public String getTipo() {
