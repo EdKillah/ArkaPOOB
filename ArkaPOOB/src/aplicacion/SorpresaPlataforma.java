@@ -11,16 +11,10 @@ public class SorpresaPlataforma extends Sorpresa{
 	private String tipo;
 	private ArkaPOOB ark;
 	private boolean isChocado;
+	private int turnos;
+	private boolean activo;
 	
-	public SorpresaPlataforma(int x, int y,ArkaPOOB ark) {
-		setX(x);
-		setY(y);
-		setWidth(70);
-		setHeight(34);
-		setIsChocado(false);
-		tipo = "sorpresaPlataformaPegajosa";
-		this.ark = ark;
-	}
+	public SorpresaPlataforma(int x, int y,ArkaPOOB ark) {   }
 	
 	/**
 	 * Metodo encargado de preparar la imagen del bloque dependiendo de su tipo.

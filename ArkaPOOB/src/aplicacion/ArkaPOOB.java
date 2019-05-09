@@ -187,15 +187,13 @@ public class ArkaPOOB {
 	 * @param height
 	 */
 	public void borrarVidas(int height) {
-		System.out.println(bola.getUltimo() + " " + naves.get(0));
-		System.out.println(bola.getUltimo() + " " + naves.get(1));
 		if (bola.getY()<=height) {
 			if(bola.getUltimo().equals(naves.get(0)) && vidas.get(0).size()>0) {
 				if(bola.getUltimo().equals(naves.get(0)) &&vidas.get(0).size()==1) vidas.get(0).add(0,null);
 				vidas.get(0).remove(vidas.get(0).size()-1);
 				System.out.println("www");
 			}
-			if(bola.getUltimo().equals(naves.get(1)) &&vidas.get(1).size()>0) {
+			else if(bola.getUltimo().equals(naves.get(1)) &&vidas.get(1).size()>0) {
 				vidas.get(1).remove(vidas.get(1).size()-1);
 				System.out.println("aaaaa");
 			}
@@ -311,7 +309,7 @@ public class ArkaPOOB {
 				//prepareBola();
 				sorpresa = null;
 				//naves.get(0).setPoderActivado(false);
-			}else if(naves.get(1)!= null && sorpresa.isChocado(naves.get(1))) {
+			}else if(jugadores == 2 && naves.get(1)!= null && sorpresa.isChocado(naves.get(1))) {
 				setPoder(true);
 				//prepareBola();
 				sorpresa = null;

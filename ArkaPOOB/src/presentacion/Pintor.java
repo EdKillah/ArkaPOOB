@@ -176,7 +176,7 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 			public void run() {
 				System.out.println("Score: "+ark.getScore1());
 				System.out.println("Score2: "+ark.getScore2());
-				ark.juegue(width, ark.getPlataforma().get(1).getY());
+				ark.juegue(width, ark.getPlataforma().get(( ark.getPlataforma().get(0)!=null?0:1)).getY());
 				
 				if(ark.gano()) {
 					mensaje();
@@ -222,7 +222,6 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 			if(ark.perdio(0,ark.getPlataforma().get(0))) JOptionPane.showMessageDialog(this, "Perdiste!");
 		}else {
 			if(ark.getPlataforma().get(0) != null && ark.perdio(0,ark.getPlataforma().get(0))) {
-				System.out.println("asdsad");
 				ark.eliminarJugador(0);	
 				
 			}if(ark.getPlataforma().get(1) != null && ark.perdio(1,ark.getPlataforma().get(1))) {
