@@ -119,8 +119,8 @@ public class ArkaPOOB {
 		if(jugadores == 1)
 			naves.add(new Plataforma(750/2,480,90,20));
 		if(jugadores ==2 ) {
-			naves.add(new Plataforma(750/2 - 100,480,90,20));
-			naves.add(new Plataforma(750/2 + 100,480,90,20));
+			naves.add(new Plataforma(40,480,90,20));//750/2 - 100
+			naves.add(new Plataforma(750-60,480,90,20));//750/2 + 100
 		}
 	}
 	
@@ -135,16 +135,14 @@ public class ArkaPOOB {
 	 */
 	private void adicioneVida(Bloque bloque) {
 		if(bloque.getTipo().equals("amarillo")) {
-			
-			
 			if(bola.getUltimo().equals(naves.get(0))) {
 				Plataforma vida = vidas.get(0).get(vidas.get(0).size()-1);
 				Plataforma temp = new Plataforma(vida.getX()+70,vida.getY(),vida.getWidth(),vida.getHeight());
 				temp.setColor(vida.getColor());
 				vidas.get(0).add(temp);
 			}else {
-				Plataforma vida = vidas.get(1).get(vidas.get(1).size()-1);
-				Plataforma temp = new Plataforma(vida.getX()-30,vida.getY(),vida.getWidth(),vida.getHeight());
+				Plataforma vida = vidas.get(1).get(vidas.get(1).size()-1);//
+				Plataforma temp = new Plataforma(vida.getX()-10,vida.getY(),vida.getWidth(),vida.getHeight());
 				temp.setColor(vida.getColor());
 				vidas.get(1).add(temp);
 			}
@@ -161,7 +159,7 @@ public class ArkaPOOB {
 		int pos =0;
 		ArrayList<Plataforma> v = new ArrayList<Plataforma>();
 		for(int i=0;i<3;i++) {
-			vida = new Plataforma(30+pos,500,40,15); //aqui podemos sacarle provecho al color que se le pasa
+			vida = new Plataforma(30+pos,500,40,15);
 			vida.setColor(naves.get(0).getColor());
 			v.add(vida);
 			pos+=40;
@@ -295,7 +293,7 @@ public class ArkaPOOB {
 						bloque = new BloqueVerde( posX, posY,70,35,this);
 				}
 				else {
-					if(j== 9 )
+					if(j== 9)
 						bloque = new BloqueAmarillo(posX, posY, 70,35,this);
 					else if(j==0)
 						bloque = new BloqueNegro(posX,posY,70,35,this);
