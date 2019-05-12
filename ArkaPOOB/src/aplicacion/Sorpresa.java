@@ -1,10 +1,12 @@
 package aplicacion;
 
 import java.awt.*;
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
 
-public abstract class Sorpresa implements Elemento{
+public abstract class Sorpresa implements Elemento,Serializable{
 	
 	private int x;
 	private int y;

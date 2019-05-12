@@ -1,12 +1,13 @@
 package aplicacion;
 
 import java.awt.*;
+import java.io.Serializable;
 import javax.swing.*;
 
 /**
  * clase abstracta Bloque es la cual los demás bloques heredan de ella. 
 */
-public abstract class Bloque implements Elemento{
+public abstract class Bloque implements Elemento, Serializable{
 	private int x;
 	private int y;
 	private int golpes;

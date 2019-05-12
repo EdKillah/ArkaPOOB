@@ -1,9 +1,15 @@
 package presentacion;
 
 import javax.swing.*;
+import javax.swing.JFileChooser;
+import aplicacion.ArkaPoobException;
+import aplicacion.ArkaPOOB;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import persistencia.*;
 
 public class ArkaPOOBGUI extends JFrame{
 	private myPanel pantallaInicial;
@@ -18,6 +24,10 @@ public class ArkaPOOBGUI extends JFrame{
 	private Boton instrucciones;
 	private Boton volverInstrucciones;
 	private Container contenedor;
+	private JMenuBar barraMenu;
+	private JMenu menu;	
+	private JMenuItem[] items;
+	private JFileChooser file;
 	
 	public ArkaPOOBGUI() {
 		super("ArkaPOOB");
@@ -27,6 +37,7 @@ public class ArkaPOOBGUI extends JFrame{
 	}
 	
 	public void prepareElementos() {
+		file = new JFileChooser();
 		prepareElementosVentana();
 		preparePantalla();
 		prepareLogo();
@@ -36,6 +47,20 @@ public class ArkaPOOBGUI extends JFrame{
 		mazo = new JPanel(new CardLayout());
 		mazo.add(pantallaInicial, "Inicio");
 		contenedor.add(mazo);
+		
+		items = new JMenuItem[2];
+		barraMenu = new JMenuBar();
+		contenedor.add(barraMenu,BorderLayout.NORTH);
+		menu = new JMenu("Opciones");
+		barraMenu.add(menu);
+		
+		items[0] = new JMenuItem("Abrir");
+		items[1] = new JMenuItem("Exportar");
+		
+		menu.add(items[0]);
+		menu.addSeparator();
+		menu.add(items[1]);
+		
 		prepararInstrucciones();
 	}
 	
@@ -93,6 +118,18 @@ public class ArkaPOOBGUI extends JFrame{
 	}
 	
 	public void prepareAcciones() {
+		items[0].addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				abrir();
+			}
+		});
+		
+		items[1].addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				abrir();
+			}
+		});
+		
 		ActionListener comenzar = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				juegoNuevo();
@@ -185,6 +222,23 @@ public class ArkaPOOBGUI extends JFrame{
 		CardLayout c1 = (CardLayout)(mazo.getLayout());
 		c1.show(mazo,"Instrucciones");
 		setSize(650,550);
+	}
+	
+	public void abrir(){
+		file.setFileFilter(new FileNameExtensionFilter("DAT (.dat)","dat"));
+		int val = file.showOpenDialog(this);
+		if(val == JFileChooser.APPROVE_OPTION){
+			ArkaPoobDAO dao = new ArkaPoobDAO();
+			ArkaPOOB juego = null;
+			try{
+				juego = dao.abrir(file.getSelectedFile());
+				PantallaDeJuego pj = new PantallaDeJuego(juego.getJugadores());
+				pj.crearJuego(juego);
+				pj.setVisible(true);	
+			}catch(ArkaPoobException e){
+				JOptionPane.showMessageDialog(this,e.getMessage());
+			}
+		}
 	}
 
 	public static void main(String[] args) {

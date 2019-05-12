@@ -2,10 +2,11 @@ package aplicacion;
 
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
-public class Bola implements Elemento{
+public class Bola implements Elemento, Serializable{
 	private int x;
 	private int y;
 	private double dx;
@@ -132,6 +133,10 @@ public class Bola implements Elemento{
 	
 	@Override
 	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void moverX(int x) {
 		if(x==2)
 			this.x -= 20;
 		else

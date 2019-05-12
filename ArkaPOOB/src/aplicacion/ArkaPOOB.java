@@ -1,5 +1,7 @@
 package aplicacion;
 
+import persistencia.*;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -9,7 +11,7 @@ import java.util.*;
  * @author Murillo Carlos
  */
 
-public class ArkaPOOB {
+public class ArkaPOOB implements Serializable{
 	private ArrayList<ArrayList<Bloque>> bloques;
 	private ArrayList< ArrayList<Plataforma>> vidas;
 	private ArrayList<Plataforma> naves;
@@ -20,6 +22,7 @@ public class ArkaPOOB {
 	private int jugadores;
 	private Sorpresa sorpresa;
 	private boolean poderActivo;
+	private ArkaPoobDAO dao;
 	
 	/**
 	 * Crea una instancia del tablero de juego
@@ -32,6 +35,7 @@ public class ArkaPOOB {
 		score2=0;
 		prepareBloques();
 		ultimoBloque = bloques.get(0).get(0);
+		dao = new ArkaPoobDAO();
 		prepareNave();
 		prepareBola();
 		prepareVidas();
@@ -59,6 +63,11 @@ public class ArkaPOOB {
 						reemplazarBloque(bloques.get(i).get(j),i,j);
 						//bloques.get(i).remove(j);
 						
+					}
+					if(jugadores  == 2 && naves.get(0).isChocado(naves.get(1))) {
+						int ax = naves.get(0).getX(),ax2 = naves.get(1).getX();
+						naves.get(0).setX(ax2);
+						naves.get(1).setX(ax);
 					}
 				}
 			}
@@ -367,6 +376,13 @@ public class ArkaPOOB {
 	
 	public Sorpresa getSorpresa() {
 		return sorpresa;
-		
+	}
+	
+	public int getJugadores() {
+		return jugadores;
+	}
+	
+	public void guardar(File file) throws ArkaPoobException {
+		dao.guardar(this,file);
 	}
 }

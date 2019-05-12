@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
 import java.util.Timer;
+import java.io.*;
 
 
 import javax.swing.*;
@@ -123,18 +124,37 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 	public void moverJugador() {
 		if(ark.getPlataforma().get(0)!=null) {
 			if(keysDown.contains(new Integer(KeyEvent.VK_LEFT))) {
-				if (ark.getPlataforma().get(0).getX()>15&& !pausa)  
-					ark.getPlataforma().get(0).setX(2);
-				if(ark.getBola().getX()>ark.getPlataforma().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
-					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(0)))ark.getBola().setX(2); //esto puede meterse en el if de arriba
+				if (ark.getPlataforma().get(0).getX()>15&& !pausa) {  
+					ark.getPlataforma().get(0).moverX(2);
+					if(jugadores == 2 && ark.getPlataforma().get(0).isChocado(ark.getPlataforma().get(1))) {
+						int ax = ark.getPlataforma().get(0).getX(),ax2 = ark.getPlataforma().get(1).getX();
+						ark.getPlataforma().get(0).setX(ax2);
+						ark.getPlataforma().get(1).setX(ax);
+					}
+				}
+				if(ark.getBola().getX()>ark.getPlataforma().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa) {
+					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(0))) {
+						ark.getBola().setX(ark.getPlataforma().get(0).getX()+ark.getPlataforma().get(0).getWidth()/2-15);
+						//ark.getBola().setX(2); //esto puede meterse en el if de arriba
+					}
+				}
 			}
 			
 			if(keysDown.contains(new Integer(KeyEvent.VK_RIGHT))) {
-				if (ark.getPlataforma().get(0).getX()<width-ark.getPlataforma().get(0).getWidth()&& !pausa) 
-					ark.getPlataforma().get(0).setX(1);
+				if (ark.getPlataforma().get(0).getX()<width-ark.getPlataforma().get(0).getWidth()&& !pausa) {
+					ark.getPlataforma().get(0).moverX(1);
+					if(jugadores == 2 && ark.getPlataforma().get(0).isChocado(ark.getPlataforma().get(1))) {
+						int ax = ark.getPlataforma().get(0).getX(),ax2 = ark.getPlataforma().get(1).getX();
+						ark.getPlataforma().get(0).setX(ax2);
+						ark.getPlataforma().get(1).setX(ax);
+					}
+				}
 				
 				if(ark.getBola().getX()+15<width-ark.getPlataforma().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
-					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(0))) ark.getBola().setX(1); //ark.getBola().getX()+30 el +30 es el ancho de la bola, ponerlo así esta mal
+					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(0))) {
+						ark.getBola().setX(ark.getPlataforma().get(0).getX()+ark.getPlataforma().get(0).getWidth()/2-15);
+						//ark.getBola().setX(1); //ark.getBola().getX()+30 el +30 es el ancho de la bola, ponerlo así esta mal
+					}
 				
 			}
 			if(keysDown.contains(new Integer(KeyEvent.VK_SPACE))) {
@@ -146,18 +166,36 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		}
 		if(jugadores == 2) {
 			if(keysDown.contains(new Integer(KeyEvent.VK_A))) {
-				if (ark.getPlataforma().get(1).getX()>15&& !pausa)  
-					ark.getPlataforma().get(1).setX(2);
+				if (ark.getPlataforma().get(1).getX()>15&& !pausa)  {
+					ark.getPlataforma().get(1).moverX(2);
+					if(jugadores == 2 && ark.getPlataforma().get(0).isChocado(ark.getPlataforma().get(1))) {
+						int ax = ark.getPlataforma().get(0).getX(),ax2 = ark.getPlataforma().get(1).getX();
+						ark.getPlataforma().get(0).setX(ax2);
+						ark.getPlataforma().get(1).setX(ax);
+					}
+				}
 				if(ark.getBola().getX()>ark.getPlataforma().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
-					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(1)))ark.getBola().setX(2); //esto puede meterse en el if de arriba
+					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(1))) {
+						ark.getBola().setX(ark.getPlataforma().get(1).getX()+ark.getPlataforma().get(1).getWidth()/2-15);
+						//ark.getBola().setX(2); //esto puede meterse en el if de arriba
+					}
 			}
 			
 			if(keysDown.contains(new Integer(KeyEvent.VK_D))) {
-				if (ark.getPlataforma().get(1).getX()<width-ark.getPlataforma().get(1).getWidth()&& !pausa) 
-					ark.getPlataforma().get(1).setX(1);
+				if (ark.getPlataforma().get(1).getX()<width-ark.getPlataforma().get(1).getWidth()&& !pausa) {
+					ark.getPlataforma().get(1).moverX(1);
+					if(jugadores == 2 && ark.getPlataforma().get(0).isChocado(ark.getPlataforma().get(1))) {
+						int ax = ark.getPlataforma().get(0).getX(),ax2 = ark.getPlataforma().get(1).getX();
+						ark.getPlataforma().get(0).setX(ax2);
+						ark.getPlataforma().get(1).setX(ax);
+					}
+				}
 				
 				if(ark.getBola().getX()+15<width-ark.getPlataforma().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
-					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(1)))ark.getBola().setX(1); //ark.getBola().getX()+30 el +30 es el ancho de la bola, ponerlo así esta mal
+					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(1))) {
+						ark.getBola().setX(ark.getPlataforma().get(1).getX()+ark.getPlataforma().get(1).getWidth()/2-15);
+						//ark.getBola().setX(1); //ark.getBola().getX()+30 el +30 es el ancho de la bola, ponerlo así esta mal
+					}
 				
 			}
 			if(keysDown.contains(new Integer(KeyEvent.VK_SPACE))) {
@@ -258,6 +296,21 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		prepareElementos();
 		prepareAcciones();
 		setBackground(Color.BLACK);
+	}
+	
+	public void setJuego(ArkaPOOB ar) {
+		pausa = false;
+		keysDown=new ArrayList<Integer>();
+		ark = ar;
+		hilo= new Thread(this);
+		myTimer = new Timer();
+		hilo.start();
+	}
+	
+	public void guardar(File file) throws ArkaPoobException {
+		task.cancel();
+		hilo= new Thread(this);
+		ark.guardar(file);
 	}
 
 }

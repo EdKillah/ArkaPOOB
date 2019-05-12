@@ -1,6 +1,7 @@
 package aplicacion;
 
 import java.awt.*;
+import java.io.Serializable;
 
 import javax.swing.*;
 
@@ -11,7 +12,7 @@ import javax.swing.*;
  * @author Jimenez Eduard- Murillo Carlos.
  *
  */
-public class Plataforma implements Elemento{
+public class Plataforma implements Elemento,Serializable{
 	private int x;
 	private int y;
 	private int vidas;
@@ -64,12 +65,16 @@ public class Plataforma implements Elemento{
 
 	@Override
 	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void moverX(int x) {
 		if(x==2)
 			this.x -= 20;
 		else
 			this.x += 20;
 	}
-
+	
 	@Override
 	public void setY(int y) {
 		this.y = y;
@@ -189,6 +194,18 @@ public class Plataforma implements Elemento{
 	public boolean isChocado(Bola bola) {
         boolean isChocado = bola.getBounds().intersects(this.getBounds());
         return isChocado;
+    }
+	
+	public boolean isChocado(Plataforma plat) {
+		if(plat.getX() <= this.getX() && plat.getX()+plat.getWidth()+1>=this.getX()) {
+			this.setX(this.getX()+2);
+			return true;
+		}
+		if(this.getX() <= plat.getX() && this.getX()+this.getWidth()+1>=plat.getX()) {
+			plat.setX(plat.getX()+2);
+			return true;
+		}
+        return false;
     }
 
 

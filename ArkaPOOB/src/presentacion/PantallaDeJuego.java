@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.io.*;
+import javax.swing.filechooser.*;
+import aplicacion.*;
 
 public class PantallaDeJuego extends JFrame{
 	
@@ -45,6 +48,7 @@ public class PantallaDeJuego extends JFrame{
 	}
 	
 	public void prepareElementos() {
+		files = new JFileChooser();
 		pint = new Pintor(747,580,jugadores);
 		container = getContentPane();
 		container.add(pint, BorderLayout.CENTER); //JUEGO
@@ -63,25 +67,21 @@ public class PantallaDeJuego extends JFrame{
 		
 		container.add(a, BorderLayout.SOUTH); //PUNTAJE
 		
-		items = new JMenuItem[3];
+		items = new JMenuItem[2];
 		barraMenu = new JMenuBar();
 		container.add(barraMenu,BorderLayout.NORTH);
 		menu = new JMenu("Opciones");
 		barraMenu.add(menu);
 		
-		items[0] = new JMenuItem("Abrir");
-		items[1] = new JMenuItem("Guardar");
-		items[2] = new JMenuItem("Salir");
+		items[0] = new JMenuItem("Guardar");
+		items[1] = new JMenuItem("Salir");
 		
 		menu.add(items[0]);
 		menu.addSeparator();
 		menu.add(items[1]);
-		menu.addSeparator();
-		menu.add(items[2]);
 	}
 	
 	public void prepareAcciones() {
-		
 		ActionListener pausar = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -105,26 +105,24 @@ public class PantallaDeJuego extends JFrame{
 		
 		items[0].addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				abrir();
-			}
-		});
-		items[1].addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
 				guardar();
 			}
 		});
-		items[2].addActionListener(new ActionListener(){
+		items[1].addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				salir();
 			}
 		});
 	}
-	private void abrir(){
-		files = new JFileChooser();
-	}
 	
 	private void guardar(){
-		files = new JFileChooser();
+		files.setFileFilter(new FileNameExtensionFilter("DAT (.dat)","dat"));
+		int valid = files.showSaveDialog(this);
+		try{
+			if (valid == JFileChooser.APPROVE_OPTION) pint.guardar(files.getSelectedFile());
+		}catch(ArkaPoobException e){	
+			JOptionPane.showMessageDialog(this,e.getMessage());
+		}
 	}
 	
 	private void salir() {
@@ -146,5 +144,11 @@ public class PantallaDeJuego extends JFrame{
 	public void reiniciar() {
 		pint.reiniciar();
 	}
+	
+	public void crearJuego(ArkaPOOB ar) {
+		pint.setJuego(ar);
+	}
+	
+	
 	
 }
