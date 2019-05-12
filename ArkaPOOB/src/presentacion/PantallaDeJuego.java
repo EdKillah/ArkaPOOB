@@ -118,11 +118,32 @@ public class PantallaDeJuego extends JFrame{
 	private void guardar(){
 		files.setFileFilter(new FileNameExtensionFilter("DAT (.dat)","dat"));
 		int valid = files.showSaveDialog(this);
+		
+		File filePath = files.getSelectedFile();
+		
+		if (filePath != null && !filePath.getName().endsWith(".dat")) {
+			
+			String fileName = redoExtension(filePath.getName());
+			filePath = new File(filePath.getParentFile(),fileName+ ".dat");
+		}
+		
 		try{
-			if (valid == JFileChooser.APPROVE_OPTION) pint.guardar(files.getSelectedFile());
+			if (valid == JFileChooser.APPROVE_OPTION) pint.guardar(filePath);
+			files.resetChoosableFileFilters();
 		}catch(ArkaPoobException e){	
 			JOptionPane.showMessageDialog(this,e.getMessage());
 		}
+	}
+	
+	private String redoExtension(String fileName) {
+		int dotIndex = fileName.indexOf('.');
+		StringBuilder sb = new StringBuilder();
+		if (dotIndex >= 0) {
+			for (int i = 0 ; i < dotIndex;i++) {
+				sb.append(fileName.charAt(i));
+			}
+		}
+		return !sb.toString().equals("") ? sb.toString() : fileName;
 	}
 	
 	private void salir() {

@@ -23,6 +23,7 @@ public class ArkaPOOB implements Serializable{
 	private Sorpresa sorpresa;
 	private boolean poderActivo;
 	private ArkaPoobDAO dao;
+	private int nivel;
 	
 	/**
 	 * Crea una instancia del tablero de juego
@@ -33,6 +34,7 @@ public class ArkaPOOB implements Serializable{
 		naves = new ArrayList<Plataforma>();
 		score=0;
 		score2=0;
+		nivel = 0;
 		prepareBloques();
 		ultimoBloque = bloques.get(0).get(0);
 		dao = new ArkaPoobDAO();
@@ -380,6 +382,10 @@ public class ArkaPOOB implements Serializable{
 	
 	public int getJugadores() {
 		return jugadores;
+	}
+	
+	public int getNivel() {
+		return nivel;
 	}
 	
 	public void guardar(File file) throws ArkaPoobException {

@@ -107,6 +107,18 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 			if(!keysDown.contains(e.getKeyCode())) {
 				keysDown.add(new Integer(e.getKeyCode()));
 			}
+			if(ark.getBola().getX()>ark.getPlataforma().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa) {
+				if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(0))) {
+					ark.getBola().setX(ark.getPlataforma().get(0).getX()+ark.getPlataforma().get(0).getWidth()/2-15);
+					//ark.getBola().setX(2); //esto puede meterse en el if de arriba
+				}
+			}
+			if(jugadores == 2 && ark.getBola().getX()>ark.getPlataforma().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa) {
+				if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(1))) {
+					ark.getBola().setX(ark.getPlataforma().get(1).getX()+ark.getPlataforma().get(1).getWidth()/2-15);
+					//ark.getBola().setX(2); //esto puede meterse en el if de arriba
+				}
+			}
 			moverJugador();
 
 	}
@@ -302,6 +314,7 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		pausa = false;
 		keysDown=new ArrayList<Integer>();
 		ark = ar;
+		jugadores = ark.getJugadores();
 		hilo= new Thread(this);
 		myTimer = new Timer();
 		hilo.start();

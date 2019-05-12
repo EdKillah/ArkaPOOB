@@ -14,7 +14,7 @@ public class ArkaPoobDAO implements Serializable{
 			out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(ac);
 		}catch (IOException e) {
-			throw new ArkaPoobException("Ocurrio un error al salvar " + file.getName()+ " " + e.getMessage());
+			throw new ArkaPoobException("Ocurrio un error al salvar " + file.getName());
 		}finally {
 			try {
 				out.close();
