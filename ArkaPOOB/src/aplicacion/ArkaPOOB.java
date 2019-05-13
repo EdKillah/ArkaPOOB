@@ -299,7 +299,11 @@ public class ArkaPOOB implements Serializable{
 					if(j==5 || j == 7)
 						bloque = new BloqueRojo(posX,posY,70,35,this); //poner esto random
 					else
-						bloque = new BloqueVerde( posX, posY,70,35,this);
+						if(j==4)
+							bloque = null;
+						else
+							bloque = new BloqueRojo( posX, posY,70,35,this);
+					
 				}
 				else {
 					if(j== 9)
@@ -308,10 +312,13 @@ public class ArkaPOOB implements Serializable{
 						bloque = new BloqueNegro(posX,posY,70,35,this);
 					else if(j == 7)
 						bloque = new BloqueAzul(posX,posY,70,35,this);
+					else if (j==4)
+						bloque = new BloqueNaranja(posX,posY,70,35,this);
 					else
-						bloque = new BloqueRojo( posX, posY,70,35,this); //75 45
+						bloque = new BloqueRojo(posX, posY,70,35,this); //75 45
 				}
-				blocks.add(bloque);
+				if(bloque!=null)
+					blocks.add(bloque);
 				posX += step;
 			}
 			posY += 38;
@@ -342,6 +349,14 @@ public class ArkaPOOB implements Serializable{
 			}
 		}
 	}
+	
+	/*
+	public void existeBloque() {
+		for(int i=0;i<ark.getBloques().size();i++)
+	    	for(int j=0;j<ark.getBloques().get(i).size();j++) {
+	    		Bloque b = ark.getBloques().get(i).get(j);
+	}
+	*/
 
 	
 	public void setPoder(boolean a) {

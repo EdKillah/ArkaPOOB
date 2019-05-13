@@ -1,8 +1,6 @@
 package aplicacion;
 
-import java.awt.Image;
 
-import javax.swing.ImageIcon;
 
 
 /**
@@ -11,14 +9,11 @@ import javax.swing.ImageIcon;
  *
  */
 public class BloqueNaranja extends Bloque{
-	private int x;
-	private int y;
 	private int con;
-	private int width;
-	private int height;
 	private String tipo;
 	private boolean isChocado;
 	private final int puntos = 300;
+	private ArkaPOOB ark;
 	
 	
 	/**
@@ -34,6 +29,7 @@ public class BloqueNaranja extends Bloque{
 		setWidth(width);
 		setHeight(height);
 		setIsChocado(false);
+		this.ark = ark;
 		tipo = "naranja";
 		con = 0;
 	}
@@ -45,9 +41,21 @@ public class BloqueNaranja extends Bloque{
 	@Override
 	public boolean isChocado(Bola bola) {
 	    isChocado = bola.getBounds().intersects(this.getBounds());
-	    if(isChocado) con++;
-	    if(con>3) return isChocado;
-	    else return false;
+	    if(isChocado)
+		    for(int i=0;i<ark.getBloques().size();i++)
+		    	for(int j=0;j<ark.getBloques().get(i).size();j++) {
+		    		Bloque b = ark.getBloques().get(i).get(j);
+		    		if(b.getX()!= getX() && b.getX()+b.getWidth()!= getX()+getWidth() && b.getY()!= getY()-getHeight()) {
+		    			double aux = getY()-getHeight();
+		    			System.out.println("getY: "+getY());
+		    			System.out.println("getHeight: "+getHeight());
+		    			System.out.println("Entra: "+aux);
+		    			setY(getY()-getHeight());
+		    		}
+		    	}
+	    //if(isChocado) con++;
+	    //if(con>3) return isChocado; else
+	    return false;
     }
 	
 
