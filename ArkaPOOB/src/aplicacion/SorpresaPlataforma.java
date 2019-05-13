@@ -45,18 +45,7 @@ public class SorpresaPlataforma extends Sorpresa{
 	
 	private void activeSorpresa(Plataforma nave) {
 		nave.activeSorpresa(tipo,ark);
-		//ark.activeSorpresa();
-		//System.out.println("Entra en activar SOPRESA");
-		//System.out.println("Kolor nave "+ark.getPlataforma().get(0).getColor());
-		//nave.setWidth(138);
-		//nave.setHeight(48);
-		//nave.setHeight(20);
-		//nave.setImagen(new ImageIcon(getClass().getResource("/imagenes/big_vaus_"+nave.getColor()+".gif")));
-		//nave.setImagen(new ImageIcon(getClass().getResource("/imagenes/big_vaus_"+nave.getColor()+".gif")));
-		
 	}
-	
-	
 	
 	public void setNave(int i) {
 		nave = i;
@@ -75,7 +64,4 @@ public class SorpresaPlataforma extends Sorpresa{
 	public void setTipo(String type) {
 		tipo = type;
 	}
-	
-	
-	
 }

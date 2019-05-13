@@ -48,9 +48,7 @@ public abstract class Bloque implements Elemento, Serializable{
 	public int getPuntos() {
 		return puntos;
 	}
-	
-	
-	
+
 	@Override
 	public int getWidth() {
 		return width;

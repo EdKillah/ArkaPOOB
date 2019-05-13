@@ -239,7 +239,6 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 					cancel();
 				}
 				if(!ark.getBola().isInAire() && ark.getBola().isInNave()) {
-					System.out.println("olakase");
 					cancel();
 				}
 			}

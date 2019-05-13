@@ -203,11 +203,11 @@ public class ArkaPOOB implements Serializable{
 			if(bola.getUltimo().equals(naves.get(0)) && vidas.get(0).size()>0) {
 				if(bola.getUltimo().equals(naves.get(0)) &&vidas.get(0).size()==1) vidas.get(0).add(0,null);
 				vidas.get(0).remove(vidas.get(0).size()-1);
-				System.out.println("www");
+				
 			}
 			else if(bola.getUltimo().equals(naves.get(1)) &&vidas.get(1).size()>0) {
 				vidas.get(1).remove(vidas.get(1).size()-1);
-				System.out.println("aaaaa");
+				
 			}
 		}
 	}
@@ -244,7 +244,6 @@ public class ArkaPOOB implements Serializable{
 			if(getVidas().get(0).size()==0) return true;
 			else return false;
 		}else {
-			System.out.println(vidas);
 			if(getVidas().get(a).size() == 1 && getVidas().get(a).get(0)==null) return true;
 			else return false;
 		}
@@ -275,7 +274,6 @@ public class ArkaPOOB implements Serializable{
 	public void prepareBola(Plataforma plat){ 
 		int i = naves.indexOf(plat);
 		if(jugadores==1) {
-			System.out.println("ola");
 			bola = new Bola(naves.get(0).getX()+naves.get(0).getWidth()/2-15,naves.get(0).getY()-naves.get(0).getHeight(),naves.get(0),null,45,1,45,this);
 		}
 		else {
@@ -324,7 +322,6 @@ public class ArkaPOOB implements Serializable{
 	
 	public void isPlataformaActiva() {
 		if(naves.get(0).isPoderActivo()) {
-			System.out.println("eNTRA EN ACTIVO");
 			naves.get(0).hagaTalCosa(this);
 		}
 	}

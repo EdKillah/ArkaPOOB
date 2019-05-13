@@ -39,8 +39,6 @@ public class BloqueVerde extends Bloque{
 		this.ark = ark;
 	}
 	
-	
-	
 	/**
 	 * Metodo sobreescrito que realiza los procedimientos necesarios para considerar si fue chocado por una bola o no.
 	 */
@@ -52,7 +50,6 @@ public class BloqueVerde extends Bloque{
 	    if(con>1) return isChocado;
 	    else return false;
     }
-	
 	
 	@Override
 	public int getPuntos() {

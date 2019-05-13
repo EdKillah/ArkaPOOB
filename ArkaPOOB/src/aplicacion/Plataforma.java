@@ -147,7 +147,6 @@ public class Plataforma implements Elemento,Serializable{
 	
 	
 	public void hagaTalCosa(ArkaPOOB ark) {
-		System.out.println("JAJAJAJAJA BUENO");
 		if(contador>3) {
 			setPoderActivo(false);
 		}
@@ -177,14 +176,9 @@ public class Plataforma implements Elemento,Serializable{
 	
 	
 	public void activeSorpresa(String tipo,ArkaPOOB ark) {
-		System.out.println("dfaaf");
 		if(tipo.equals("Pegajosa")) {
-			System.out.println((ark.getBola().getY() + ark.getBola().getTamY() + height)+ "EnPlataforma " +getY());
-			System.out.println("Poder: "+ark.getPoder());
 			if(ark.getPoder() && ark.getBola().getY()+ ark.getBola().getTamY() + height >= getY()-1) {
-				System.out.println("k?");
 				this.setPoderActivo(true);
-				System.out.println("ANDO DESTROY");
 				//ark.prepareBola(); //this
 				//ark.setPoder(false);
 			}
