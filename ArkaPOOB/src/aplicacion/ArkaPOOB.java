@@ -350,13 +350,26 @@ public class ArkaPOOB implements Serializable{
 		}
 	}
 	
-	/*
-	public void existeBloque() {
-		for(int i=0;i<ark.getBloques().size();i++)
-	    	for(int j=0;j<ark.getBloques().get(i).size();j++) {
-	    		Bloque b = ark.getBloques().get(i).get(j);
+	
+	public boolean existeBloque(Bloque bloque) {
+		boolean band = true; 
+		for(int i=0;i<getBloques().size();i++) {
+			for(int j=0;j<getBloques().get(i).size();j++) {
+				Bloque b = getBloques().get(i).get(j);
+		    	if(b.getX()== bloque.getX() && b.getX()+b.getWidth()== bloque.getX()+bloque.getWidth()) {
+		    		System.out.println("Entra: "+b.getX()+" "+ bloque.getX());
+		    		double aux = bloque.getY()-bloque.getHeight();
+		    		if(b.getY()!= bloque.getY()-bloque.getHeight() && bloque.getY()-b.getY()<40 && !bloque.equals(b)) {
+		    			band = false;
+		    			System.out.println("Se multiplica: "+bloque.getY());
+		    			System.out.println("XXX: "+b.getY()+ " "+aux);
+		    		//setY(getY()-getHeight());
+		    		}
+		    	}
+		    }
+		}
+		return band;
 	}
-	*/
 
 	
 	public void setPoder(boolean a) {

@@ -11,10 +11,6 @@ import javax.swing.ImageIcon;
  *
  */
 public class BloqueAmarillo extends Bloque{
-	private int x;
-	private int y;
-	private int width;
-	private int height;
 	private String tipo;
 	private boolean isChocado;
 	private final int puntos = 300;

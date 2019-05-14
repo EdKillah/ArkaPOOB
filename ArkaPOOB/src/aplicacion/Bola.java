@@ -43,7 +43,24 @@ public class Bola implements Elemento, Serializable{
 		
 	}
 	
+	public void activeSorpresa(String type) {
+		
+		if(type=="minus")
+			moverX("-");
+		else
+			moverX("+");
+	}
 	
+	
+	public void moverX(String type) {
+		if(type.equals("-")) 
+			this.x -= 35;
+		else
+			this.x += 35;
+		
+			
+	}
+		
 	public Rectangle getBounds() {
         Rectangle borde = new Rectangle(this.getX(), this.getY(), TAMX, TAMY);
         return borde;
@@ -88,7 +105,6 @@ public class Bola implements Elemento, Serializable{
 		}
 		
 		if(y + TAMY>heightT){
-			double aux =  TAMY +y;
 			if(isInNave()) {
 				y=(int)heightT-TAMY;
 				dy=-dy;
@@ -136,12 +152,14 @@ public class Bola implements Elemento, Serializable{
 		this.x = x;
 	}
 	
+	/*
 	public void moverX(int x) {
 		if(x==2)
 			this.x -= 20;
 		else
 			this.x += 20;
 	}
+	*/
 	
 	@Override
 	public int getY() {

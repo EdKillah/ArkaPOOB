@@ -1,8 +1,5 @@
 package aplicacion;
 
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
 
 
 /**
@@ -11,10 +8,6 @@ import javax.swing.ImageIcon;
  *
  */
 public class BloqueNegro extends Bloque{
-	private int x;
-	private int y;
-	private int width;
-	private int height;
 	private String tipo;
 	private boolean isChocado;
 	private final int puntos = 600;

@@ -1,9 +1,5 @@
 package aplicacion;
 
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
-
 /**
  * Clase BloqueRojo que extiende de la clase Bloque para obtener todos sus atributos. 
  * @author Jimenez Eduard- Murillo Carlos
@@ -11,10 +7,7 @@ import javax.swing.ImageIcon;
  */
 
 public class BloqueRojo extends Bloque{
-	private int x;
-	private int y;
-	private int width;
-	private int height;
+
 	private String tipo;
 	private boolean isChocado;
 	private final int puntos = 100;

@@ -4,10 +4,6 @@ package aplicacion;
 
 
 public class SorpresaPlataforma extends Sorpresa{
-	private int x;
-	private int y;
-	private int width;
-	private int height;
 	private String tipo;
 	private ArkaPOOB ark;
 	private boolean isChocado;
@@ -21,16 +17,19 @@ public class SorpresaPlataforma extends Sorpresa{
 		setWidth(70);
 		setHeight(34);
 		setIsChocado(false);
-		tipo = "Pegajosa";
+		escojaTipo();
+		//setTipo("pegajosa");
 		this.ark = ark;
 	}
 	
-	/**
-	 * Metodo encargado de preparar la imagen del bloque dependiendo de su tipo.
-	 */
-	private void prepareImagen() {
-		//System.out.println("ENTRA EN PREPAREIMAGEN SORPRESA");
-		//imagen = new ImageIcon(getClass().getResource("/imagenes/sorpresa_especial.gif"));
+	
+	private void escojaTipo() {
+		double x = Math.random()*3;
+		int azar = (int)x;
+		System.out.println("Numero escojido al azar nave: "+azar);
+		if(azar%2==0) tipo="Laser";
+		else tipo = "pegajosa";
+		
 	}
 	
 	@Override
@@ -55,7 +54,7 @@ public class SorpresaPlataforma extends Sorpresa{
 		return nave;
 	}
 	
-	@Override
+	
 	public String getTipo() {
 		return tipo;
 	}

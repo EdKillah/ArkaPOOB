@@ -3,7 +3,6 @@ package aplicacion;
 import java.awt.*;
 import java.io.Serializable;
 
-import javax.swing.ImageIcon;
 
 
 public abstract class Sorpresa implements Elemento,Serializable{
@@ -13,12 +12,10 @@ public abstract class Sorpresa implements Elemento,Serializable{
 	private int width;
 	private int height;
 	private boolean isChocado;
-	private ImageIcon imagen;
+	private String tipo;
+
 	
-	public Image getImagen() {
-		imagen = new ImageIcon(getClass().getResource("/imagenes/sorpresa_especial.gif"));
-		return imagen.getImage();
-	}
+
 	
 	@Override
 	public int getX() {
@@ -38,6 +35,10 @@ public abstract class Sorpresa implements Elemento,Serializable{
 	@Override
 	public void setY(int y) {
 		this.y += y;
+	}
+	
+	public void setTipo(String type) {
+		tipo = type;
 	}
 	
 	public Rectangle getBounds() {
@@ -70,6 +71,9 @@ public abstract class Sorpresa implements Elemento,Serializable{
 	}
 	
 	public abstract boolean isChocado(Plataforma nave);
+	//public String getTipo() {
+	//	return tipo;
+	//}
 	public abstract String getTipo();
-	public abstract void setTipo(String type);
+	//public abstract void setTipo(String type);
 }

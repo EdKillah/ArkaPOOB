@@ -63,7 +63,8 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		
 		Sorpresa poder = ark.getSorpresa();
 		if(poder!= null) {
-			g.drawImage(poder.getImagen(), poder.getX(),poder.getY() ,poder.getWidth(),poder.getHeight(), this);
+			Image img = new ImageIcon(getClass().getResource("/imagenes/sorpresa_"+poder.getTipo()+".gif")).getImage();
+			g.drawImage(img, poder.getX(),poder.getY() ,poder.getWidth(),poder.getHeight(), this);
 		}
 		
 		Bola bola = ark.getBola();
