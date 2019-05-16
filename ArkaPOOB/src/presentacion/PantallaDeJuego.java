@@ -21,37 +21,49 @@ public class PantallaDeJuego extends JFrame{
 	private JMenuItem[] items;
 	private JFileChooser files;
 	private int jugadores; 
+	private boolean usaRosa;
+	private boolean usaAzul;
+	private boolean usaAmarillo;
+	private boolean usaNaranja;
+	private boolean usaNegro;
+	private String colorNave;
 	
-	public PantallaDeJuego(int jugadores) {
+	public PantallaDeJuego(int jugadores,String color,boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
 		super("Juego");
 		setSize(750,660);
 		this.jugadores=jugadores;
-		//this.color = color;
+		colorNave=color;
 		pausa =false;
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocationRelativeTo(null);
 		setResizable(false);
+		prepareEstadoBloques(rosa, azul,amarillo, naranja,negro);
 		prepareElementos();
+		pint.colores(color,null);
 		prepareAcciones();
 	}
 	
-	public PantallaDeJuego(int jugadores,String color,String color2) {
-		this(jugadores);
+	public PantallaDeJuego(int jugadores,String color,String color2,boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
+		this(jugadores,color,rosa, azul,amarillo, naranja,negro);
 		pint.colores(color,color2);
 		
 	}
 	
-	public PantallaDeJuego(int jugadores,String color) {
-		this(jugadores);
-		pint.colores(color,null);
-		
+	
+	public void prepareEstadoBloques(boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
+		usaRosa = rosa;
+		usaAzul = azul;
+		usaAmarillo = amarillo;
+		usaNaranja = naranja;
+		usaNegro = negro;
 	}
 	
 	public void prepareElementos() {
 		files = new JFileChooser();
-		pint = new Pintor(747,580,jugadores);
+		pint = new Pintor(747,580,jugadores,colorNave,usaRosa,usaAzul,usaAmarillo,usaNaranja,usaNegro);
 		container = getContentPane();
 		container.add(pint, BorderLayout.CENTER); //JUEGO
+		pint.setBackground(new ImageIcon(getClass().getResource("/imagenes/ArkanoidFondo.png")));
 		
 		JPanel a = new JPanel(); 
 		a.setOpaque(true);

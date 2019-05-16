@@ -24,18 +24,27 @@ public class ArkaPOOB implements Serializable{
 	private boolean poderActivo;
 	private ArkaPoobDAO dao;
 	private int nivel;
+	private String colorNave;
+	private boolean bloqueRosa;
+	private boolean bloqueAzul;
+	private boolean bloqueAmarillo;
+	private boolean bloqueNaranja;
+	private boolean bloqueNegro;
+	
+	
 	
 	/**
 	 * Crea una instancia del tablero de juego
 	 * 
 	 */
-	public ArkaPOOB(int jugadores) {
+	public ArkaPOOB(int jugadores,String colorNave,boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
 		this.jugadores = jugadores;
 		naves = new ArrayList<Plataforma>();
 		score=0;
 		score2=0;
 		nivel = 0;
-		prepareBloques();
+		this.colorNave = colorNave;
+		prepareBloques(rosa,azul,amarillo,naranja,negro);
 		ultimoBloque = bloques.get(0).get(0);
 		dao = new ArkaPoobDAO();
 		prepareNave();
@@ -281,14 +290,79 @@ public class ArkaPOOB implements Serializable{
 		}
 	}
 	
+	public boolean[] getColores(){
+		boolean[] colores = {bloqueRosa,bloqueAzul,bloqueAmarillo,bloqueNaranja,bloqueNegro};
+		//colores.add(bloqueRosa);
+		//colores.add(bloqueAzul);
+		return colores;
+	}
+	
+	
+	
+	public void prepareColorBloques(boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
+		bloqueRosa = rosa;
+		bloqueAzul = azul;
+		bloqueAmarillo = amarillo;
+		bloqueNaranja = naranja;
+		bloqueNegro = negro;
+	}
+	
+	
+	private Bloque alisteBloques(int posicionAux,int contador,int posX,int posY,Bloque bloque) {
+		String[] mComunes = {"Rojo","Verde","Naranja","Gris"};
+		String[] pComunes = {"Rosa","Azul","Amarillo","Negro"};
+		if(posicionAux>=mComunes.length) 
+			posicionAux=0;
+		//System.out.println("PosicionAux: "+posicionAux);
+		if(contador%2==0) {
+			if(mComunes[posicionAux].equals("Rojo"))
+				bloque = new BloqueRojo(posX,posY,70,35,this);
+			else if(mComunes[posicionAux].equals("Verde"))
+				bloque = new BloqueVerde(posX,posY,70,35,this);
+			else if(mComunes[posicionAux].equals("Naranja") && bloqueNaranja)
+				bloque = new BloqueNaranja(posX,posY,70,35,this);
+			else 
+				bloque = new BloqueGris(posX,posY,70,35,this);
+		}
+		else {
+			int pocoComunes = (int) (Math.random() * 40);
+			//System.out.println("PocoCOMUNES: "+pocoComunes);
+			if(pocoComunes%2==0) {
+				if(pComunes[posicionAux].equals("Azul") && bloqueAzul)
+					bloque = new BloqueAzul(posX,posY,70,35,this);
+				else if(pComunes[posicionAux].equals("Amarillo") && bloqueAmarillo)
+					bloque = new BloqueAmarillo(posX,posY,70,35,this);
+				else if(pComunes[posicionAux].equals("Rosa") && bloqueRosa && pocoComunes%8==0)
+					bloque = new BloqueRosa(posX,posY,70,35,this);
+				else if(pComunes[posicionAux].equals("Negro") && bloqueNegro)
+					bloque = new BloqueNegro(posX,posY,70,35,this);
+				else
+					bloque = new BloqueVerde(posX,posY,70,35,this);
+			}
+			else
+				bloque = new BloqueVerde(posX,posY,70,35,this);
+		}
+		return bloque;
+	}
+	
+	
 	/**
 	 * Metodo que prepara los bloques iniciales del juego, distribuyendolos de una manera especifica.
 	 */
-	public void prepareBloques() {
-		Bloque bloque;
+	public void prepareBloques(boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
+		//System.out.println("rosa: "+rosa);
+		//System.out.println("azurro: "+azul);
+		//System.out.println("giallo: "+amarillo);
+		//System.out.println("arancia: "+naranja);
+		//System.out.println("nero: "+negro);
+
+		prepareColorBloques(rosa, azul, amarillo, naranja,negro);
+		Bloque bloque=null;
 		bloques = new ArrayList<ArrayList<Bloque>>();
 		int posY=30,posX=0;
 		int step = 70;
+		int posicionAux=0;
+		int contador = 0;
 		for(int i=0;i<3;i++) {
 			posX=20;
 			ArrayList<Bloque> blocks = new ArrayList<Bloque>();
@@ -296,26 +370,14 @@ public class ArkaPOOB implements Serializable{
 				if(i==0) 
 					bloque = new BloqueGris(posX, posY,70,35,this);
 				else if(i==1) {
-					if(j==5 || j == 7)
-						bloque = new BloqueRojo(posX,posY,70,35,this); //poner esto random
-					else
-						if(j==4)
-							bloque = null;
-						else
-							bloque = new BloqueRojo( posX, posY,70,35,this);
-					
+					bloque = alisteBloques(posicionAux,contador,posX,posY,bloque);
+					posicionAux++;
+					contador++;
 				}
 				else {
-					if(j== 9)
-						bloque = new BloqueAmarillo(posX, posY, 70,35,this);
-					else if(j==0)
-						bloque = new BloqueNegro(posX,posY,70,35,this);
-					else if(j == 7)
-						bloque = new BloqueAzul(posX,posY,70,35,this);
-					else if (j==4)
-						bloque = new BloqueNaranja(posX,posY,70,35,this);
-					else
-						bloque = new BloqueRojo(posX, posY,70,35,this); //75 45
+					bloque = alisteBloques(posicionAux,contador,posX,posY,bloque);
+					posicionAux++;
+					contador++;
 				}
 				if(bloque!=null)
 					blocks.add(bloque);
@@ -357,13 +419,8 @@ public class ArkaPOOB implements Serializable{
 			for(int j=0;j<getBloques().get(i).size();j++) {
 				Bloque b = getBloques().get(i).get(j);
 		    	if(b.getX()== bloque.getX() && b.getX()+b.getWidth()== bloque.getX()+bloque.getWidth()) {
-		    		System.out.println("Entra: "+b.getX()+" "+ bloque.getX());
-		    		double aux = bloque.getY()-bloque.getHeight();
 		    		if(b.getY()!= bloque.getY()-bloque.getHeight() && bloque.getY()-b.getY()<40 && !bloque.equals(b)) {
 		    			band = false;
-		    			System.out.println("Se multiplica: "+bloque.getY());
-		    			System.out.println("XXX: "+b.getY()+ " "+aux);
-		    		//setY(getY()-getHeight());
 		    		}
 		    	}
 		    }
@@ -378,6 +435,10 @@ public class ArkaPOOB implements Serializable{
 
 	public boolean getPoder() {
 		return poderActivo;
+	}
+	
+	public String getColorNave() {
+		return colorNave;
 	}
 
 	public ArrayList<Plataforma> getPlataforma() {

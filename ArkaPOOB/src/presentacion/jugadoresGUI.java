@@ -25,6 +25,17 @@ public class jugadoresGUI extends JFrame{
 	private JComboBox<String> naveColor;
 	private JComboBox<String> naveColor1;
 	private JComboBox<String> naveColor2;
+	private JCheckBox bloqueRosado;
+	private JCheckBox bloqueNegro;
+	private JCheckBox bloqueAmarillo;
+	private JCheckBox bloqueNaranja;
+	private JCheckBox bloqueAzul;
+	private JCheckBox bloqueRosado2;
+	private JCheckBox bloqueNegro2;
+	private JCheckBox bloqueAmarillo2;
+	private JCheckBox bloqueNaranja2;
+	private JCheckBox bloqueAzul2;
+	
 	private String[] colores = {"red","blue","orange","green","purple"};
 	
 	public jugadoresGUI() {
@@ -69,6 +80,93 @@ public class jugadoresGUI extends JFrame{
 		prepareJugadorCPU();
 	}
 	
+	
+	private void prepareBloquesJugador1(JPanel contenido) {
+		
+		JLabel bloques = new JLabel("Bloques:");
+		bloques.setForeground(Color.BLACK);
+		bloques.setBounds(355, 10, 80, 18);
+		contenido.add(bloques);
+		
+		bloqueRosado = new JCheckBox("Rosado");
+		bloqueAzul = new JCheckBox("Azul");
+		bloqueAmarillo = new JCheckBox("Amarillo");
+		bloqueNaranja = new JCheckBox("Naranja");
+		bloqueNegro = new JCheckBox("Negro");
+		
+		bloqueRosado.setBounds(355, 35, 80, 20);
+		bloqueAzul.setBounds(355, 55, 80, 20);
+		bloqueAmarillo.setBounds(355, 75, 80, 20);
+		bloqueNaranja.setBounds(355, 95, 80, 20);
+		bloqueNegro.setBounds(355, 115, 80, 20);
+		bloqueRosado.setOpaque(false);
+		bloqueAzul.setOpaque(false);
+		bloqueAmarillo.setOpaque(false);
+		bloqueNaranja.setOpaque(false);
+		bloqueNegro.setOpaque(false);
+		
+		contenido.add(bloqueRosado);
+		contenido.add(bloqueAzul);
+		contenido.add(bloqueAmarillo);
+		contenido.add(bloqueNaranja);
+		contenido.add(bloqueNegro);
+	}
+	
+	private void prepareBloquesJugador2(JPanel contenido) {
+		JLabel bloques = new JLabel("Bloques:");
+		bloques.setForeground(Color.BLACK);
+		bloques.setBounds(25, 105, 80, 18);
+		contenido.add(bloques);
+		
+		bloqueRosado2 = new JCheckBox("Rosado");
+		bloqueAzul2 = new JCheckBox("Azul");
+		bloqueAmarillo2 = new JCheckBox("Amarillo");
+		bloqueNaranja2 = new JCheckBox("Naranja");
+		bloqueNegro2 = new JCheckBox("Negro");
+		
+		bloqueRosado2.setBounds(105, 105, 80, 20);
+		bloqueAzul2.setBounds(185, 105, 80, 20);
+		bloqueAmarillo2.setBounds(265, 105, 80, 20);
+		bloqueNaranja2.setBounds(345, 105, 80, 20);
+		bloqueNegro2.setBounds(425, 105, 80, 20);
+		bloqueRosado2.setOpaque(false);
+		bloqueAzul2.setOpaque(false);
+		bloqueAmarillo2.setOpaque(false);
+		bloqueNaranja2.setOpaque(false);
+		bloqueNegro2.setOpaque(false);
+		
+		contenido.add(bloqueRosado2);
+		contenido.add(bloqueAzul2);
+		contenido.add(bloqueAmarillo2);
+		contenido.add(bloqueNaranja2);
+		contenido.add(bloqueNegro2);
+	}
+	
+	private void prepareNombreJugador1(JPanel contenido) {
+		
+		JLabel nombre = new JLabel("Nombre:");
+		nombre.setForeground(Color.BLACK);
+		nombre.setBounds(15, 20, 80, 18);
+		contenido.add(nombre);
+		
+		textNombre = new JTextField();
+		textNombre.setBounds(90, 19, 78, 18);
+		contenido.add(textNombre);
+		textNombre.setColumns(10);
+	}
+	
+	private void prepareColorNaveJugador1(JPanel contenido) {
+		
+		JLabel nave = new JLabel("Color Nave:");
+		nave.setForeground(Color.BLACK);
+		nave.setBounds(15, 65, 80, 18);
+		contenido.add(nave);
+		
+		naveColor = new JComboBox<>(colores);
+		naveColor.setBounds(100, 65, 121, 20);
+		contenido.add(naveColor);
+	}
+	
 	private void prepareUnJugador() {
 		myPanel panelUnJugador = new myPanel();
 		panelUnJugador.setBackground(new ImageIcon(getClass().getResource("/imagenes/fondo.png")));
@@ -87,15 +185,11 @@ public class jugadoresGUI extends JFrame{
 		contenido.setLayout(null);
 		contenido.setBackground(Color.BLACK);
 		
-		JLabel nombre = new JLabel("Nombre:");
-		nombre.setForeground(Color.BLACK);
-		nombre.setBounds(15, 20, 80, 18);
-		contenido.add(nombre);
+		prepareNombreJugador1(contenido);
 		
-		JLabel nave = new JLabel("Color Nave:");
-		nave.setForeground(Color.BLACK);
-		nave.setBounds(15, 65, 80, 18);
-		contenido.add(nave);
+		prepareColorNaveJugador1(contenido);
+
+		prepareBloquesJugador1(contenido);
 		
 		jugar1 = new Boton(new ImageIcon(getClass().getResource("/imagenes/jugar2.png")));
 		jugar1.setBounds(85, 150, 180, 60);
@@ -106,17 +200,24 @@ public class jugadoresGUI extends JFrame{
 		volver1.setBounds(300, 150, 200, 60);
 		volver1.setTransparent();
 		contenido.add(volver1);
+		//prepareBotonJugar(contenido);
+		//prepareBotonVolver(contenido);
 		
-		textNombre = new JTextField();
-		textNombre.setBounds(90, 19, 78, 18);
-		contenido.add(textNombre);
-		textNombre.setColumns(10);
-		
-		naveColor = new JComboBox<>(colores);
-		naveColor.setBounds(100, 65, 121, 20);
-		contenido.add(naveColor);
-
 		panelUnJugador.add(contenido);
+	}
+	
+	private void prepareBotonJugar(JPanel contenido) {
+		jugar1 = new Boton(new ImageIcon(getClass().getResource("/imagenes/jugar2.png")));
+		jugar1.setBounds(85, 150, 180, 60);
+		jugar1.setTransparent();
+		contenido.add(jugar1);
+	}
+	
+	private void prepareBotonVolver(JPanel contenido){
+		volver1 = new Boton(new ImageIcon(getClass().getResource("/imagenes/volver.png")));
+		volver1.setBounds(300, 150, 200, 60);
+		volver1.setTransparent();
+		contenido.add(volver1);
 	}
 	
 	private void prepareDosJugadores() {
@@ -137,25 +238,38 @@ public class jugadoresGUI extends JFrame{
 		contenido.setLayout(null);
 		contenido.setBackground(Color.BLACK);
 		
-		JLabel nombre = new JLabel("Jugador 1:");
-		nombre.setForeground(Color.BLACK);
-		nombre.setBounds(15, 20, 80, 18);
-		contenido.add(nombre);
+		prepareNombreJugador1(contenido);
+		
+		//prepareColorNaveJugador1(contenido);
+		
+		
+		
+		naveColor1 = new JComboBox<>(colores);
+		naveColor1.setBounds(90, 65, 121, 20);
+		contenido.add(naveColor1);
+		
+		prepareBloquesJugador2(contenido);
 		
 		JLabel nombre2 = new JLabel("Jugador 2:");
 		nombre2.setForeground(Color.BLACK);
 		nombre2.setBounds(280, 20, 80, 18);
 		contenido.add(nombre2);
 		
-		JLabel nave = new JLabel("Color Nave:");
-		nave.setForeground(Color.BLACK);
-		nave.setBounds(15, 65, 80, 18);
-		contenido.add(nave);
 		
 		JLabel nave2 = new JLabel("Color Nave:");
 		nave2.setForeground(Color.BLACK);
 		nave2.setBounds(280, 65, 80, 18);
 		contenido.add(nave2);
+		
+		
+		textNombre2 = new JTextField();
+		textNombre2.setBounds(355, 19, 78, 18);
+		contenido.add(textNombre2);
+		textNombre2.setColumns(10);
+		
+		naveColor2 = new JComboBox<>(colores);
+		naveColor2.setBounds(355, 65, 121, 20);
+		contenido.add(naveColor2);
 		
 		jugar2 = new Boton(new ImageIcon(getClass().getResource("/imagenes/jugar2.png")));
 		jugar2.setBounds(85, 150, 180, 60);
@@ -167,24 +281,9 @@ public class jugadoresGUI extends JFrame{
 		volver2.setTransparent();
 		contenido.add(volver2);
 		
-		textNombre = new JTextField();
-		textNombre.setBounds(90, 19, 78, 18);
-		contenido.add(textNombre);
-		textNombre.setColumns(10);
+		//prepareBotonJugar(contenido);
 		
-		textNombre2 = new JTextField();
-		textNombre2.setBounds(355, 19, 78, 18);
-		contenido.add(textNombre2);
-		textNombre2.setColumns(10);
-		
-		naveColor1 = new JComboBox<>(colores);
-		naveColor1.setBounds(90, 65, 121, 20);
-		contenido.add(naveColor1);
-		
-		naveColor2 = new JComboBox<>(colores);
-		naveColor2.setBounds(355, 65, 121, 20);
-		contenido.add(naveColor2);
-
+		//prepareBotonVolver(contenido);
 		
 		panelDosJugador.add(contenido);
 	}
@@ -313,10 +412,10 @@ public class jugadoresGUI extends JFrame{
 	private void jugar(int jugadores,boolean cpu) {
 		dispose();
 		PantallaDeJuego pdj = null;
-		if(jugadores == 1) {
-			pdj = new PantallaDeJuego(jugadores,(String)naveColor.getSelectedItem());
+		if(jugadores == 1) {	
+			pdj = new PantallaDeJuego(jugadores,(String)naveColor.getSelectedItem(),bloqueRosado.isSelected(), bloqueAzul.isSelected(), bloqueAmarillo.isSelected(), bloqueNaranja.isSelected(), bloqueNegro.isSelected());
 		}else if(jugadores == 2) {
-			pdj = new PantallaDeJuego(jugadores,(String)naveColor1.getSelectedItem(),(String)naveColor2.getSelectedItem());
+			pdj = new PantallaDeJuego(jugadores,(String)naveColor1.getSelectedItem(),(String)naveColor2.getSelectedItem(),bloqueRosado2.isSelected(), bloqueAzul2.isSelected(), bloqueAmarillo2.isSelected(), bloqueNaranja2.isSelected(), bloqueNegro2.isSelected());
 		}
 		pdj.setVisible(true);
 	}

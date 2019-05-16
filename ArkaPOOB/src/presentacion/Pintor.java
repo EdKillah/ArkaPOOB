@@ -15,10 +15,11 @@ import java.io.*;
 
 import javax.swing.*;
 
-public class Pintor extends JPanel implements ActionListener, KeyListener, Runnable{
+public class Pintor extends myPanel implements ActionListener, KeyListener, Runnable{
+	//private myPanel myPanel;	
 	private ArkaPOOB ark;
 	private ArrayList<Integer> keysDown;
-	//private String colorNave;
+	private String colorNave;
 	private Thread hilo;
 	private Timer myTimer;
 	private TimerTask task;
@@ -26,12 +27,23 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 	private int height;
 	private boolean pausa;
 	private int jugadores;
+	private boolean usaRosa;
+	private boolean usaAzul;
+	private boolean usaAmarillo;
+	private boolean usaNaranja;
+	private boolean usaNegro;
 	
-	public Pintor(int w, int h , int jugadores) {
+	public Pintor(int w, int h , int jugadores,String colorNave, boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
 		this.jugadores = jugadores;
 		pausa = false;
 		keysDown=new ArrayList<Integer>();
-		ark = new ArkaPOOB(jugadores);
+		usaRosa = rosa;
+		usaAzul = azul;
+		usaAmarillo = amarillo;
+		usaNaranja = naranja;
+		usaNegro = negro;
+		this.colorNave = colorNave;
+		ark = new ArkaPOOB(jugadores,colorNave,rosa,azul,amarillo,naranja,negro);
 		width = w;
 		height = h;
 		//colorNave = color;
@@ -61,6 +73,14 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 			if(nave2 != null ) g.drawImage(nave2.getImagen(), nave2.getX(), nave2.getY(),nave2.getWidth(),nave2.getHeight(), this);
 		}
 		
+	   // g.setFont(new Font("TimesRoman", Font.PLAIN, 15));
+		g.setColor(Color.RED);
+		int scores[] = {ark.getScore1(),ark.getScore2()};
+		g.drawString(" score: " + scores[0] , width/2-100, height-70); //ark.encuentreTanque(1).getName()+
+		if (ark.getJugadores() == 2) {
+			g.drawString(" score2: " + scores[1], width/2+100, height-70); //ark.encuentreTanque(2).getName()
+		}
+		
 		Sorpresa poder = ark.getSorpresa();
 		if(poder!= null) {
 			Image img = new ImageIcon(getClass().getResource("/imagenes/sorpresa_"+poder.getTipo()+".gif")).getImage();
@@ -85,6 +105,15 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		if(color1 != null) naves.get(0).setColor(color1);
 		if(color2 != null) naves.get(1).setColor(color2);
 		ark.prepareVidas();
+	}
+	
+	
+	public void prepareBloques(boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
+		usaRosa = rosa;
+		usaAzul = azul;
+		usaAmarillo = amarillo;
+		usaNaranja = naranja;
+		usaNegro = negro;
 	}
 	
 	public void prepareElementos() {
@@ -300,7 +329,7 @@ public class Pintor extends JPanel implements ActionListener, KeyListener, Runna
 		String c,c2=null;
 		c = ark.getPlataforma().get(0).getColor();
 		if(jugadores == 2) {c2 = ark.getPlataforma().get(1).getColor();}
-		ark = new ArkaPOOB(jugadores);
+		ark = new ArkaPOOB(jugadores,colorNave,usaRosa, usaAzul, usaAmarillo, usaNaranja, usaNegro);
 		colores(c,c2);
 		hilo= new Thread(this);
 		myTimer = new Timer();
