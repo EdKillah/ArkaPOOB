@@ -45,8 +45,8 @@ public class BloqueAzul extends Bloque{
 	
 	private void creeSorpresa() {
 		if(isChocado) {
-			Sorpresa poder = new SorpresaPlataforma(getX(),getY(),ark);
-			//Sorpresa poder = new SorpresaBola(getX(),getY(),ark);
+			//Sorpresa poder = new SorpresaPlataforma(getX(),getY(),ark);
+			Sorpresa poder = new SorpresaBola(getX(),getY(),ark);
 			ark.setSorpresa(poder);
 		}
 	}

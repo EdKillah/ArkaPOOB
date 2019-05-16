@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 import javax.swing.*;
 
-//import com.sun.javafx.geom.Rectangle;
 
 /**
  * Clase que crea la plataforma del juego la cual es la que representa al jugador.
