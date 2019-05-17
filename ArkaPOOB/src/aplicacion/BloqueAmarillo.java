@@ -1,9 +1,5 @@
 package aplicacion;
 
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
-
 
 /**
  * Clase BloqueAmarillo que extiende de la clase Bloque para obtener todos sus atributos. 
@@ -40,6 +36,9 @@ public class BloqueAmarillo extends Bloque{
 	@Override
 	public boolean isChocado(Bola bola) {
         isChocado = bola.getBounds().intersects(this.getBounds());
+        if(isChocado) {
+        	ark.adicioneVida();
+        }
         return isChocado;
     }
 	

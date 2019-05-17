@@ -1,8 +1,5 @@
 package aplicacion;
 
-import java.awt.Image;
-
-import javax.swing.*;
 
 
 /**
@@ -42,6 +39,7 @@ public class BloqueRosa extends Bloque{
 	@Override
 	public boolean isChocado(Bola bola) {
         isChocado = bola.getBounds().intersects(this.getBounds());
+        //if(isChocado) ark.prepareBloques();
         return isChocado;
     }
 	

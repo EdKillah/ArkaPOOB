@@ -39,11 +39,13 @@ public class BloqueNaranja extends Bloque{
 	@Override
 	public boolean isChocado(Bola bola) {
 	    isChocado = bola.getBounds().intersects(this.getBounds());
-	    if(isChocado)
+	    if(isChocado) {
 	    	if(ark.existeBloque(this)) {
 	    		setY(getY()-getHeight()-3);
 	    		return false;
 	    	}
+	    }
+	    
 	    return isChocado;
     }
 	

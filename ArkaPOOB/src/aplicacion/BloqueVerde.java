@@ -1,8 +1,6 @@
 package aplicacion;
 
-import java.awt.Image;
 
-import javax.swing.ImageIcon;
 
 
 /**
@@ -44,7 +42,9 @@ public class BloqueVerde extends Bloque{
 	    isChocado = bola.getBounds().intersects(this.getBounds());
 	    if(isChocado) con++;
 	    
-	    if(con>1) return isChocado;
+	    if(con>1) {
+	    	return isChocado;
+	    }
 	    else return false;
     }
 	

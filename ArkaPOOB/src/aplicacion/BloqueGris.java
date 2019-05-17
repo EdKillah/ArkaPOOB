@@ -1,9 +1,5 @@
 package aplicacion;
 
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
-
 
 /**
  * Clase BloqueGris que extiende de la clase Bloque para obtener todos sus atributos. 

@@ -236,11 +236,20 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 					mensaje();
 					cancel();
 				}
+				//System.out.println(ark.getNivel());
+				if(ark.avanzaNivel()) {
+					System.out.println(ark.getNivel());
+					ark.prepareBloques(usaRosa, usaAzul, usaAmarillo, usaNaranja, usaNegro);
+					ark.estatico(0);
+					ark.prepareBola();
+					cancel();
+				}
 				if(!ark.isVivo()) {
 					ark.estatico(height);
 					mensaje();
 					ark.prepareBola();
 					cancel();
+					
 				}
 				if(!ark.getBola().isInAire() && ark.getBola().isInNave()) {
 					cancel();

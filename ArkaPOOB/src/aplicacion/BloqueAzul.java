@@ -39,16 +39,17 @@ public class BloqueAzul extends Bloque{
 	@Override
 	public boolean isChocado(Bola bola) {
         isChocado = bola.getBounds().intersects(this.getBounds());
-        creeSorpresa();
+        if(isChocado) {
+        	creeSorpresa();
+        }
+       
         return isChocado;
     }
 	
 	private void creeSorpresa() {
-		if(isChocado) {
-			//Sorpresa poder = new SorpresaPlataforma(getX(),getY(),ark);
-			Sorpresa poder = new SorpresaBola(getX(),getY(),ark);
-			ark.setSorpresa(poder);
-		}
+		//Sorpresa poder = new SorpresaPlataforma(getX(),getY(),ark);
+		Sorpresa poder = new SorpresaBola(getX(),getY(),ark);
+		ark.setSorpresa(poder);
 	}
 	
 	

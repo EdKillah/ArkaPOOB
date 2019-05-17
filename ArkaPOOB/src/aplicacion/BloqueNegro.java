@@ -39,7 +39,7 @@ public class BloqueNegro extends Bloque{
 	 */
 	@Override
 	public boolean isChocado(Bola bola) {
-        isChocado = bola.getBounds().intersects(this.getBounds());
+        isChocado = bola.getBounds().intersects(this.getBounds());       	
         return isChocado;
     }
 	

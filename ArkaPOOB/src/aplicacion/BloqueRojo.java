@@ -39,6 +39,7 @@ public class BloqueRojo extends Bloque{
 	@Override
 	public boolean isChocado(Bola bola) {
         isChocado = bola.getBounds().intersects(this.getBounds());
+
         return isChocado;
     }
 	
