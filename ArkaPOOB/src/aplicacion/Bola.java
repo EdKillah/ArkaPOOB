@@ -133,10 +133,10 @@ public class Bola implements Elemento, Serializable{
 	
 	public boolean isInNave() {
 		boolean ban = false;
-		if(getX()>=nave.getX()-15 && getX()<=nave.getX()+nave.getWidth()) {
+		if(nave.getVidas()>=0  && getX()>=nave.getX()-15 && getX()<=nave.getX()+nave.getWidth()) {
 			setUltimo(nave);
 			ban = true;
-		}if(nave2!=null && getX()>=nave2.getX()-15 && getX()<=nave2.getX()+nave2.getWidth()) {
+		}if(nave2 != null && nave2.getVidas()>=0 && getX()>=nave2.getX()-15 && getX()<=nave2.getX()+nave2.getWidth()) {
 			ban = true;
 			setUltimo(nave2);
 		}

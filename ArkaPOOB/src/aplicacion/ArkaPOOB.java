@@ -13,12 +13,9 @@ import java.util.*;
 
 public class ArkaPOOB implements Serializable{
 	private ArrayList<ArrayList<Bloque>> bloques;
-	private ArrayList< ArrayList<Plataforma>> vidas;
 	private ArrayList<Plataforma> naves;
 	private Bola bola;
 	private Bloque ultimoBloque;
-	private int score;
-	private int score2;
 	private int jugadores;
 	private Sorpresa sorpresa;
 	private boolean poderActivo;
@@ -40,8 +37,6 @@ public class ArkaPOOB implements Serializable{
 	public ArkaPOOB(int jugadores,String colorNave,boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
 		this.jugadores = jugadores;
 		naves = new ArrayList<Plataforma>();
-		score=0;
-		score2=0;
 		nivel = 0;
 		this.colorNave = colorNave;
 		prepareBloques(rosa,azul,amarillo,naranja,negro);
@@ -49,7 +44,6 @@ public class ArkaPOOB implements Serializable{
 		dao = new ArkaPoobDAO();
 		prepareNave();
 		prepareBola();
-		prepareVidas();
 	}
 	
 	
@@ -68,16 +62,11 @@ public class ArkaPOOB implements Serializable{
 					activeSorpresa();
 					isPlataformaActiva();
 					if(bloques.get(i).get(j).isChocado(bola)) {
-						if(bola.getUltimo().equals(naves.get(0))) score+=bloques.get(i).get(j).getPuntos();
-						else score2+=bloques.get(i).get(j).getPuntos();
+						bola.getUltimo().setScore(bloques.get(i).get(j).getPuntos());
 						adicioneVida(bloques.get(i).get(j));
 						reemplazarBloque(bloques.get(i).get(j),i,j);						
 					}
-					if(jugadores  == 2 && naves.get(0).isChocado(naves.get(1))) {
-						int ax = naves.get(0).getX(),ax2 = naves.get(1).getX();
-						naves.get(0).setX(ax2);
-						naves.get(1).setX(ax);
-					}
+					if(jugadores  == 2 ) naves.get(0).isChocado(naves.get(1));
 				}
 			}
 		}
@@ -122,7 +111,7 @@ public class ArkaPOOB implements Serializable{
 	 */
 	public void estatico(double height) {
 		borrarVidas((int)height);
-		if(vidas.size()>0)
+		if(naves.get(0).getVidas()>0)
 			prepareBola();
 			bola.setInAire(false);
 	}
@@ -137,8 +126,8 @@ public class ArkaPOOB implements Serializable{
 		if(jugadores == 1)
 			naves.add(new Plataforma(750/2,480,90,20));
 		if(jugadores ==2 ) {
-			naves.add(new Plataforma(40,480,90,20));//750/2 - 100
-			naves.add(new Plataforma(750-60,480,90,20));//750/2 + 100
+			naves.add(new Plataforma(750-60,480,90,20));//750/2 - 100
+			naves.add(new Plataforma(40,480,90,20));//750/2 + 100 //
 		}
 	}
 	
@@ -154,49 +143,13 @@ public class ArkaPOOB implements Serializable{
 	private void adicioneVida(Bloque bloque) {
 		if(bloque.getTipo().equals("amarillo")) {
 			if(bola.getUltimo().equals(naves.get(0))) {
-				Plataforma vida = vidas.get(0).get(vidas.get(0).size()-1);
-				Plataforma temp = new Plataforma(vida.getX()+70,vida.getY(),vida.getWidth(),vida.getHeight());
-				temp.setColor(vida.getColor());
-				vidas.get(0).add(temp);
+				naves.get(0).setVidas(1);
 			}else {
-				Plataforma vida = vidas.get(1).get(vidas.get(1).size()-1);//
-				Plataforma temp = new Plataforma(vida.getX()-10,vida.getY(),vida.getWidth(),vida.getHeight());
-				temp.setColor(vida.getColor());
-				vidas.get(1).add(temp);
+				naves.get(1).setVidas(1);
 			}
 		}
 	}
-	
-	
-	/**
-	 * Metodo que prepara las vidas del jugador. 
-	 */
-	public void prepareVidas() {
-		vidas = new ArrayList< ArrayList<Plataforma>>();
-		Plataforma vida;
-		int pos =0;
-		ArrayList<Plataforma> v = new ArrayList<Plataforma>();
-		for(int i=0;i<3;i++) {
-			vida = new Plataforma(30+pos,500,40,15);
-			vida.setColor(naves.get(0).getColor());
-			v.add(vida);
-			pos+=40;
-		}
-		vidas.add(v);
-		if(jugadores == 2) {
-			v = new ArrayList<Plataforma>();
-			pos = 750;
-			for(int i=0;i<3;i++) {
-				vida = new Plataforma(pos-30,500,40,15); //aqui podemos sacarle provecho al color que se le pasa
-				vida.setColor(naves.get(1).getColor());
-				v.add(vida);
-				pos-=40;
-			}
-		vidas.add(v);
-		}
-	}
-	
-	
+		
 	public boolean isVivo() {
 		return bola.isVivo();
 	}
@@ -207,23 +160,15 @@ public class ArkaPOOB implements Serializable{
 	 */
 	public void borrarVidas(int height) {
 		if (bola.getY()<=height) {
-			if(bola.getUltimo().equals(naves.get(0)) && vidas.get(0).size()>0) {
-				if(bola.getUltimo().equals(naves.get(0)) &&vidas.get(0).size()==1) vidas.get(0).add(0,null);
-				vidas.get(0).remove(vidas.get(0).size()-1);		
+			if(bola.getUltimo().equals(naves.get(0)) && naves.get(0).getVidas()>0) {
+				//if(bola.getUltimo().equals(naves.get(0)) &&vidas.get(0).size()==1) vidas.get(0).add(0,null);
+				naves.get(0).setVidas(-1);	
 			}
-			else if(bola.getUltimo().equals(naves.get(1)) &&vidas.get(1).size()>0) {
-				vidas.get(1).remove(vidas.get(1).size()-1);
+			else if(jugadores == 2 && bola.getUltimo().equals(naves.get(1)) &&naves.get(1).getVidas()>0) {
+				naves.get(1).setVidas(-1);
 				
 			}
 		}
-	}
-	
-	public int getScore1() {
-		return score;
-	}
-	
-	public int getScore2() {
-		return score2;
 	}
 	
 	/**
@@ -234,8 +179,28 @@ public class ArkaPOOB implements Serializable{
 	public boolean gano() {
 		int bloq=0;
 		for(int i=0;i<bloques.size();i++) 
-			if(bloques.get(i).size()>0)
-				bloq++;
+			for(int j=0;j<bloques.get(i).size();j++) {
+				if(!bloques.get(i).get(j).getTipo().equals("gris"))
+					bloq++;
+			}
+		System.out.println(bloq + " dsad");
+		if(bloq == 0 && nivel == 5) return true;
+		else return false;
+	}
+	
+	/**
+	 * Metodo que determina si el jugador gano, cumpliendose las condiciones necesarias. 
+	 * Estas son que se elimine un bloque rosa o que se eliminen todos los bloques(que se pueden eliminar)
+	 * @return true si gano, false dlc.
+	 */
+	public boolean avanazaNivel() {
+		int bloq=0;
+		for(int i=0;i<bloques.size();i++) {
+			for(int j=0;j<bloques.get(i).size();j++) {
+				if(!bloques.get(i).get(j).getTipo().equals("gris"))
+					bloq++;
+			}
+		}
 		if(bloq == 0 || ultimoBloque.getTipo().equals("rosa")) return true;
 		else return false;
 	}
@@ -245,31 +210,20 @@ public class ArkaPOOB implements Serializable{
 	 * El jugador pierde si esta no cuenta con vidas suficientes (mayor a 0).
 	 * @return
 	 */
-	public boolean perdio(int a,Plataforma p) {
-		if(jugadores == 1) {
-			if(getVidas().get(0).size()==0) return true;
-			else return false;
-		}else {
-			if(getVidas().get(a).size() == 1 && getVidas().get(a).get(0)==null) return true;
-			else return false;
-		}
-	}
-	
-	
-	public ArrayList<ArrayList<Plataforma>> getVidas(){
-		return vidas;
-	}
-	
+	public boolean perdio(Plataforma p) {
+		if(p.getVidas()==0) return true;
+		else return false;
+	}	
 	
 	/**
 	 * Metodo que prepara la bola dandole unos atributos iniciales.
 	 */
 	public void prepareBola(){
-		if(jugadores==1)
+		if(jugadores==1 && naves.get(0).getVidas() > 0)
 			bola = new Bola(naves.get(0).getX()+naves.get(0).getWidth()/2-15,naves.get(0).getY()-naves.get(0).getHeight(),naves.get(0),null,45,1,45,this);
 		else {
 			int numero = (int) (Math.random() * 2);
-			if(naves.get(numero) == null) {
+			if(naves.get(numero).getVidas() <= 0) {
 				if(numero == 0) numero=1;
 				else numero = 0;
 			}
@@ -306,7 +260,7 @@ public class ArkaPOOB implements Serializable{
 	private Bloque alisteBloques(int posicionAux,int contador,int posX,int posY,Bloque bloque) {
 		String[] mComunes = {"Rojo","Verde","Naranja","Gris"};
 		String[] pComunes = {"Rosa","Azul","Amarillo","Negro"};
-		System.out.println("Contador: "+contador);
+		//System.out.println("Contador: "+contador);
 		if(posicionAux>=mComunes.length) 
 			posicionAux=0;
 		if(contador%2==0) {
@@ -332,7 +286,7 @@ public class ArkaPOOB implements Serializable{
 				else if(pComunes[posicionAux].equals("Negro") && bloqueNegro)
 					bloque = new BloqueNegro(posX,posY,70,35,this);
 				else
-					bloque = new BloqueVerde(posX,posY,70,35,this);
+					bloque = new BloqueAmarillo(posX,posY,70,35,this);
 			}
 			else
 				bloque = new BloqueAzul(posX,posY,70,35,this);
@@ -447,8 +401,7 @@ public class ArkaPOOB implements Serializable{
 	}
 	
 	public void setSorpresa(Sorpresa a) {
-		sorpresa = a;
-		
+		sorpresa = a;	
 	}
 	
 	public Sorpresa getSorpresa() {

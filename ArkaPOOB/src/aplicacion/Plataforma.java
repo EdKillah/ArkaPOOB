@@ -23,6 +23,7 @@ public class Plataforma implements Elemento,Serializable{
 	private boolean poderActivo;
 	private boolean vivo;
 	private int contador;
+	private int score;
 	
 	
 	/**
@@ -43,6 +44,8 @@ public class Plataforma implements Elemento,Serializable{
 		contador = 0;
 		poderActivo = false;
 		prepareImagen();
+		score = 0;
+		vidas  = 3;
 	}
 	
 	/**
@@ -84,7 +87,7 @@ public class Plataforma implements Elemento,Serializable{
 	}
 
 	public void setVidas(int vidas) {
-		this.vidas = vidas;
+		this.vidas += vidas;
 	}
 
 	public int getBalas() {
@@ -155,6 +158,13 @@ public class Plataforma implements Elemento,Serializable{
 		}
 	}
 	
+	public int getScore() {
+		return score;
+	}
+	
+	public void setScore(int a) {
+		score += a;
+	}
 	
 	public Rectangle getBounds() {
         Rectangle borde = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
@@ -189,16 +199,19 @@ public class Plataforma implements Elemento,Serializable{
         return isChocado;
     }
 	
-	public boolean isChocado(Plataforma plat) {
-		if(plat.getX() <= this.getX() && plat.getX()+plat.getWidth()+1>=this.getX()) {
+	public void isChocado(Plataforma plat) {
+		if(plat.getVidas() > 0 && plat.getX() <= this.getX() && plat.getX()+plat.getWidth()+1>=this.getX()) {
 			this.setX(this.getX()+2);
-			return true;
+			int ax = this.getX(),ax2 = plat.getX();
+			this.setX(ax2);
+			plat.setX(ax);
 		}
-		if(this.getX() <= plat.getX() && this.getX()+this.getWidth()+1>=plat.getX()) {
+		if(plat.getVidas() > 0 && this.getX() <= plat.getX() && this.getX()+this.getWidth()+1>=plat.getX()) {
 			plat.setX(plat.getX()+2);
-			return true;
+			int ax = this.getX(),ax2 = plat.getX();
+			this.setX(ax2);
+			plat.setX(ax);
 		}
-        return false;
     }
 
 
