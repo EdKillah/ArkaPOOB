@@ -21,6 +21,7 @@ public class jugadoresGUI extends JFrame{
 	private Boton volver2;
 	private Boton volver3;
 	private JTextField textNombre;
+	private JTextField textNombre1;
 	private JTextField textNombre2;
 	private JComboBox<String> naveColor;
 	private JComboBox<String> naveColor1;
@@ -238,11 +239,24 @@ public class jugadoresGUI extends JFrame{
 		contenido.setLayout(null);
 		contenido.setBackground(Color.BLACK);
 		
-		prepareNombreJugador1(contenido);
+		//prepareNombreJugador1(contenido);
 		
 		//prepareColorNaveJugador1(contenido);
 		
+		JLabel nombre = new JLabel("Jugador 1:");
+		nombre.setForeground(Color.BLACK);
+		nombre.setBounds(15, 20, 80, 18);
+		contenido.add(nombre);
 		
+		textNombre1 = new JTextField();
+		textNombre1.setBounds(90, 19, 78, 18);
+		contenido.add(textNombre1);
+		textNombre1.setColumns(10);
+		
+		JLabel nave = new JLabel("Color Nave:");
+		nave.setForeground(Color.BLACK);
+		nave.setBounds(15, 65, 80, 18);
+		contenido.add(nave);
 		
 		naveColor1 = new JComboBox<>(colores);
 		naveColor1.setBounds(90, 65, 121, 20);
@@ -412,10 +426,10 @@ public class jugadoresGUI extends JFrame{
 	private void jugar(int jugadores,boolean cpu) {
 		dispose();
 		PantallaDeJuego pdj = null;
-		if(jugadores == 1) {	
-			pdj = new PantallaDeJuego(jugadores,(String)naveColor.getSelectedItem(),bloqueRosado.isSelected(), bloqueAzul.isSelected(), bloqueAmarillo.isSelected(), bloqueNaranja.isSelected(), bloqueNegro.isSelected());
+		if(jugadores == 1) {
+			pdj = new PantallaDeJuego(jugadores,textNombre.getText(),(String)naveColor.getSelectedItem(),bloqueRosado.isSelected(), bloqueAzul.isSelected(), bloqueAmarillo.isSelected(), bloqueNaranja.isSelected(), bloqueNegro.isSelected());
 		}else if(jugadores == 2) {
-			pdj = new PantallaDeJuego(jugadores,(String)naveColor1.getSelectedItem(),(String)naveColor2.getSelectedItem(),bloqueRosado2.isSelected(), bloqueAzul2.isSelected(), bloqueAmarillo2.isSelected(), bloqueNaranja2.isSelected(), bloqueNegro2.isSelected());
+			pdj = new PantallaDeJuego(jugadores,textNombre1.getText(),textNombre2.getText(),(String)naveColor1.getSelectedItem(),(String)naveColor2.getSelectedItem(),bloqueRosado2.isSelected(), bloqueAzul2.isSelected(), bloqueAmarillo2.isSelected(), bloqueNaranja2.isSelected(), bloqueNegro2.isSelected());
 		}
 		pdj.setVisible(true);
 	}

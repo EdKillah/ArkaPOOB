@@ -28,6 +28,7 @@ public class BloqueAzul extends Bloque{
 		setWidth(width);
 		setHeight(height);
 		setIsChocado(false);
+		setVivo(true);
 		tipo = "azul";
 		this.ark = ark;
 	}
@@ -41,6 +42,7 @@ public class BloqueAzul extends Bloque{
         isChocado = bola.getBounds().intersects(this.getBounds());
         if(isChocado) {
         	creeSorpresa();
+        	setVivo(false);
         }
        
         return isChocado;

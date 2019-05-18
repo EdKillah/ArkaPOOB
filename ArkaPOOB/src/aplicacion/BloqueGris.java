@@ -25,6 +25,7 @@ public class BloqueGris extends Bloque{
 		setWidth(width);
 		setHeight(height);
 		setIsChocado(false);
+		setVivo(true);
 		tipo = "gris";
 		this.ark = ark;
 	}

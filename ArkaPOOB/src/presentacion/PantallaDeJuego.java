@@ -27,12 +27,13 @@ public class PantallaDeJuego extends JFrame{
 	private boolean usaNaranja;
 	private boolean usaNegro;
 	private String colorNave;
+	private String nombre1;
+	private String nombre2;
 	
-	public PantallaDeJuego(int jugadores,String color,boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
+	public PantallaDeJuego(int jugadores,boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
 		super("Juego");
 		setSize(750,660);
 		this.jugadores=jugadores;
-		colorNave=color;
 		pausa =false;
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocationRelativeTo(null);
@@ -43,9 +44,17 @@ public class PantallaDeJuego extends JFrame{
 		prepareAcciones();
 	}
 	
-	public PantallaDeJuego(int jugadores,String color,String color2,boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
-		this(jugadores,color,rosa, azul,amarillo, naranja,negro);
+	public PantallaDeJuego(int jugadores,String nombre,String color,boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
+		this(jugadores,rosa, azul,amarillo, naranja,negro);
+		pint.colores(color,null);
+		pint.nombre(nombre,null);
+		colorNave=color;
+	}
+	
+	public PantallaDeJuego(int jugadores,String nombre1,String nombre2,String color,String color2,boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
+		this(jugadores,rosa, azul,amarillo, naranja,negro);
 		pint.colores(color,color2);
+		pint.nombre(nombre1,nombre2);
 		
 	}
 	

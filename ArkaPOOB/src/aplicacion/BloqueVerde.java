@@ -29,6 +29,7 @@ public class BloqueVerde extends Bloque{
 		setWidth(width);
 		setHeight(height);
 		setIsChocado(false);
+		setVivo(true);
 		con=0;
 		tipo = "verde";
 		this.ark = ark;
@@ -43,6 +44,7 @@ public class BloqueVerde extends Bloque{
 	    if(isChocado) con++;
 	    
 	    if(con>1) {
+	    	setVivo(false);
 	    	return isChocado;
 	    }
 	    else return false;

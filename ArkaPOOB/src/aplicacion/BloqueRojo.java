@@ -28,6 +28,7 @@ public class BloqueRojo extends Bloque{
 		setIsChocado(false);
 		tipo = "rojo";
 		this.ark = ark;
+		setVivo(true);
 	}
 	
 
@@ -39,7 +40,7 @@ public class BloqueRojo extends Bloque{
 	@Override
 	public boolean isChocado(Bola bola) {
         isChocado = bola.getBounds().intersects(this.getBounds());
-
+        if(isChocado) setVivo(false);
         return isChocado;
     }
 	

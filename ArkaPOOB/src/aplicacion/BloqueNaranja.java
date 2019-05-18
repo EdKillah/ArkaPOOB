@@ -28,6 +28,7 @@ public class BloqueNaranja extends Bloque{
 		setWidth(width);
 		setHeight(height);
 		setIsChocado(false);
+		setVivo(true);
 		this.ark = ark;
 		tipo = "naranja";
 	}

@@ -78,7 +78,7 @@ public class Bola implements Elemento, Serializable{
 	public Bloque confirmeChoque() { //otra forma de hacerlo es enviarle desde arkaPOOB el bloque con el cual choco y con eso no habria que hacer este
 		for(int i=0;i<ark.getBloques().size();i++) {
 			for(int j=0;j<ark.getBloques().get(i).size();j++) {
-				if(this.isChocado(ark.getBloques().get(i).get(j))) {
+				if(ark.getBloques().get(i).get(j).isVivo() && this.isChocado(ark.getBloques().get(i).get(j))) {
 					return ark.getBloques().get(i).get(j);	
 				}
 			}

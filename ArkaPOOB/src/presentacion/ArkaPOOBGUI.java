@@ -232,7 +232,7 @@ public class ArkaPOOBGUI extends JFrame{
 			ArkaPOOB juego = null;
 			try{
 				juego = dao.abrir(file.getSelectedFile());
-				PantallaDeJuego pj = new PantallaDeJuego(juego.getJugadores(),juego.getColorNave(),juego.getColores()[0],juego.getColores()[1],juego.getColores()[2],juego.getColores()[3],juego.getColores()[4]);
+				PantallaDeJuego pj = new PantallaDeJuego(juego.getJugadores(),juego.getColores()[0],juego.getColores()[1],juego.getColores()[2],juego.getColores()[3],juego.getColores()[4]);
 				pj.crearJuego(juego);
 				pj.setVisible(true);	
 			}catch(ArkaPoobException e){

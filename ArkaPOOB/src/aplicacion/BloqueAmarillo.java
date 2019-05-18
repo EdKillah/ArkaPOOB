@@ -25,6 +25,7 @@ public class BloqueAmarillo extends Bloque{
 		setWidth(width);
 		setHeight(height);
 		setIsChocado(false);
+		setVivo(true);
 		tipo = "amarillo";
 		this.ark = ark;
 	}
@@ -38,6 +39,7 @@ public class BloqueAmarillo extends Bloque{
         isChocado = bola.getBounds().intersects(this.getBounds());
         if(isChocado) {
         	ark.adicioneVida();
+        	setVivo(false);
         }
         return isChocado;
     }

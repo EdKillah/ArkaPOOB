@@ -12,6 +12,7 @@ public class BloqueRosa extends Bloque{
 	private boolean isChocado;
 	private final int puntos = 500;
 	private ArkaPOOB ark;
+	private boolean vivo;
 	
 	/**
 	 * Constructor de la clase, que instancia la misma. 
@@ -28,10 +29,8 @@ public class BloqueRosa extends Bloque{
 		setIsChocado(false);
 		tipo = "rosa";
 		this.ark = ark;
+		setVivo(true);		
 	}
-	
-	
-	
 	
 	/**
 	 * Metodo sobreescrito que realiza los procedimientos necesarios para considerar si fue chocado por una bola o no.
@@ -39,6 +38,7 @@ public class BloqueRosa extends Bloque{
 	@Override
 	public boolean isChocado(Bola bola) {
         isChocado = bola.getBounds().intersects(this.getBounds());
+        if(isChocado) setVivo(false);
         //if(isChocado) ark.prepareBloques();
         return isChocado;
     }

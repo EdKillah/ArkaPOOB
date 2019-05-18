@@ -16,6 +16,7 @@ public abstract class Bloque implements Elemento, Serializable{
 	private int width;
 	private int height;
 	private boolean isChocado;
+	private boolean vivo;
 	
 	@Override
 	public int getX() {
@@ -47,6 +48,14 @@ public abstract class Bloque implements Elemento, Serializable{
 	
 	public int getPuntos() {
 		return puntos;
+	}
+	
+	public void setVivo(boolean a) {
+		this.vivo = a;
+	}
+	
+	public boolean isVivo() {
+		return vivo;
 	}
 
 	@Override

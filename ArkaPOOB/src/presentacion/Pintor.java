@@ -32,6 +32,8 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 	private boolean usaAmarillo;
 	private boolean usaNaranja;
 	private boolean usaNegro;
+	private String nombre1;
+	private String nombre2;
 	
 	public Pintor(int w, int h , int jugadores,String colorNave, boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
 		this.jugadores = jugadores;
@@ -60,8 +62,11 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 		for(int i=0;i<bloques.size();i++) {
 			for(int j=0;j<bloques.get(i).size();j++) {
 				b = bloques.get(i).get(j);
-				Image img =  new ImageIcon(getClass().getResource("/imagenes/bloque_"+b.getTipo()+".png")).getImage();
-				g.drawImage(img, b.getX(), b.getY(),b.getWidth(),b.getHeight(), this);			
+				
+				if(b.isVivo()) {
+					Image img =  new ImageIcon(getClass().getResource("/imagenes/bloque_"+b.getTipo()+".png")).getImage();
+					g.drawImage(img, b.getX(), b.getY(),b.getWidth(),b.getHeight(), this);	
+				}
 			}
 		}
 		Plataforma nave = ark.getPlataforma().get(0);
@@ -73,9 +78,9 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 		
 	   // g.setFont(new Font("TimesRoman", Font.PLAIN, 15));
 		g.setColor(Color.RED);
-		g.drawString(" score: " + ark.getPlataforma().get(0).getScore() , width/2-100, height-70); //ark.encuentreTanque(1).getName()+
+		g.drawString(nombre1+" Score: " + ark.getPlataforma().get(0).getScore() , width/2-150, height-70); //ark.encuentreTanque(1).getName()+
 		if (ark.getJugadores() == 2) {
-			g.drawString(" score2: " + ark.getPlataforma().get(1).getScore(), width/2+100, height-70); //ark.encuentreTanque(2).getName()
+			g.drawString(nombre2 +" Score: " + ark.getPlataforma().get(1).getScore(), width/2+50, height-70); //ark.encuentreTanque(2).getName()
 		}
 		
 		Sorpresa poder = ark.getSorpresa();
@@ -106,6 +111,11 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 				pos+=40;
 			}
 		}
+	}
+	
+	public void nombre(String n1,String n2) {
+		if(n1 != null) nombre1=n1;
+		if(n2 != null) nombre2=n2;
 	}
 	
 	public void colores(String color1,String color2) {
@@ -191,10 +201,11 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 			}
 		}
 		if(jugadores == 2) {
+			ark.getPlataforma().get(0).isChocado(ark.getPlataforma().get(1));
 			if(keysDown.contains(new Integer(KeyEvent.VK_A))) {
 				if (ark.getPlataforma().get(1).getX()>15&& !pausa)  {
 					ark.getPlataforma().get(1).moverX(2);
-					ark.getPlataforma().get(0).isChocado(ark.getPlataforma().get(1));
+					//ark.getPlataforma().get(0).isChocado(ark.getPlataforma().get(1));
 				}
 				if(ark.getBola().getX()>ark.getPlataforma().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
 					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(1))) {
@@ -205,7 +216,7 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 			if(keysDown.contains(new Integer(KeyEvent.VK_D))) {
 				if (ark.getPlataforma().get(1).getX()<width-ark.getPlataforma().get(1).getWidth()&& !pausa) {
 					ark.getPlataforma().get(1).moverX(1);
-					ark.getPlataforma().get(0).isChocado(ark.getPlataforma().get(1));
+					//ark.getPlataforma().get(0).isChocado(ark.getPlataforma().get(1));
 				}
 				
 				if(ark.getBola().getX()+15<width-ark.getPlataforma().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
@@ -281,7 +292,17 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 				pausa = true;
 			}
 		}else {
-			if(ark.getPlataforma().get(0).getVidas() <= 0 && ark.getPlataforma().get(1).getVidas() <= 0) {
+			if(ark.gano()) {
+				String ganador = "";
+				if(ark.getPlataforma().get(0).getScore() > ark.getPlataforma().get(1).getScore())
+					ganador = "Gana jugador Jugador 1";
+				else if(ark.getPlataforma().get(0).getScore() < ark.getPlataforma().get(1).getScore())
+					ganador = "Gana jugador Jugador 2";
+				else ganador = "Empate";
+				JOptionPane.showMessageDialog(this, ganador);
+				pausa = true;
+			}
+			if(ark.perdio(ark.getPlataforma().get(0)) && ark.perdio(ark.getPlataforma().get(0))) {
 				String ganador = "";
 				if(ark.getPlataforma().get(0).getScore() > ark.getPlataforma().get(1).getScore())
 					ganador = "Gana jugador Jugador 1";
@@ -317,7 +338,7 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 		c = ark.getPlataforma().get(0).getColor();
 		if(jugadores == 2) {c2 = ark.getPlataforma().get(1).getColor();}
 		ark = new ArkaPOOB(jugadores,colorNave,usaRosa, usaAzul, usaAmarillo, usaNaranja, usaNegro);
-		//colores(c,c2);
+		colores(c,c2);
 		hilo= new Thread(this);
 		myTimer = new Timer();
 		hilo.start();

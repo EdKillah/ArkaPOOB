@@ -201,16 +201,16 @@ public class Plataforma implements Elemento,Serializable{
 	
 	public void isChocado(Plataforma plat) {
 		if(plat.getVidas() > 0 && plat.getX() <= this.getX() && plat.getX()+plat.getWidth()+1>=this.getX()) {
-			this.setX(this.getX()+2);
+			this.setX(this.getX());
 			int ax = this.getX(),ax2 = plat.getX();
-			this.setX(ax2);
-			plat.setX(ax);
+			this.setX(ax2-2);
+			plat.setX(ax+2);
 		}
-		if(plat.getVidas() > 0 && this.getX() <= plat.getX() && this.getX()+this.getWidth()+1>=plat.getX()) {
-			plat.setX(plat.getX()+2);
+		else if(plat.getVidas() > 0 && this.getX() <= plat.getX() && this.getX()+this.getWidth()+1>=plat.getX()) {
+			plat.setX(plat.getX());
 			int ax = this.getX(),ax2 = plat.getX();
-			this.setX(ax2);
-			plat.setX(ax);
+			this.setX(ax2+2);
+			plat.setX(ax-2);
 		}
     }
 

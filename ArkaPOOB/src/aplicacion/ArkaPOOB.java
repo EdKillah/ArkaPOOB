@@ -1,8 +1,12 @@
 package aplicacion;
 
 import persistencia.*;
+
+import java.awt.Image;
 import java.io.*;
 import java.util.*;
+
+import javax.swing.ImageIcon;
 
 /**
  * Clase principal del paquete aplicación y del juego en general,
@@ -56,60 +60,31 @@ public class ArkaPOOB implements Serializable{
 	
 	public void juegue(double width, double height) {
 		if(bola.isVivo()) {
-			System.out.println("ENTRA EN JUEGA");
 			bola.muevase(width,height);
 			if(getSorpresa() != null) sorpresa.muevase();
 			for(int i=0;i<bloques.size();i++) {
 				for(int j=0;j<bloques.get(i).size();j++) {
 					activeSorpresa();
 					isPlataformaActiva();
-					if(bloques.get(i).get(j).isChocado(bola)) {
+					if(bloques.get(i).get(j).isVivo() && bloques.get(i).get(j).isChocado(bola)) {
 						bola.getUltimo().setScore(bloques.get(i).get(j).getPuntos());
-						reemplazarBloque(bloques.get(i).get(j),i,j);						
+						if(!bloques.get(i).get(j).getTipo().equals("negro"))ultimoBloque = bloques.get(i).get(j);
+						
 					}
 					if(jugadores  == 2 ) naves.get(0).isChocado(naves.get(1));
 				}
 			}
-			/*if(avanzaNivel()) {
-				prepareBloques(bloqueRosa, bloqueAzul, bloqueAmarillo, bloqueNaranja, bloqueNegro);
-			}*/
 				
 		}
 		
 	}
-	
-	
-	/**
-	 * Metodo encargado de eliminar el bloque dado su posición en el arreglo de Bloques.
-	 * @param i
-	 * @param j
-	 */
-	public void eliminarBloque(int i,int j) {
-		bloques.get(i).remove(j);
-	}
-	
-	
-	/**
-	 * Metodo que reemplaza el bloque negro por el ultimo bloque chocado.
-	 * @param bloque
-	 * @param i
-	 * @param j
-	 */
-	public void reemplazarBloque(Bloque bloque, int i, int j) {
-		if(bloque.getTipo().equals("negro")) {
-			ultimoBloque.setX(bloque.getX());
-			ultimoBloque.setY(bloque.getY());
-			bloques.get(i).set(j,ultimoBloque);
-			ultimoBloque = bloques.get(i).get(j);
-		}
-		else {
-			ultimoBloque = bloques.get(i).get(j);
-			eliminarBloque(i,j);
-		}
-	}	
-	
+
 	public Bloque getUltimoBloque() {
 		return ultimoBloque;
+	}
+	
+	public void setUltimoBloque(Bloque a) {
+		ultimoBloque = a;
 	}
 	
 	/**
@@ -123,9 +98,6 @@ public class ArkaPOOB implements Serializable{
 			bola.setInAire(false);
 	}
 	
-	
-	
-	
 	/**
 	 * Metodo que prepara la plataforma del juego dandole unos atributos iniciales.
 	 */
@@ -133,7 +105,7 @@ public class ArkaPOOB implements Serializable{
 		if(jugadores == 1)
 			naves.add(new Plataforma(750/2,480,90,20));
 		if(jugadores ==2 ) {
-			naves.add(new Plataforma(750-60,480,90,20));
+			naves.add(new Plataforma(750-60,480,90,20));;
 			naves.add(new Plataforma(40,480,90,20));
 		}
 	}
@@ -189,7 +161,7 @@ public class ArkaPOOB implements Serializable{
 		int bloq=0;
 		for(int i=0;i<bloques.size();i++) 
 			for(int j=0;j<bloques.get(i).size();j++) {
-				if(!bloques.get(i).get(j).getTipo().equals("gris"))
+				if(!bloques.get(i).get(j).getTipo().equals("gris") && bloques.get(i).get(j).isVivo())
 					bloq++;
 			}
 		if(bloq == 0 && nivel == 5) { 
@@ -209,11 +181,10 @@ public class ArkaPOOB implements Serializable{
 		int bloq=0;
 		for(int i=0;i<bloques.size();i++) {
 			for(int j=0;j<bloques.get(i).size();j++) {
-				if(!bloques.get(i).get(j).getTipo().equals("gris"))
+				if(!bloques.get(i).get(j).getTipo().equals("gris") && bloques.get(i).get(j).isVivo())
 					bloq++;
 			}
 		}
-		
 		if(bloq == 0 || ultimoBloque.getTipo().equals("rosa")) return true; //|| ultimoBloque.getTipo().equals("rosa")
 		else return false;
 	}
@@ -224,7 +195,7 @@ public class ArkaPOOB implements Serializable{
 	 * @return
 	 */
 	public boolean perdio(Plataforma p) {
-		if(p.getVidas()==0) return true;
+		if(p.getVidas()<=0) return true;
 		else return false;
 	}	
 	
@@ -280,33 +251,34 @@ public class ArkaPOOB implements Serializable{
 		String[] pComunes = {"Rosa","Azul","Amarillo","Negro"};
 		if(posicionAux>=mComunes.length) 
 			posicionAux=0;
+		//System.out.println("PosicionAux: "+posicionAux);
 		if(contador%2==0) {
 			if(mComunes[posicionAux].equals("Rojo"))
-				bloque = new BloqueNegro(posX,posY,70,35,this);
+				bloque = new BloqueRojo(posX,posY,70,35,this);
 			else if(mComunes[posicionAux].equals("Verde"))
 				bloque = new BloqueVerde(posX,posY,70,35,this);
 			else if(mComunes[posicionAux].equals("Naranja") && bloqueNaranja)
 				bloque = new BloqueNaranja(posX,posY,70,35,this);
 			else 
-				bloque = new BloqueRosa(posX,posY,70,35,this);
+				bloque = new BloqueGris(posX,posY,70,35,this);
 		}
 		else {
 			int pocoComunes = (int) (Math.random() * 40);
 			//System.out.println("PocoCOMUNES: "+pocoComunes);
-			if(pocoComunes%2==0 || pocoComunes%2!=0) {
+			if(pocoComunes%2==0) {
 				if(pComunes[posicionAux].equals("Azul") && bloqueAzul)
 					bloque = new BloqueAzul(posX,posY,70,35,this);
 				else if(pComunes[posicionAux].equals("Amarillo") && bloqueAmarillo)
-					bloque = new BloqueRosa(posX,posY,70,35,this);
+					bloque = new BloqueAmarillo(posX,posY,70,35,this);
 				else if(pComunes[posicionAux].equals("Rosa") && bloqueRosa && pocoComunes%8==0)
 					bloque = new BloqueRosa(posX,posY,70,35,this);
 				else if(pComunes[posicionAux].equals("Negro") && bloqueNegro)
-					bloque = new BloqueRosa(posX,posY,70,35,this);
+					bloque = new BloqueNegro(posX,posY,70,35,this);
 				else
-					bloque = new BloqueRosa(posX,posY,70,35,this);
+					bloque = new BloqueVerde(posX,posY,70,35,this);
 			}
 			else
-				bloque = new BloqueRosa(posX,posY,70,35,this);
+				bloque = new BloqueVerde(posX,posY,70,35,this);
 		}
 		return bloque;
 	}
