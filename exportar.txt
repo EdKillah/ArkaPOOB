@@ -1,0 +1,35 @@
+1 1
+BloqueGris 20 30 70 35 0 gris
+BloqueGris 90 30 70 35 0 gris
+BloqueGris 160 30 70 35 0 gris
+BloqueGris 230 30 70 35 0 gris
+BloqueGris 300 30 70 35 0 gris
+BloqueGris 370 30 70 35 0 gris
+BloqueGris 440 30 70 35 0 gris
+BloqueGris 510 30 70 35 0 gris
+BloqueGris 580 30 70 35 0 gris
+BloqueGris 650 30 70 35 0 gris
+BloqueRojo 20 68 70 35 100 rojo
+BloqueVerde 90 68 70 35 200 verde
+BloqueGris 160 68 70 35 0 gris
+BloqueVerde 230 68 70 35 200 verde
+BloqueRojo 300 68 70 35 100 rojo
+BloqueVerde 370 68 70 35 200 verde
+BloqueRojo 440 68 70 35 100 rojo
+BloqueVerde 510 68 70 35 200 verde
+BloqueRojo 580 68 70 35 100 rojo
+BloqueVerde 650 68 70 35 200 verde
+BloqueRojo 20 106 70 35 100 rojo
+BloqueVerde 90 106 70 35 200 verde
+BloqueRojo 160 106 70 35 100 rojo
+BloqueVerde 230 106 70 35 200 verde
+BloqueRojo 300 106 70 35 100 rojo
+BloqueVerde 370 106 70 35 200 verde
+BloqueRojo 440 106 70 35 100 rojo
+BloqueVerde 510 106 70 35 200 verde
+BloqueRojo 580 106 70 35 100 rojo
+BloqueVerde 650 106 70 35 200 verde
+Jugador 385 480 90 20 0 red 3
+JugadorMimo 485 480 90 20 100 blue 6
+Bola 515 460 485 480 90 20 100 blue 6 null
+null

@@ -70,7 +70,7 @@ public abstract class Sorpresa implements Elemento,Serializable{
 		setY(1);
 	}
 	
-	public abstract boolean isChocado(Plataforma nave);
+	public abstract boolean isChocado(Jugador nave);
 	//public String getTipo() {
 	//	return tipo;
 	//}

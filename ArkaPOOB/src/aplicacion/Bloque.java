@@ -83,7 +83,7 @@ public abstract class Bloque implements Elemento, Serializable{
         Rectangle borde = new Rectangle(this.getX(), this.getY(), 70, 35);
         return borde;
     }   
-	
+
 	public abstract boolean isChocado(Bola bola);
 	public abstract String getTipo();
 	public abstract void setTipo(String type);

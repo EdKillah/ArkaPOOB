@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
 
 public class ArkaPOOB implements Serializable{
 	private ArrayList<ArrayList<Bloque>> bloques;
-	private ArrayList<Plataforma> naves;
+	private ArrayList<Jugador> naves;
 	private Bola bola;
 	private Bloque ultimoBloque;
 	private int jugadores;
@@ -31,7 +31,8 @@ public class ArkaPOOB implements Serializable{
 	private boolean bloqueAmarillo;
 	private boolean bloqueNaranja;
 	private boolean bloqueNegro;
-	
+	private Jugador maquina;
+	private int direccion;
 	
 	
 	/**
@@ -40,7 +41,7 @@ public class ArkaPOOB implements Serializable{
 	 */
 	public ArkaPOOB(int jugadores,String colorNave,boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
 		this.jugadores = jugadores;
-		naves = new ArrayList<Plataforma>();
+		naves = new ArrayList<Jugador>();
 		nivel = 1;
 		this.colorNave = colorNave;
 		prepareBloques(rosa,azul,amarillo,naranja,negro);
@@ -65,20 +66,34 @@ public class ArkaPOOB implements Serializable{
 			for(int i=0;i<bloques.size();i++) {
 				for(int j=0;j<bloques.get(i).size();j++) {
 					activeSorpresa();
-					isPlataformaActiva();
+					isJugadorActiva();
 					if(bloques.get(i).get(j).isVivo() && bloques.get(i).get(j).isChocado(bola)) {
 						bola.getUltimo().setScore(bloques.get(i).get(j).getPuntos());
 						if(!bloques.get(i).get(j).getTipo().equals("negro"))ultimoBloque = bloques.get(i).get(j);
 						
 					}
-					if(jugadores  == 2 ) naves.get(0).isChocado(naves.get(1));
+					if(jugadores  == 2) naves.get(0).isChocado(naves.get(1));
+					if(maquina != null) {
+						maquina.moverX(getDireccion());
+						maquina.isChocado(naves.get(0));
+					}
+					
+					
 				}
 			}
 				
 		}
 		
 	}
-
+	
+	public void setDireccion(int i) {
+		direccion = i;
+	}
+	
+	public int getDireccion() {
+		return direccion;
+	}
+	
 	public Bloque getUltimoBloque() {
 		return ultimoBloque;
 	}
@@ -99,14 +114,14 @@ public class ArkaPOOB implements Serializable{
 	}
 	
 	/**
-	 * Metodo que prepara la plataforma del juego dandole unos atributos iniciales.
+	 * Metodo que prepara la Jugador del juego dandole unos atributos iniciales.
 	 */
 	private void prepareNave() {
 		if(jugadores == 1)
-			naves.add(new Plataforma(750/2,480,90,20));
+			naves.add(new Jugador(750/2-40,480,90,20));
 		if(jugadores ==2 ) {
-			naves.add(new Plataforma(750-60,480,90,20));;
-			naves.add(new Plataforma(40,480,90,20));
+			naves.add(new Jugador(750-60,480,90,20));
+			naves.add(new Jugador(40,480,90,20));
 		}
 	}
 	
@@ -194,7 +209,7 @@ public class ArkaPOOB implements Serializable{
 	 * El jugador pierde si esta no cuenta con vidas suficientes (mayor a 0).
 	 * @return
 	 */
-	public boolean perdio(Plataforma p) {
+	public boolean perdio(Jugador p) {
 		if(p.getVidas()<=0) return true;
 		else return false;
 	}	
@@ -203,9 +218,12 @@ public class ArkaPOOB implements Serializable{
 	 * Metodo que prepara la bola dandole unos atributos iniciales.
 	 */
 	public void prepareBola(){
-		if(jugadores==1 && naves.get(0).getVidas() > 0)
-			bola = new Bola(naves.get(0).getX()+naves.get(0).getWidth()/2-15,naves.get(0).getY()-naves.get(0).getHeight(),naves.get(0),null,45,1,45,this);
-		else {
+		if(jugadores==1 && naves.get(0).getVidas() > 0) {
+			System.out.println(jugadores);
+			if(maquina!=null)bola = new Bola(maquina.getX()+maquina.getWidth()/2-15,maquina.getY()-maquina.getHeight(),maquina,naves.get(0),45,1,45,this);
+			else bola = new Bola(naves.get(0).getX()+naves.get(0).getWidth()/2-15,naves.get(0).getY()-naves.get(0).getHeight(),naves.get(0),null,45,1,45,this);
+		}
+		else if(jugadores == 2){
 			int numero = (int) (Math.random() * 2);
 			if(naves.get(numero).getVidas() <= 0) {
 				if(numero == 0) numero=1;
@@ -215,7 +233,7 @@ public class ArkaPOOB implements Serializable{
 		}
 	}
 	
-	public void prepareBola(Plataforma plat){ 
+	public void prepareBola(Jugador plat){ 
 		int i = naves.indexOf(plat);
 		if(jugadores==1) {
 			bola = new Bola(naves.get(0).getX()+naves.get(0).getWidth()/2-15,naves.get(0).getY()-naves.get(0).getHeight(),naves.get(0),null,45,1,45,this);
@@ -376,7 +394,7 @@ public class ArkaPOOB implements Serializable{
 		prepareBloques(bloqueRosa,bloqueAzul,bloqueAmarillo,bloqueNaranja,bloqueNegro);
 	}
 	
-	public void isPlataformaActiva() {
+	public void isJugadorActiva() {
 		if(naves.get(0).isPoderActivo()) {
 			naves.get(0).hagaTalCosa(this);
 		}
@@ -415,6 +433,42 @@ public class ArkaPOOB implements Serializable{
 		return band;
 	}
 
+	public void maquina(String tipo) {
+		if(tipo.equals("destructor")) maquina = new JugadorDestructor(750/2 + 80,480,90,20,this);
+		//else if(tipo.equals("curioso")) maquina = tipo;
+		else if(tipo.equals("mimo")) maquina = new JugadorMimo(750/2 + 60,480,90,20,this);
+		System.out.println(maquina+ "W");
+		prepareBola();
+	}
+	
+	/**
+	 * Obtiene una lista de los elementos vivos del tablero
+	 * @return La lista de los elementos vivos del tablero
+	 */
+	public ArrayList<Elemento> getElementos(){
+		ArrayList<Elemento> elemns = new ArrayList<>();
+
+		for(int i=0;i<bloques.size();i++) {
+			for(int j=0;j<bloques.get(i).size();j++) {
+				elemns.add(bloques.get(i).get(j));
+				//if(bloques.get(i).get(j).isVivo() && bloques.get(i).get(j).isChocado(bola)) {}
+			}
+		}
+		for (Jugador a: naves) {
+			if (a.getVidas()>0) elemns.add(a);
+		}
+		if(maquina!= null) {
+			elemns.add(maquina);
+		}
+		elemns.add(bola);
+
+		return elemns;
+
+	}
+	
+	public Jugador getMaquina() {
+		return maquina;	
+	}
 	
 	public void setPoder(boolean a) {
 		poderActivo = a;
@@ -428,7 +482,7 @@ public class ArkaPOOB implements Serializable{
 		return colorNave;
 	}
 
-	public ArrayList<Plataforma> getPlataforma() {
+	public ArrayList<Jugador> getJugador() {
 		return naves;
 	}
 	
@@ -462,5 +516,13 @@ public class ArkaPOOB implements Serializable{
 	
 	public void guardar(File file) throws ArkaPoobException {
 		dao.guardar(this,file);
+	}
+	
+	/**
+	 * Exporta el estado del juego
+	 * @param file La ruta del archivo para exportar
+	 */
+	public void exportarJuego(File file) throws ArkaPoobException {
+		dao.exportar(this, file);
 	}
 }

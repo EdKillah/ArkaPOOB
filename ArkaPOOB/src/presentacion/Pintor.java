@@ -69,19 +69,25 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 				}
 			}
 		}
-		Plataforma nave = ark.getPlataforma().get(0);
+		Jugador maquina = ark.getMaquina();
+		//System.out.println(maquina);
+		if(maquina != null) if(maquina.getVidas() >0) g.drawImage(maquina.getImagen(), maquina.getX(), maquina.getY(),maquina.getWidth(),maquina.getHeight(), this);
+		
+		
+		Jugador nave = ark.getJugador().get(0);
 		if(nave.getVidas() >0) g.drawImage(nave.getImagen(), nave.getX(), nave.getY(),nave.getWidth(),nave.getHeight(), this);
 		if(jugadores == 2)  {
-			Plataforma nave2 = ark.getPlataforma().get(1);
+			Jugador nave2 = ark.getJugador().get(1);
 			if(nave2.getVidas() >0) g.drawImage(nave2.getImagen(), nave2.getX(), nave2.getY(),nave2.getWidth(),nave2.getHeight(), this);
 		}
 		
 	   // g.setFont(new Font("TimesRoman", Font.PLAIN, 15));
 		g.setColor(Color.RED);
-		g.drawString(nombre1+" Score: " + ark.getPlataforma().get(0).getScore() , width/2-150, height-70); //ark.encuentreTanque(1).getName()+
+		g.drawString(nombre1+" Score: " + ark.getJugador().get(0).getScore() , width/2-150, height-70); //ark.encuentreTanque(1).getName()+
 		if (ark.getJugadores() == 2) {
-			g.drawString(nombre2 +" Score: " + ark.getPlataforma().get(1).getScore(), width/2+50, height-70); //ark.encuentreTanque(2).getName()
-		}
+			g.drawString(nombre2 +" Score: " + ark.getJugador().get(1).getScore(), width/2+50, height-70); //ark.encuentreTanque(2).getName()
+		}if(ark.getMaquina()!=null)
+			g.drawString("Maquina Score: " + ark.getMaquina().getScore(), width/2+50, height-70); //ark.encuentreTanque(2).getName()
 		
 		Sorpresa poder = ark.getSorpresa();
 		if(poder!= null) {
@@ -95,18 +101,18 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 			g.drawImage(img, bola.getX(),bola.getY() ,Bola.getTamX(),Bola.getTamY(), this);			//(int)d.getHeight()-125
 		}
 		int pos =750;
-		for(int j=0;j<ark.getPlataforma().get(0).getVidas();j++) {
-			Plataforma vida = new Plataforma(pos-30,500,40,15);
-			vida.setColor(ark.getPlataforma().get(0).getColor());
+		for(int j=0;j<ark.getJugador().get(0).getVidas();j++) {
+			Jugador vida = new Jugador(pos-30,500,40,15);
+			vida.setColor(ark.getJugador().get(0).getColor());
 			if(vida != null )g.drawImage(vida.getImagen(), vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);
 			pos-=40;
 		}
 		
 		if(jugadores == 2) {
 			pos = 0;
-			for(int j=0;j<ark.getPlataforma().get(1).getVidas();j++) {
-				Plataforma vida = new Plataforma(30+pos,500,40,15);
-				vida.setColor(ark.getPlataforma().get(1).getColor());
+			for(int j=0;j<ark.getJugador().get(1).getVidas();j++) {
+				Jugador vida = new Jugador(30+pos,500,40,15);
+				vida.setColor(ark.getJugador().get(1).getColor());
 				if(vida != null )g.drawImage(vida.getImagen(), vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);
 				pos+=40;
 			}
@@ -118,8 +124,12 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 		if(n2 != null) nombre2=n2;
 	}
 	
+	public void maquina(String tipo) {
+		ark.maquina(tipo);
+	}
+	
 	public void colores(String color1,String color2) {
-		ArrayList<Plataforma> naves = ark.getPlataforma();
+		ArrayList<Jugador> naves = ark.getJugador();
 		if(color1 != null) naves.get(0).setColor(color1);
 		if(color2 != null) naves.get(1).setColor(color2);
 		//ark.prepareVidas();
@@ -145,14 +155,14 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 			if(!keysDown.contains(e.getKeyCode())) {
 				keysDown.add(new Integer(e.getKeyCode()));
 			}
-			if(ark.getBola().getX()>ark.getPlataforma().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa) {
-				if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(0))) {
-					ark.getBola().setX(ark.getPlataforma().get(0).getX()+ark.getPlataforma().get(0).getWidth()/2-15);
+			if(ark.getBola().getX()>ark.getJugador().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa) {
+				if(ark.getBola().getUltimo().equals(ark.getJugador().get(0))) {
+					ark.getBola().setX(ark.getJugador().get(0).getX()+ark.getJugador().get(0).getWidth()/2-15);
 				}
 			}
-			if(jugadores == 2 && ark.getBola().getX()>ark.getPlataforma().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa) {
-				if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(1))) {
-					ark.getBola().setX(ark.getPlataforma().get(1).getX()+ark.getPlataforma().get(1).getWidth()/2-15);
+			if(jugadores == 2 && ark.getBola().getX()>ark.getJugador().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa) {
+				if(ark.getBola().getUltimo().equals(ark.getJugador().get(1))) {
+					ark.getBola().setX(ark.getJugador().get(1).getX()+ark.getJugador().get(1).getWidth()/2-15);
 				}
 			}
 			moverJugador();
@@ -170,26 +180,31 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 	}
 	
 	public void moverJugador() {
-		if(ark.getPlataforma().get(0)!=null) {
+		if(ark.getJugador().get(0)!=null) {
 			if(keysDown.contains(new Integer(KeyEvent.VK_LEFT))) {
-				if (ark.getPlataforma().get(0).getX()>15&& !pausa) {  
-					ark.getPlataforma().get(0).moverX(2);
+				if (ark.getJugador().get(0).getX()>15&& !pausa) {  
+					ark.getJugador().get(0).moverX(2);
+					ark.setDireccion(2);
+					if(ark.getMaquina()!=null)ark.getMaquina().imitar(2);
 				}
-				if(ark.getBola().getX()>ark.getPlataforma().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa) {
-					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(0))) {
-						ark.getBola().setX(ark.getPlataforma().get(0).getX()+ark.getPlataforma().get(0).getWidth()/2-15);
+				if(ark.getMaquina()!=null && !ark.getBola().isInAire()&& !pausa) ark.getBola().setX(ark.getMaquina().getX()+ark.getMaquina().getWidth()/2-15);
+				else if(ark.getBola().getX()>ark.getJugador().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa) {
+					if(ark.getBola().getUltimo().equals(ark.getJugador().get(0))) {
+						ark.getBola().setX(ark.getJugador().get(0).getX()+ark.getJugador().get(0).getWidth()/2-15);
 					}
 				}
 			}
 			
 			if(keysDown.contains(new Integer(KeyEvent.VK_RIGHT))) {
-				if (ark.getPlataforma().get(0).getX()<width-ark.getPlataforma().get(0).getWidth()&& !pausa) {
-					ark.getPlataforma().get(0).moverX(1);
+				if (ark.getJugador().get(0).getX()<width-ark.getJugador().get(0).getWidth()&& !pausa) {
+					ark.getJugador().get(0).moverX(1);
+					ark.setDireccion(1);
+					if(ark.getMaquina()!=null) ark.getMaquina().imitar(1);
 				}
-				
-				if(ark.getBola().getX()+15<width-ark.getPlataforma().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
-					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(0))) {
-						ark.getBola().setX(ark.getPlataforma().get(0).getX()+ark.getPlataforma().get(0).getWidth()/2-15);
+				if(ark.getMaquina()!=null && !ark.getBola().isInAire()&& !pausa) ark.getBola().setX(ark.getMaquina().getX()+ark.getMaquina().getWidth()/2-15);
+				else if(ark.getBola().getX()+15<width-ark.getJugador().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
+					if(ark.getBola().getUltimo().equals(ark.getJugador().get(0))) {
+						ark.getBola().setX(ark.getJugador().get(0).getX()+ark.getJugador().get(0).getWidth()/2-15);
 					}
 				
 			}
@@ -201,27 +216,27 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 			}
 		}
 		if(jugadores == 2) {
-			ark.getPlataforma().get(0).isChocado(ark.getPlataforma().get(1));
+			ark.getJugador().get(0).isChocado(ark.getJugador().get(1));
 			if(keysDown.contains(new Integer(KeyEvent.VK_A))) {
-				if (ark.getPlataforma().get(1).getX()>15&& !pausa)  {
-					ark.getPlataforma().get(1).moverX(2);
-					//ark.getPlataforma().get(0).isChocado(ark.getPlataforma().get(1));
+				if (ark.getJugador().get(1).getX()>15&& !pausa)  {
+					ark.getJugador().get(1).moverX(2);
+					//ark.getJugador().get(0).isChocado(ark.getJugador().get(1));
 				}
-				if(ark.getBola().getX()>ark.getPlataforma().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
-					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(1))) {
-						ark.getBola().setX(ark.getPlataforma().get(1).getX()+ark.getPlataforma().get(1).getWidth()/2-15);
+				if(ark.getBola().getX()>ark.getJugador().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
+					if(ark.getBola().getUltimo().equals(ark.getJugador().get(1))) {
+						ark.getBola().setX(ark.getJugador().get(1).getX()+ark.getJugador().get(1).getWidth()/2-15);
 					}
 			}
 			
 			if(keysDown.contains(new Integer(KeyEvent.VK_D))) {
-				if (ark.getPlataforma().get(1).getX()<width-ark.getPlataforma().get(1).getWidth()&& !pausa) {
-					ark.getPlataforma().get(1).moverX(1);
-					//ark.getPlataforma().get(0).isChocado(ark.getPlataforma().get(1));
+				if (ark.getJugador().get(1).getX()<width-ark.getJugador().get(1).getWidth()&& !pausa) {
+					ark.getJugador().get(1).moverX(1);
+					//ark.getJugador().get(0).isChocado(ark.getJugador().get(1));
 				}
 				
-				if(ark.getBola().getX()+15<width-ark.getPlataforma().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
-					if(ark.getBola().getUltimo().equals(ark.getPlataforma().get(1))) {
-						ark.getBola().setX(ark.getPlataforma().get(1).getX()+ark.getPlataforma().get(1).getWidth()/2-15);
+				if(ark.getBola().getX()+15<width-ark.getJugador().get(1).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)
+					if(ark.getBola().getUltimo().equals(ark.getJugador().get(1))) {
+						ark.getBola().setX(ark.getJugador().get(1).getX()+ark.getJugador().get(1).getWidth()/2-15);
 					}
 				
 			}
@@ -239,9 +254,9 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 		task = new TimerTask() {
 			@Override
 			public void run() {
-				//System.out.println("Score: "+ark.getPlataforma().get(0).getVidas());
-				//System.out.println("Score2: "+ark.getPlataforma().get(1).getVidas());
-				ark.juegue(width, ark.getPlataforma().get(( ark.getPlataforma().get(0)!=null?0:1)).getY());
+				//System.out.println("Score: "+ark.getJugador().get(0).getVidas());
+				//System.out.println("Score2: "+ark.getJugador().get(1).getVidas());
+				ark.juegue(width, ark.getJugador().get(( ark.getJugador().get(0)!=null?0:1)).getY());
 				
 				if(ark.gano()) {
 					mensaje();
@@ -287,26 +302,26 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 	private void mensaje() {
 		if(jugadores == 1) {
 			if(ark.gano()) JOptionPane.showMessageDialog(this, "Ganaste!");
-			if(ark.perdio(ark.getPlataforma().get(0))) { 
+			if(ark.perdio(ark.getJugador().get(0))) { 
 				JOptionPane.showMessageDialog(this, "GAME OVER!");
 				pausa = true;
 			}
 		}else {
 			if(ark.gano()) {
 				String ganador = "";
-				if(ark.getPlataforma().get(0).getScore() > ark.getPlataforma().get(1).getScore())
+				if(ark.getJugador().get(0).getScore() > ark.getJugador().get(1).getScore())
 					ganador = "Gana jugador Jugador 1";
-				else if(ark.getPlataforma().get(0).getScore() < ark.getPlataforma().get(1).getScore())
+				else if(ark.getJugador().get(0).getScore() < ark.getJugador().get(1).getScore())
 					ganador = "Gana jugador Jugador 2";
 				else ganador = "Empate";
 				JOptionPane.showMessageDialog(this, ganador);
 				pausa = true;
 			}
-			if(ark.perdio(ark.getPlataforma().get(0)) && ark.perdio(ark.getPlataforma().get(0))) {
+			if(ark.perdio(ark.getJugador().get(0)) && ark.perdio(ark.getJugador().get(0))) {
 				String ganador = "";
-				if(ark.getPlataforma().get(0).getScore() > ark.getPlataforma().get(1).getScore())
+				if(ark.getJugador().get(0).getScore() > ark.getJugador().get(1).getScore())
 					ganador = "Gana jugador Jugador 1";
-				else if(ark.getPlataforma().get(0).getScore() < ark.getPlataforma().get(1).getScore())
+				else if(ark.getJugador().get(0).getScore() < ark.getJugador().get(1).getScore())
 					ganador = "Gana jugador Jugador 2";
 				else ganador = "Empate";
 				JOptionPane.showMessageDialog(this, ganador);
@@ -334,10 +349,14 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 		task.cancel();
 		pausa = false;
 		keysDown=new ArrayList<Integer>();
-		String c,c2=null;
-		c = ark.getPlataforma().get(0).getColor();
-		if(jugadores == 2) {c2 = ark.getPlataforma().get(1).getColor();}
+		String c,c2=null,maqui=null;
+		c = ark.getJugador().get(0).getColor();
+		if(ark.getMaquina()!= null) maqui = ark.getMaquina().getTipo();
+		System.out.println(maqui + "W");
+		if(jugadores == 2) {c2 = ark.getJugador().get(1).getColor();}
 		ark = new ArkaPOOB(jugadores,colorNave,usaRosa, usaAzul, usaAmarillo, usaNaranja, usaNegro);
+		if(maqui!=null)maquina(maqui);
+		System.out.println(maqui);
 		colores(c,c2);
 		hilo= new Thread(this);
 		myTimer = new Timer();
@@ -360,6 +379,10 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 		task.cancel();
 		hilo= new Thread(this);
 		ark.guardar(file);
+	}
+	
+	public void exportar(File selectedFile) throws ArkaPoobException {
+		ark.exportarJuego(selectedFile);
 	}
 
 }

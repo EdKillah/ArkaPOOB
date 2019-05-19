@@ -10,7 +10,7 @@ class ArkaPOOBTest {
 	@Test
 	void deberiaMoverPlataformaDerecha() {
 		ArkaPOOB ark = new ArkaPOOB(1,"red",false,false, true, true, false);
-		Plataforma nave = ark.getPlataforma().get(0);
+		Jugador nave = ark.getJugador().get(0);
 		int x = nave.getX();
 		nave.moverX(1);
 		assertTrue(x<nave.getX());
@@ -19,7 +19,7 @@ class ArkaPOOBTest {
 	@Test
 	void deberiaMoverPlataformaIzquierda() {
 		ArkaPOOB ark = new ArkaPOOB(1,"red",false,false, true, true, false);
-		Plataforma nave = ark.getPlataforma().get(0);
+		Jugador nave = ark.getJugador().get(0);
 		int x = nave.getX();
 		nave.moverX(2);
 		assertTrue(x>=nave.getX());

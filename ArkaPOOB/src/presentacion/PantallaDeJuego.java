@@ -51,11 +51,10 @@ public class PantallaDeJuego extends JFrame{
 		colorNave=color;
 	}
 	
-	public PantallaDeJuego(int jugadores,String nombre1,String nombre2,String color,String color2,boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
+	public PantallaDeJuego(int jugadores,boolean cpu,String nombre1,String nombre2,String color,String color2,boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
 		this(jugadores,rosa, azul,amarillo, naranja,negro);
 		pint.colores(color,color2);
-		pint.nombre(nombre1,nombre2);
-		
+		pint.nombre(nombre1,nombre2);	
 	}
 	
 	
@@ -65,6 +64,10 @@ public class PantallaDeJuego extends JFrame{
 		usaAmarillo = amarillo;
 		usaNaranja = naranja;
 		usaNegro = negro;
+	}
+	
+	public void maquina(String tipo) {
+		pint.maquina(tipo);
 	}
 	
 	public void prepareElementos() {
@@ -88,18 +91,21 @@ public class PantallaDeJuego extends JFrame{
 		
 		container.add(a, BorderLayout.SOUTH); //PUNTAJE
 		
-		items = new JMenuItem[2];
+		items = new JMenuItem[3];
 		barraMenu = new JMenuBar();
 		container.add(barraMenu,BorderLayout.NORTH);
 		menu = new JMenu("Opciones");
 		barraMenu.add(menu);
 		
 		items[0] = new JMenuItem("Guardar");
-		items[1] = new JMenuItem("Salir");
+		items[1] = new JMenuItem("Exportar");
+		items[2] = new JMenuItem("Salir");
 		
 		menu.add(items[0]);
 		menu.addSeparator();
 		menu.add(items[1]);
+		menu.addSeparator();
+		menu.add(items[2]);
 	}
 	
 	public void prepareAcciones() {
@@ -131,6 +137,11 @@ public class PantallaDeJuego extends JFrame{
 		});
 		items[1].addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				exportar();
+			}
+		});
+		items[2].addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
 				salir();
 			}
 		});
@@ -154,6 +165,26 @@ public class PantallaDeJuego extends JFrame{
 		}catch(ArkaPoobException e){	
 			JOptionPane.showMessageDialog(this,e.getMessage());
 		}
+	}
+	
+	public void exportar() {
+		//if(pausa) {actualiceBotonPausa();play();}
+		files.setFileFilter(new FileNameExtensionFilter("TXT (.txt)", "txt"));
+		int val = files.showSaveDialog(this);
+		File filePath = files.getSelectedFile();
+		
+		if (filePath != null && !filePath.getName().endsWith(".txt")) {
+			String fileName = redoExtension(filePath.getName());
+			filePath = new File(filePath.getParent(),fileName+".txt");
+			
+		}
+		try{
+			if(val==JFileChooser.APPROVE_OPTION) pint.exportar(filePath);
+		files.resetChoosableFileFilters();
+		}catch(ArkaPoobException e){	
+			JOptionPane.showMessageDialog(this,e.getMessage());
+		}
+		//if (!pausa){actualiceBotonPausa();play();}
 	}
 	
 	private String redoExtension(String fileName) {

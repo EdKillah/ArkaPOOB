@@ -23,9 +23,11 @@ public class jugadoresGUI extends JFrame{
 	private JTextField textNombre;
 	private JTextField textNombre1;
 	private JTextField textNombre2;
+	private JTextField textNombre4;
 	private JComboBox<String> naveColor;
 	private JComboBox<String> naveColor1;
 	private JComboBox<String> naveColor2;
+	private JComboBox<String> tipoMaquina;
 	private JCheckBox bloqueRosado;
 	private JCheckBox bloqueNegro;
 	private JCheckBox bloqueAmarillo;
@@ -38,6 +40,7 @@ public class jugadoresGUI extends JFrame{
 	private JCheckBox bloqueAzul2;
 	
 	private String[] colores = {"red","blue","orange","green","purple"};
+	private String[] maquinas = {"destructor","curioso","mimo"};
 	
 	public jugadoresGUI() {
 		super("Jugadores");
@@ -320,6 +323,37 @@ public class jugadoresGUI extends JFrame{
 		contenido.setLayout(null);
 		contenido.setBackground(Color.BLACK);
 		
+		JLabel nombre = new JLabel("Jugador:");
+		nombre.setForeground(Color.BLACK);
+		nombre.setBounds(15, 20, 80, 18);
+		contenido.add(nombre);
+		
+		textNombre4 = new JTextField();
+		textNombre4.setBounds(90, 19, 78, 18);
+		contenido.add(textNombre4);
+		textNombre4.setColumns(10);
+		
+		JLabel nave = new JLabel("Color Nave:");
+		nave.setForeground(Color.BLACK);
+		nave.setBounds(15, 65, 80, 18);
+		contenido.add(nave);
+		
+		naveColor1 = new JComboBox<>(colores);
+		naveColor1.setBounds(90, 65, 121, 20);
+		contenido.add(naveColor1);
+		
+		prepareBloquesJugador2(contenido);
+		
+		JLabel nombre2 = new JLabel("Maquina :");
+		nombre2.setForeground(Color.BLACK);
+		nombre2.setBounds(280, 20, 80, 18);
+		contenido.add(nombre2);
+		
+		tipoMaquina = new JComboBox<>(maquinas);
+		tipoMaquina.setBounds(355, 19, 121, 20);
+		contenido.add(tipoMaquina);
+	
+		
 		jugar3 = new Boton(new ImageIcon(getClass().getResource("/imagenes/jugar2.png")));
 		jugar3.setBounds(85, 150, 180, 60);
 		jugar3.setTransparent();
@@ -378,7 +412,7 @@ public class jugadoresGUI extends JFrame{
 		
 		ActionListener jugarDosCPU = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				jugar(2,true);
+				jugar(1,true);
 			}
 		};
 		
@@ -426,10 +460,14 @@ public class jugadoresGUI extends JFrame{
 	private void jugar(int jugadores,boolean cpu) {
 		dispose();
 		PantallaDeJuego pdj = null;
-		if(jugadores == 1) {
+		if(jugadores == 1 && !cpu) {
 			pdj = new PantallaDeJuego(jugadores,textNombre.getText(),(String)naveColor.getSelectedItem(),bloqueRosado.isSelected(), bloqueAzul.isSelected(), bloqueAmarillo.isSelected(), bloqueNaranja.isSelected(), bloqueNegro.isSelected());
-		}else if(jugadores == 2) {
-			pdj = new PantallaDeJuego(jugadores,textNombre1.getText(),textNombre2.getText(),(String)naveColor1.getSelectedItem(),(String)naveColor2.getSelectedItem(),bloqueRosado2.isSelected(), bloqueAzul2.isSelected(), bloqueAmarillo2.isSelected(), bloqueNaranja2.isSelected(), bloqueNegro2.isSelected());
+		}else if(jugadores == 2 && !cpu) {
+			pdj = new PantallaDeJuego(jugadores,false,textNombre1.getText(),textNombre2.getText(),(String)naveColor1.getSelectedItem(),(String)naveColor2.getSelectedItem(),bloqueRosado2.isSelected(), bloqueAzul2.isSelected(), bloqueAmarillo2.isSelected(), bloqueNaranja2.isSelected(), bloqueNegro2.isSelected());
+		}else if(jugadores == 1 && cpu) {
+			pdj = new PantallaDeJuego(jugadores,true,textNombre4.getText(),null,(String)naveColor1.getSelectedItem(),null,bloqueRosado2.isSelected(), bloqueAzul2.isSelected(), bloqueAmarillo2.isSelected(), bloqueNaranja2.isSelected(), bloqueNegro2.isSelected());
+			System.out.println((String)tipoMaquina.getSelectedItem());
+			pdj.maquina((String)tipoMaquina.getSelectedItem());
 		}
 		pdj.setVisible(true);
 	}

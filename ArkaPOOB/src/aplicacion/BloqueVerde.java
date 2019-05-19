@@ -64,4 +64,9 @@ public class BloqueVerde extends Bloque{
 	public void setTipo(String type) {
 		tipo = type;
 	}
+	
+	@Override
+	public String toString(){
+		return getX()+" "+getY()+ " "+getWidth()+" "+getHeight()+" "+puntos+" "+tipo;
+	}
 }

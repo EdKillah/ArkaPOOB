@@ -33,7 +33,7 @@ public class SorpresaPlataforma extends Sorpresa{
 	}
 	
 	@Override
-	public boolean isChocado(Plataforma nave) { //mirar si le damos la nave o con arkgetPlataforma
+	public boolean isChocado(Jugador nave) { //mirar si le damos la nave o con arkgetPlataforma
         isChocado =nave.getBounds().intersects(this.getBounds());
         if(isChocado) {	
         	ark.setPoder(true);
@@ -42,7 +42,7 @@ public class SorpresaPlataforma extends Sorpresa{
         return isChocado;
     }
 	
-	private void activeSorpresa(Plataforma nave) {
+	private void activeSorpresa(Jugador nave) {
 		nave.activeSorpresa(tipo,ark);
 	}
 	

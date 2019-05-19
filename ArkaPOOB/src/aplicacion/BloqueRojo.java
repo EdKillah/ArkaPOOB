@@ -61,4 +61,9 @@ public class BloqueRojo extends Bloque{
 		tipo = type;
 	}
 	
+	@Override
+	public String toString(){
+		return getX()+" "+getY()+ " "+getWidth()+" "+getHeight()+" "+puntos+" "+tipo;
+	}
+	
 }

@@ -13,8 +13,8 @@ public class Bola implements Elemento, Serializable{
 	private double dy;
 	private static final int TAMX=21;
 	private static final int TAMY=21;
-	private Plataforma nave;
-	private Plataforma nave2;
+	private Jugador nave;
+	private Jugador nave2;
 	private ArkaPOOB ark;
 	private int velocidad;
 	private int damage;
@@ -23,9 +23,9 @@ public class Bola implements Elemento, Serializable{
 	private boolean isInAire;
 	private boolean isChocado;
 	private ImageIcon imagen;
-	private Plataforma ultimo;
+	private Jugador ultimo;
 	
-	public Bola(int x, int y, Plataforma nave,Plataforma nave2, int velocidad, int damage,int angulo, ArkaPOOB ark) {
+	public Bola(int x, int y, Jugador nave,Jugador nave2, int velocidad, int damage,int angulo, ArkaPOOB ark) {
 		dy = 1;
 		dx = 1;
 		vivo = true;
@@ -133,10 +133,12 @@ public class Bola implements Elemento, Serializable{
 	
 	public boolean isInNave() {
 		boolean ban = false;
+		System.out.println(getX()+" " +(nave.getX()-15));
+		System.out.println( (getX()>=nave.getX()-15)+ " " +( getX()<=nave.getX()+nave.getWidth()));
 		if(nave.getVidas()>=0  && getX()>=nave.getX()-15 && getX()<=nave.getX()+nave.getWidth()) {
 			setUltimo(nave);
 			ban = true;
-		}if(nave2 != null && nave2.getVidas()>=0 && getX()>=nave2.getX()-15 && getX()<=nave2.getX()+nave2.getWidth()) {
+		}else if(nave2 != null && nave2.getVidas()>=0 && getX()>=nave2.getX()-15 && getX()<=nave2.getX()+nave2.getWidth()) {
 			ban = true;
 			setUltimo(nave2);
 		}
@@ -171,23 +173,23 @@ public class Bola implements Elemento, Serializable{
 		this.y = y;
 	}
 	
-	public void setUltimo(Plataforma a) {
+	public void setUltimo(Jugador a) {
 		this.ultimo = a;
 	}
 	
-	public Plataforma getUltimo() {
+	public Jugador getUltimo() {
 		return ultimo;
 	}
 	
-	public Plataforma getPlataforma() {
+	public Jugador getPlataforma() {
 		return ultimo;
 	}
 	
-	public Plataforma getNave() {
+	public Jugador getNave() {
 		return nave;
 	}
 
-	public void setNave(Plataforma nave) {
+	public void setNave(Jugador nave) {
 		this.nave = nave;
 	}
 
@@ -235,5 +237,10 @@ public class Bola implements Elemento, Serializable{
 	@Override
 	public int getWidth() {
 		return TAMX;
+	}
+	
+	@Override
+	public String toString(){
+		return x+" "+y+ " "+nave+" "+nave2;
 	}
 }
