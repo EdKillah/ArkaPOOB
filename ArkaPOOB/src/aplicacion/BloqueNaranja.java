@@ -69,6 +69,6 @@ public class BloqueNaranja extends Bloque{
 
 	@Override
 	public String toString(){
-		return getX()+" "+getY()+ " "+getWidth()+" "+getHeight()+" "+puntos+" "+tipo;
+		return getX()+" "+getY()+ " "+getWidth()+" "+getHeight()+" " +isVivo();
 	}
 }

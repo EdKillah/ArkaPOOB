@@ -9,7 +9,7 @@ import java.util.ArrayList;
 class ArkaPOOBTest {
 	@Test
 	void deberiaMoverPlataformaDerecha() {
-		ArkaPOOB ark = new ArkaPOOB(1,"red",false,false, true, true, false);
+		ArkaPOOB ark = new ArkaPOOB(1,false,false, true, true, false);
 		Jugador nave = ark.getJugador().get(0);
 		int x = nave.getX();
 		nave.moverX(1);
@@ -18,7 +18,7 @@ class ArkaPOOBTest {
 	
 	@Test
 	void deberiaMoverPlataformaIzquierda() {
-		ArkaPOOB ark = new ArkaPOOB(1,"red",false,false, true, true, false);
+		ArkaPOOB ark = new ArkaPOOB(1,false,false, true, true, false);
 		Jugador nave = ark.getJugador().get(0);
 		int x = nave.getX();
 		nave.moverX(2);
@@ -28,7 +28,7 @@ class ArkaPOOBTest {
 	
 	@Test
 	void deberiaCrearBloques() {
-		ArkaPOOB ark = new ArkaPOOB(1,"red",false,false, true, true, false);
+		ArkaPOOB ark = new ArkaPOOB(1,false,false, true, true, false);
 		ArrayList<ArrayList<Bloque>>blocks = ark.getBloques();
 		assertTrue(blocks.size()>0);
 	}

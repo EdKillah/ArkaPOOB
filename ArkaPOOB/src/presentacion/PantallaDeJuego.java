@@ -72,7 +72,7 @@ public class PantallaDeJuego extends JFrame{
 	
 	public void prepareElementos() {
 		files = new JFileChooser();
-		pint = new Pintor(747,580,jugadores,colorNave,usaRosa,usaAzul,usaAmarillo,usaNaranja,usaNegro);
+		pint = new Pintor(747,580,jugadores,usaRosa,usaAzul,usaAmarillo,usaNaranja,usaNegro);
 		container = getContentPane();
 		container.add(pint, BorderLayout.CENTER); //JUEGO
 		pint.setBackground(new ImageIcon(getClass().getResource("/imagenes/ArkanoidFondo.png")));
@@ -220,6 +220,10 @@ public class PantallaDeJuego extends JFrame{
 	
 	public void crearJuego(ArkaPOOB ar) {
 		pint.setJuego(ar);
+	}
+	
+	public void setJuego(ArkaPOOB tablero) {
+		pint.importe(tablero);
 	}
 	
 	

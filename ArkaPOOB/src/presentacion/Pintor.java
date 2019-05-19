@@ -35,7 +35,7 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 	private String nombre1;
 	private String nombre2;
 	
-	public Pintor(int w, int h , int jugadores,String colorNave, boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
+	public Pintor(int w, int h , int jugadores, boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
 		this.jugadores = jugadores;
 		pausa = false;
 		keysDown=new ArrayList<Integer>();
@@ -44,8 +44,8 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 		usaAmarillo = amarillo;
 		usaNaranja = naranja;
 		usaNegro = negro;
-		this.colorNave = colorNave;
-		ark = new ArkaPOOB(jugadores,colorNave,rosa,azul,amarillo,naranja,negro);
+		//this.colorNave = colorNave;
+		ark = new ArkaPOOB(jugadores,rosa,azul,amarillo,naranja,negro);
 		width = w;
 		height = h;
 		hilo= new Thread(this);
@@ -113,6 +113,16 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 			for(int j=0;j<ark.getJugador().get(1).getVidas();j++) {
 				Jugador vida = new Jugador(30+pos,500,40,15);
 				vida.setColor(ark.getJugador().get(1).getColor());
+				if(vida != null )g.drawImage(vida.getImagen(), vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);
+				pos+=40;
+			}
+		}
+		
+		if(ark.getMaquina() != null) {
+			pos = 0;
+			for(int j=0;j<ark.getMaquina().getVidas();j++) {
+				Jugador vida = new Jugador(30+pos,500,40,15);
+				vida.setColor(ark.getMaquina().getColor());
 				if(vida != null )g.drawImage(vida.getImagen(), vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);
 				pos+=40;
 			}
@@ -354,7 +364,7 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 		if(ark.getMaquina()!= null) maqui = ark.getMaquina().getTipo();
 		System.out.println(maqui + "W");
 		if(jugadores == 2) {c2 = ark.getJugador().get(1).getColor();}
-		ark = new ArkaPOOB(jugadores,colorNave,usaRosa, usaAzul, usaAmarillo, usaNaranja, usaNegro);
+		ark = new ArkaPOOB(jugadores,usaRosa, usaAzul, usaAmarillo, usaNaranja, usaNegro);
 		if(maqui!=null)maquina(maqui);
 		System.out.println(maqui);
 		colores(c,c2);
@@ -383,6 +393,17 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 	
 	public void exportar(File selectedFile) throws ArkaPoobException {
 		ark.exportarJuego(selectedFile);
+	}
+	
+	public void importe(ArkaPOOB iw) {
+		pausa = false;
+		keysDown=new ArrayList<Integer>();
+		ark = iw;
+		jugadores = ark.getJugadores();
+		hilo= new Thread(this);
+		myTimer = new Timer();
+		hilo.start();
+		
 	}
 
 }

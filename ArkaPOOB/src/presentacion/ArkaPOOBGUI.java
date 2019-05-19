@@ -8,8 +8,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import persistencia.*;
+import persistencia.ArkaPoobDAO;
 
 public class ArkaPOOBGUI extends JFrame{
 	private myPanel pantallaInicial;
@@ -55,7 +54,7 @@ public class ArkaPOOBGUI extends JFrame{
 		barraMenu.add(menu);
 		
 		items[0] = new JMenuItem("Abrir");
-		items[1] = new JMenuItem("Exportar");
+		items[1] = new JMenuItem("Importar");
 		
 		menu.add(items[0]);
 		menu.addSeparator();
@@ -126,7 +125,7 @@ public class ArkaPOOBGUI extends JFrame{
 		
 		items[1].addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				abrir();
+				importar();
 			}
 		});
 		
@@ -240,6 +239,27 @@ public class ArkaPOOBGUI extends JFrame{
 			}
 		}
 	}
+	
+	public void importar() {
+		file.setFileFilter(new FileNameExtensionFilter("TXT (.txt)", "txt"));
+		int option = file.showOpenDialog(this);
+		if(option == JFileChooser.APPROVE_OPTION){
+			ArkaPoobDAO dao = new ArkaPoobDAO();
+			ArkaPOOB tableroDatos = null ;
+			try {
+				tableroDatos = dao.importe(file.getSelectedFile());
+				PantallaDeJuego pj = new PantallaDeJuego(tableroDatos.getJugadores(),tableroDatos.getColores()[0],tableroDatos.getColores()[1],tableroDatos.getColores()[2],tableroDatos.getColores()[3],tableroDatos.getColores()[4]);
+				pj.setJuego(tableroDatos);
+				pj.setVisible(true);
+			} catch (ArkaPoobException e) {
+				//ArkaPoobException.registreError(e);
+				JOptionPane.showMessageDialog(this, e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE);
+			}
+			
+		}		
+		file.resetChoosableFileFilters();
+	}
+
 
 	public static void main(String[] args) {
 		ArkaPOOBGUI arka = new ArkaPOOBGUI();

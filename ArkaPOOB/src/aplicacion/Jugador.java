@@ -90,6 +90,10 @@ public class Jugador implements Elemento,Serializable{
 	public void setVidas(int vidas) {
 		this.vidas += vidas;
 	}
+	
+	public void setVida(int vidas) {
+		this.vidas = vidas;
+	}
 
 	public int getBalas() {
 		return balas;
