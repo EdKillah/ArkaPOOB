@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 public class JugadorMimo extends Jugador{
 	private ArkaPOOB ark;
 	private int x;
-	private String tipo; 
+	private String tipo;
 	
 	public JugadorMimo(int x,int y, int width, int height, ArkaPOOB ark) {
 		super( x, y, width, height);

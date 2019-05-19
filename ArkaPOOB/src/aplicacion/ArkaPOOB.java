@@ -174,14 +174,13 @@ public class ArkaPOOB implements Serializable{
 	 */
 	public boolean gano() {
 		int bloq=0;
-		for(int i=0;i<bloques.size();i++) 
+		for(int i=0;i<bloques.size();i++) {
 			for(int j=0;j<bloques.get(i).size();j++) {
 				if(!bloques.get(i).get(j).getTipo().equals("gris") && bloques.get(i).get(j).isVivo())
 					bloq++;
 			}
+		}
 		if(bloq == 0 && nivel == 5) { 
-			System.out.println(bloq + " dsad");
-			System.out.println(nivel + " dsad");
 			return true;
 		}
 		else return false;
@@ -219,7 +218,6 @@ public class ArkaPOOB implements Serializable{
 	 */
 	public void prepareBola(){
 		if(jugadores==1 && naves.get(0).getVidas() > 0) {
-			System.out.println(jugadores);
 			if(maquina!=null)bola = new Bola(maquina.getX()+maquina.getWidth()/2-15,maquina.getY()-maquina.getHeight(),maquina,naves.get(0),45,1,45,this);
 			else bola = new Bola(naves.get(0).getX()+naves.get(0).getWidth()/2-15,naves.get(0).getY()-naves.get(0).getHeight(),naves.get(0),null,45,1,45,this);
 		}
@@ -269,7 +267,6 @@ public class ArkaPOOB implements Serializable{
 		String[] pComunes = {"Rosa","Azul","Amarillo","Negro"};
 		if(posicionAux>=mComunes.length) 
 			posicionAux=0;
-		//System.out.println("PosicionAux: "+posicionAux);
 		if(contador%2==0) {
 			if(mComunes[posicionAux].equals("Rojo"))
 				bloque = new BloqueRojo(posX,posY,70,35,this);
@@ -282,7 +279,6 @@ public class ArkaPOOB implements Serializable{
 		}
 		else {
 			int pocoComunes = (int) (Math.random() * 40);
-			//System.out.println("PocoCOMUNES: "+pocoComunes);
 			if(pocoComunes%2==0) {
 				if(pComunes[posicionAux].equals("Azul") && bloqueAzul)
 					bloque = new BloqueAzul(posX,posY,70,35,this);
@@ -437,7 +433,6 @@ public class ArkaPOOB implements Serializable{
 		if(tipo.equals("destructor")) maquina = new JugadorDestructor(750/2 + 80,480,90,20,this);
 		//else if(tipo.equals("curioso")) maquina = tipo;
 		else if(tipo.equals("mimo")) maquina = new JugadorMimo(750/2 + 60,480,90,20,this);
-		System.out.println(maquina+ "W");
 		prepareBola();
 	}
 	
@@ -466,16 +461,13 @@ public class ArkaPOOB implements Serializable{
 	}
 	
 	public void addBloque(int x,int y,int width,int height,boolean vivo,String bloque) throws ArkaPoobException{
-		System.out.println(bloque);
 		int i=0;
 		Bloque a = null;
 		if(bloques.get(0).size() == 10) i=1;
 		else if(bloques.get(1).size() == 10) i=2;
 		else if(bloques.get(2).size() == 10) throw new ArkaPoobException("No se puede agregar mas bloques"); 
 		
-		System.out.println("e");
 		if(bloque.equals("BloqueRojo")) {
-			System.out.println("W");
 			a = new BloqueRojo(x,y,width,height,this);
 			a.setVivo(vivo);
 			bloques.get(i).add(a);
@@ -511,28 +503,34 @@ public class ArkaPOOB implements Serializable{
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueVerde")) {
-			System.out.println(vivo);
 			a = new BloqueVerde(x,y,width,height,this);
 			a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 	}
 	
-	public void addJugador(int x,int y,int width,int height,int score,String color,int vidas,String jugador) throws ArkaPoobException{
+	public void addJugador(int x,int y,int width,int height,int score,String color,int vidas,String nombre,String jugador) throws ArkaPoobException{
 		Jugador a = null;
 		if(jugador.equals("Jugador")) {
 			a = new Jugador(x,y,width,height);
+			a.setScor(score);
 			a.setVida(vidas);
+			a.setColor(color);
+			a.setNombre(nombre);
 			naves.add(a);
 		}
 		if(jugador.equals("JugadorDestructor")) {
 			a = new JugadorDestructor(x,y,width,height,this);
 			a.setVida(vidas);
+			a.setScor(score);
+			a.setColor(color);
 			maquina = a;
 		}
 		if(jugador.equals("JugadorMimo")) {
 			a = new JugadorMimo(x,y,width,height,this);
 			a.setVida(vidas);
+			a.setScor(score);
+			a.setColor(color);
 			maquina = a;
 		}
 		//if(jugador.equals("JugadorCurioso")) naves.add(new JugadorCurioso(x,y,width,height,this));
@@ -540,7 +538,6 @@ public class ArkaPOOB implements Serializable{
 	
 	public void addBola(int x, int y) throws ArkaPoobException{
 		if(jugadores==1 && naves.get(0).getVidas() > 0) {
-			//System.out.println(jugadores);
 			if(maquina!=null)bola = new Bola(maquina.getX()+maquina.getWidth()/2-15,maquina.getY()-maquina.getHeight(),maquina,naves.get(0),45,1,45,this);
 			else bola = new Bola(naves.get(0).getX()+naves.get(0).getWidth()/2-15,naves.get(0).getY()-naves.get(0).getHeight(),naves.get(0),null,45,1,45,this);
 		}
@@ -584,6 +581,9 @@ public class ArkaPOOB implements Serializable{
 	
 	public void setBloques(ArrayList<ArrayList<Bloque>> bloques) {
 		this.bloques = bloques;
+		this.bloques.add(new ArrayList<Bloque>());
+		this.bloques.add(new ArrayList<Bloque>());
+		this.bloques.add(new ArrayList<Bloque>());
 	}
 	
 	public void setNaves(ArrayList<Jugador> a) {

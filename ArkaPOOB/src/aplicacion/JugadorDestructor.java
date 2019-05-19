@@ -6,6 +6,7 @@ public class JugadorDestructor extends Jugador {
 	
 	private ArkaPOOB ark;
 	private String tipo;
+	
 	public JugadorDestructor(int x,int y, int width, int height, ArkaPOOB ark) {
 		super( x, y, width, height);
 		this.ark = ark;

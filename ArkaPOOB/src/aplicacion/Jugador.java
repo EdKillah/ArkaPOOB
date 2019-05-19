@@ -25,6 +25,7 @@ public class Jugador implements Elemento,Serializable{
 	private int contador;
 	private int score;
 	private String tipo;
+	private String nombre;
 	
 	
 	/**
@@ -179,6 +180,18 @@ public class Jugador implements Elemento,Serializable{
 		score += a;
 	}
 	
+	public void setScor(int a) {
+		score = a;
+	}
+	
+	public void setNombre(String a) {
+		this.nombre =a;
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+	
 	public Rectangle getBounds() {
         Rectangle borde = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         return borde;
@@ -251,7 +264,7 @@ public class Jugador implements Elemento,Serializable{
 	
 	@Override
 	public String toString(){
-		return x+" "+y+ " "+width+" "+height+" "+score+" "+color+" "+vidas;
+		return x+" "+y+ " "+width+" "+height+" "+score+" "+color+" "+vidas+ " "+ nombre;
 	}
 
 

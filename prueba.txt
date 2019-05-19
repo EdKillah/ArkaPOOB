@@ -21,15 +21,16 @@ BloqueRojo 440 68 70 35 true
 BloqueVerde 510 68 70 35 true
 BloqueRojo 580 68 70 35 true
 BloqueVerde 650 68 70 35 true
-BloqueRojo 20 106 70 35 true
+BloqueRojo 20 106 70 35 false
 BloqueVerde 90 106 70 35 true
 BloqueRojo 160 106 70 35 true
 BloqueVerde 230 106 70 35 true
-BloqueRojo 300 106 70 35 false
+BloqueRojo 300 106 70 35 true
 BloqueVerde 370 106 70 35 true
 BloqueRojo 440 106 70 35 true
 BloqueVerde 510 106 70 35 true
 BloqueRojo 580 106 70 35 true
-BloqueVerde 650 106 70 35 true
-Jugador 5 480 90 20 100 blue 2
-Bola 35 460 5 480 90 20 100 blue 2 null
+BloqueVerde 650 106 70 35 false
+Jugador 108 480 90 20 0 purple 3 Hola
+JugadorDestructor 612 480 90 20 300 blue 3 null
+Bola 647 240 612 480 90 20 300 blue 3 null 108 480 90 20 0 purple 3 Hola

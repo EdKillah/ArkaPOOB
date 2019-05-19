@@ -54,7 +54,6 @@ public class ArkaPoobDAO implements Serializable{
 			for(Elemento e: elementos){
 				w.println(e.getClass().getSimpleName()+ " "+ e.toString());
 			}
-			//if (ark.getMaquina() != null)w.println(ark.getMaquina().getTipo());
 		}
 		catch(IOException e){
 			//throw new ArkaPoobException("Ocurrio un error al abrir " + file.getName());
@@ -78,18 +77,20 @@ public class ArkaPoobDAO implements Serializable{
 			
 			ark = new ArkaPOOB(jugadores,Boolean.valueOf(ar[0]),Boolean.valueOf(ar[1]),Boolean.valueOf(ar[2]),Boolean.valueOf(ar[3]),Boolean.valueOf(ar[4]));
 			ark.setNivel(nivel);
+			System.out.println(ark.getNivel());
 			
 			String ln = in.readLine();
 			ark.setBloques(new ArrayList<ArrayList<Bloque>>());
+			ark.setNaves(new ArrayList<Jugador>());
 			while(ln!=null){
 				ar = ln.split(" ");
 				
 				try {
 					if(ar[0].equals("BloqueGris") || ar[0].equals("BloqueRojo") || ar[0].equals("BloqueVerde") || ar[0].equals("BloqueAmarillo") || ar[0].equals("BloqueAzul") || ar[0].equals("BloqueNaranja") || ar[0].equals("BloqueNegro")|| ar[0].equals("BloqueNegro")){
-						System.out.println(Boolean.valueOf(ar[5]));
+						//System.out.println(Boolean.valueOf(ar[5]));
 						ark.addBloque(Integer.parseInt(ar[1]),Integer.parseInt(ar[2]),Integer.parseInt(ar[3]),Integer.parseInt(ar[4]),Boolean.valueOf(ar[5]),ar[0]);
-					}else if(ar[0].equals("Jugador")) {
-						ark.addJugador(Integer.parseInt(ar[1]),Integer.parseInt(ar[2]),Integer.parseInt(ar[3]),Integer.parseInt(ar[4]),Integer.parseInt(ar[5]),ar[6],Integer.parseInt(ar[7]),ar[0]);
+					}else if(ar[0].equals("Jugador") || ar[0].equals("JugadorMimo") || ar[0].equals("JugadorDestructor") || ar[0].equals("JugadorCuriosos") ) {  
+						ark.addJugador(Integer.parseInt(ar[1]),Integer.parseInt(ar[2]),Integer.parseInt(ar[3]),Integer.parseInt(ar[4]),Integer.parseInt(ar[5]),ar[6],Integer.parseInt(ar[7]),ar[8],ar[0]);
 					}else if(ar[0].equals("Bola")) {
 						ark.addBola(Integer.parseInt(ar[1]),Integer.parseInt(ar[2]));
 					}
@@ -103,6 +104,7 @@ public class ArkaPoobDAO implements Serializable{
 				}
 				catch(Exception e) {
 					registreError(e);
+					//throw new ArkaPoobException("Los datos del archivo son erroneos."+ e.getMessage());
 				}
 				ln = in.readLine();
 			}

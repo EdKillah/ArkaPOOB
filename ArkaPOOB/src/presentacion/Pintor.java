@@ -16,7 +16,6 @@ import java.io.*;
 import javax.swing.*;
 
 public class Pintor extends myPanel implements ActionListener, KeyListener, Runnable{
-	//private myPanel myPanel;	
 	private ArkaPOOB ark;
 	private ArrayList<Integer> keysDown;
 	private String colorNave;
@@ -70,7 +69,6 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 			}
 		}
 		Jugador maquina = ark.getMaquina();
-		//System.out.println(maquina);
 		if(maquina != null) if(maquina.getVidas() >0) g.drawImage(maquina.getImagen(), maquina.getX(), maquina.getY(),maquina.getWidth(),maquina.getHeight(), this);
 		
 		
@@ -81,11 +79,10 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 			if(nave2.getVidas() >0) g.drawImage(nave2.getImagen(), nave2.getX(), nave2.getY(),nave2.getWidth(),nave2.getHeight(), this);
 		}
 		
-	   // g.setFont(new Font("TimesRoman", Font.PLAIN, 15));
 		g.setColor(Color.RED);
-		g.drawString(nombre1+" Score: " + ark.getJugador().get(0).getScore() , width/2-150, height-70); //ark.encuentreTanque(1).getName()+
+		g.drawString(ark.getJugador().get(0).getNombre()+" Score: " + ark.getJugador().get(0).getScore() , width/2-150, height-70); //ark.encuentreTanque(1).getName()+
 		if (ark.getJugadores() == 2) {
-			g.drawString(nombre2 +" Score: " + ark.getJugador().get(1).getScore(), width/2+50, height-70); //ark.encuentreTanque(2).getName()
+			g.drawString(ark.getJugador().get(1).getNombre() +" Score: " + ark.getJugador().get(1).getScore(), width/2+50, height-70); //ark.encuentreTanque(2).getName()
 		}if(ark.getMaquina()!=null)
 			g.drawString("Maquina Score: " + ark.getMaquina().getScore(), width/2+50, height-70); //ark.encuentreTanque(2).getName()
 		
@@ -130,8 +127,14 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 	}
 	
 	public void nombre(String n1,String n2) {
-		if(n1 != null) nombre1=n1;
-		if(n2 != null) nombre2=n2;
+		if(n1 != null) {
+			nombre1=n1;
+			ark.getJugador().get(0).setNombre(nombre1);
+		}
+		if(n2 != null) {
+			nombre2=n2;
+			ark.getJugador().get(1).setNombre(nombre2);
+		}
 	}
 	
 	public void maquina(String tipo) {
@@ -327,7 +330,7 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 				JOptionPane.showMessageDialog(this, ganador);
 				pausa = true;
 			}
-			if(ark.perdio(ark.getJugador().get(0)) && ark.perdio(ark.getJugador().get(0))) {
+			if(ark.perdio(ark.getJugador().get(0)) && ark.perdio(ark.getJugador().get(1))) {
 				String ganador = "";
 				if(ark.getJugador().get(0).getScore() > ark.getJugador().get(1).getScore())
 					ganador = "Gana jugador Jugador 1";
