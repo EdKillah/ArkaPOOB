@@ -365,11 +365,13 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 		String c,c2=null,maqui=null;
 		c = ark.getJugador().get(0).getColor();
 		if(ark.getMaquina()!= null) maqui = ark.getMaquina().getTipo();
-		System.out.println(maqui + "W");
 		if(jugadores == 2) {c2 = ark.getJugador().get(1).getColor();}
+		int nivel = ark.getNivel();
+		System.out.println(nivel);
 		ark = new ArkaPOOB(jugadores,usaRosa, usaAzul, usaAmarillo, usaNaranja, usaNegro);
 		if(maqui!=null)maquina(maqui);
-		System.out.println(maqui);
+		System.out.println(nivel);
+		ark.setNivel(nivel);
 		colores(c,c2);
 		hilo= new Thread(this);
 		myTimer = new Timer();

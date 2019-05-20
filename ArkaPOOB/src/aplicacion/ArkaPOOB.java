@@ -180,7 +180,7 @@ public class ArkaPOOB implements Serializable{
 					bloq++;
 			}
 		}
-		if(bloq == 0 && nivel == 5) { 
+		if(bloq == 0 && nivel >= 6) { 
 			return true;
 		}
 		else return false;
@@ -359,10 +359,10 @@ public class ArkaPOOB implements Serializable{
 			bloques.add(blocks);
 		}
 		ultimoBloque = bloques.get(0).get(0);
-		System.out.println("NIVEL 2: "+nivel);
+		//System.out.println("NIVEL 2: "+nivel);
 	}
 	
-	private void prepareNivelTres() {
+	private void prepareNivelCuatro() {
 		Bloque bloque=null;
 		bloques = new ArrayList<ArrayList<Bloque>>();
 		int posY=30,posX=0;int step = 70; int posicionAux=0;int contador = 0; int i=0; int x=1;
@@ -394,11 +394,29 @@ public class ArkaPOOB implements Serializable{
 			x++;i++;posY += 38;
 			bloques.add(blocks);
 		}
+		bloque = new BloqueRosa(110,30,70,35,this);
+		bloques.get(0).add(bloque);
 		ultimoBloque = bloques.get(0).get(0);
 	}
 	
-	private void prepareNivelCuatro() {
-		System.out.println("NIVEL 4: "+nivel);
+	private void prepareNivelTres() {
+		//System.out.println("NIVEL 3: "+nivel);
+		Bloque bloque=null;
+		bloques = new ArrayList<ArrayList<Bloque>>();
+		int posY=30,posX=10;int step = 70; int posicionAux=0;int contador = 0; int i=0; int x=1;
+		for(int j=0;j<5;j++) {
+			ArrayList<Bloque> blocks = new ArrayList<Bloque>();
+			for(int k=0;k<6;k++) {
+				if(k%2==0)posX+=step;
+				bloque = new BloqueRojo(posX,posY,70,35,this);
+				blocks.add(bloque);
+				posX+=step;
+			}
+			posY+=38;
+			posX = 10;
+			bloques.add(blocks);
+		}
+		ultimoBloque = bloques.get(0).get(0);
 	}
 	
 	private void prepareNivelCinco() {
@@ -497,7 +515,9 @@ public class ArkaPOOB implements Serializable{
 		Bloque a = null;
 		if(bloques.get(0).size() == 10) i=1;
 		else if(bloques.get(1).size() == 10) i=2;
-		else if(bloques.get(2).size() == 10) throw new ArkaPoobException("No se puede agregar mas bloques"); 
+		else if(bloques.get(2).size() == 10) i=3;
+		else if(bloques.get(4).size() == 10) i=5;
+		else if(bloques.get(5).size() == 10) throw new ArkaPoobException("No se puede agregar mas bloques"); 
 		
 		if(bloque.equals("BloqueRojo")) {
 			a = new BloqueRojo(x,y,width,height,this);
@@ -616,6 +636,9 @@ public class ArkaPOOB implements Serializable{
 		this.bloques.add(new ArrayList<Bloque>());
 		this.bloques.add(new ArrayList<Bloque>());
 		this.bloques.add(new ArrayList<Bloque>());
+		this.bloques.add(new ArrayList<Bloque>());
+		this.bloques.add(new ArrayList<Bloque>());
+		this.bloques.add(new ArrayList<Bloque>());
 	}
 	
 	public void setNaves(ArrayList<Jugador> a) {
@@ -640,6 +663,7 @@ public class ArkaPOOB implements Serializable{
 	
 	public void setNivel(int a) {
 		this.nivel = a;
+		prepareBloques(bloqueRosa,bloqueAzul,bloqueAmarillo,bloqueNaranja,bloqueNegro);
 	}
 	
 	public void guardar(File file) throws ArkaPoobException {
