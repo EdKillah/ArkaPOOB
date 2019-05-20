@@ -65,7 +65,7 @@ public class ArkaPOOB implements Serializable{
 			for(int i=0;i<bloques.size();i++) {
 				for(int j=0;j<bloques.get(i).size();j++) {
 					activeSorpresa();
-					isJugadorActiva();
+					//isJugadorActiva();
 					if(bloques.get(i).get(j).isVivo() && bloques.get(i).get(j).isChocado(bola)) {
 						bola.getUltimo().setScore(bloques.get(i).get(j).getPuntos());
 						if(!bloques.get(i).get(j).getTipo().equals("negro"))ultimoBloque = bloques.get(i).get(j);
@@ -407,10 +407,13 @@ public class ArkaPOOB implements Serializable{
 		for(int j=0;j<5;j++) {
 			ArrayList<Bloque> blocks = new ArrayList<Bloque>();
 			for(int k=0;k<6;k++) {
+				posicionAux = compruebePosicionArreglo(posicionAux);
 				if(k%2==0)posX+=step;
-				bloque = new BloqueRojo(posX,posY,70,35,this);
+				bloque = alisteBloques(posicionAux,contador,posX,posY,bloque); //new BloqueRojo(posX,posY,70,35,this);
 				blocks.add(bloque);
 				posX+=step;
+				posicionAux++;
+				contador++;
 			}
 			posY+=38;
 			posX = 10;
@@ -440,16 +443,18 @@ public class ArkaPOOB implements Serializable{
 	}
 	*/
 	
+	/*
 	public void isJugadorActiva() {
 		if(naves.get(0).isPoderActivo()) {
 			naves.get(0).hagaTalCosa(this);
 		}
 	}
+	*/
 	
 	public void activeSorpresa() {
 		if(getSorpresa()!=null) {
 			if(naves.get(0)!= null && sorpresa.isChocado(naves.get(0))){
-				setPoder(true);
+				//setPoder(true);
 				//prepareBola();
 				sorpresa = null;
 				//naves.get(0).setPoderActivado(false);

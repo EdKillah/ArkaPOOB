@@ -211,8 +211,15 @@ public class Jugador implements Elemento,Serializable{
 	
 	
 	public void activeSorpresa(String tipo,ArkaPOOB ark) {
-		if(tipo.equals("Pegajosa")) {
-			if(ark.getPoder() && ark.getBola().getY()+ ark.getBola().getTamY() + height >= getY()-1) {
+		System.out.println("LLEGA A ACTIVAR LA SORPRESA");
+		if(tipo.equals("pegajosa")) {
+			System.out.println("ark.getPoder(): "+ark.getPoder());
+			System.out.println("GETy()-1: "+getY());
+			System.out.println("ark.getBola().getY(): "+ark.getBola().getY());
+			System.out.println("Bola.getTamY(): "+Bola.getTamY());
+			if(ark.getPoder() && ark.getBola().getY()+ Bola.getTamY() + height >= getY()-1) {
+				System.out.println("ACTIVA SU PODEEER");
+				contador=0;
 				this.setPoderActivo(true);
 				//ark.prepareBola(); //this
 				//ark.setPoder(false);
@@ -220,8 +227,23 @@ public class Jugador implements Elemento,Serializable{
 		}
 	}
 	
+	
+	
+	
 	public boolean isChocado(Bola bola) {
         boolean isChocado = bola.getBounds().intersects(this.getBounds());
+        System.out.println("IsChoadoNave: "+isChocado);
+        System.out.println("isPoderActivo(): "+isPoderActivo());
+        if(isChocado && isPoderActivo()) {
+        	System.out.println("EntraENiSHCAODOOO");
+        	if(contador<3) {
+        		bola.setY(getY());
+        		bola.setInAire(false);
+        		contador++;
+        	}
+        }
+        
+        	
         return isChocado;
     }
 	/*
