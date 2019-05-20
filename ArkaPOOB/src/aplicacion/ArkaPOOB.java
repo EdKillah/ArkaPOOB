@@ -2,11 +2,10 @@ package aplicacion;
 
 import persistencia.*;
 
-import java.awt.Image;
 import java.io.*;
 import java.util.*;
 
-import javax.swing.ImageIcon;
+
 
 /**
  * Clase principal del paquete aplicación y del juego en general,
@@ -45,7 +44,7 @@ public class ArkaPOOB implements Serializable{
 		nivel = 1;
 		prepareColorBloques(rosa, azul, amarillo, naranja,negro);
 		prepareBloques(rosa,azul,amarillo,naranja,negro);
-		ultimoBloque = bloques.get(0).get(0);
+		ultimoBloque = new BloqueGris(0,0,70,35,this);
 		dao = new ArkaPoobDAO();
 		prepareNave();	
 		prepareBola();
@@ -68,7 +67,7 @@ public class ArkaPOOB implements Serializable{
 					//isJugadorActiva();
 					if(bloques.get(i).get(j).isVivo() && bloques.get(i).get(j).isChocado(bola)) {
 						bola.getUltimo().setScore(bloques.get(i).get(j).getPuntos());
-						if(!bloques.get(i).get(j).getTipo().equals("negro"))ultimoBloque = bloques.get(i).get(j);
+						//if(!bloques.get(i).get(j).getTipo().equals("negro"))ultimoBloque = bloques.get(i).get(j);
 						
 					}
 					if(jugadores  == 2) naves.get(0).isChocado(naves.get(1));
@@ -358,8 +357,7 @@ public class ArkaPOOB implements Serializable{
 			posicionAux++;
 			bloques.add(blocks);
 		}
-		ultimoBloque = bloques.get(0).get(0);
-		//System.out.println("NIVEL 2: "+nivel);
+		ultimoBloque = new BloqueGris(0,0,70,35,this);
 	}
 	
 	private void prepareNivelCuatro() {
@@ -372,6 +370,7 @@ public class ArkaPOOB implements Serializable{
 			for(int j=0;j<x;j++) {
 				posicionAux = compruebePosicionArreglo(posicionAux);
 				if(i==8) bloque = new BloqueGris(posX,posY,70,35,this);
+				else if(i == 7 && j == 0) bloque = new BloqueRosa(posX,posY,70,35,this);
 				else if(j==0) bloque = new BloqueVerde(posX,posY,70,35,this);
 				else if(j==1) bloque = new BloqueRojo(posX,posY,70,35,this);
 				else if(j==2 && bloqueNaranja) bloque = new BloqueNaranja(posX,posY,70,35,this);
@@ -396,11 +395,10 @@ public class ArkaPOOB implements Serializable{
 		}
 		bloque = new BloqueRosa(110,30,70,35,this);
 		bloques.get(0).add(bloque);
-		ultimoBloque = bloques.get(0).get(0);
+		ultimoBloque = new BloqueGris(0,0,70,35,this);
 	}
 	
 	private void prepareNivelTres() {
-		//System.out.println("NIVEL 3: "+nivel);
 		Bloque bloque=null;
 		bloques = new ArrayList<ArrayList<Bloque>>();
 		int posY=30,posX=10;int step = 70; int posicionAux=0;int contador = 0; int i=0; int x=1;
@@ -419,11 +417,53 @@ public class ArkaPOOB implements Serializable{
 			posX = 10;
 			bloques.add(blocks);
 		}
-		ultimoBloque = bloques.get(0).get(0);
+		ultimoBloque = new BloqueGris(0,0,70,35,this);
 	}
 	
 	private void prepareNivelCinco() {
-		System.out.println("NIVEL 5: "+nivel);
+		Bloque bloque = null;
+		int posY=30,posX=20;int step = 70; int posicionAux=0;int contador = 0; int x=1;
+		bloques = new ArrayList<ArrayList<Bloque>>();
+		for(int i=0;i<6;i++) {
+			ArrayList<Bloque> blocks = new ArrayList<Bloque>();
+			for(int j = 0; j<4 ;j++) {
+				posicionAux = compruebePosicionArreglo(posicionAux);
+				if(i == 0 && j!=3)bloque = new BloqueGris(posX,posY,70,35,this);
+				else if(i == 2 && j == 3) bloque = new BloqueRojo(posX,posY,70,35,this);
+				else if(i == 3 && j == 3) bloque = new BloqueRojo(posX,posY,70,35,this);
+				else if(j == 3 && i!=0 && i!=5) bloque = new BloqueGris(posX,posY,70,35,this);
+				else if( i == 5 && j!=3)bloque = new BloqueGris(posX,posY,70,35,this);
+				else bloque = alisteBloques(posicionAux,contador,posX,posY,bloque);
+				blocks.add(bloque);
+				posX+=step;
+				contador++;
+				posicionAux++;
+			}
+			posX = 20;
+			posY+=38;
+			bloques.add(blocks);
+		}
+		posX = 650;posY = 30;
+		for(int i=0;i<6;i++) {
+			ArrayList<Bloque> blocks = new ArrayList<Bloque>();
+			for(int j = 0; j<4 ;j++) {
+				posicionAux = compruebePosicionArreglo(posicionAux);
+				if(i == 0 && j!=3)bloque = new BloqueGris(posX,posY,70,35,this);
+				else if(i == 2 && j == 3) bloque = new BloqueRojo(posX,posY,70,35,this);
+				else if(i == 3 && j == 3) bloque = new BloqueRojo(posX,posY,70,35,this);
+				else if(j == 3 && i!=0 && i!=5) bloque = new BloqueGris(posX,posY,70,35,this);
+				else if( i == 5 && j!=3)bloque = new BloqueGris(posX,posY,70,35,this);
+				else bloque = alisteBloques(posicionAux,contador,posX,posY,bloque);
+				blocks.add(bloque);
+				posX-=step;
+				contador++;
+				posicionAux++;
+			}
+			posX = 650;
+			posY+=38;
+			bloques.add(blocks);
+		}
+		ultimoBloque = new BloqueGris(0,0,70,35,this);
 	}
 	
 	/**
@@ -488,6 +528,7 @@ public class ArkaPOOB implements Serializable{
 		if(tipo.equals("destructor")) maquina = new JugadorDestructor(750/2 + 80,480,90,20,this);
 		//else if(tipo.equals("curioso")) maquina = tipo;
 		else if(tipo.equals("mimo")) maquina = new JugadorMimo(750/2 + 60,480,90,20,this);
+		else if(tipo.equals("curioso")) maquina = new JugadorCurioso(750/2 + 60,480,90,20,this);
 		prepareBola();
 	}
 	
@@ -526,42 +567,42 @@ public class ArkaPOOB implements Serializable{
 		
 		if(bloque.equals("BloqueRojo")) {
 			a = new BloqueRojo(x,y,width,height,this);
-			a.setVivo(vivo);
+			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueAmarillo")) {
 			a = new BloqueAmarillo(x,y,width,height,this);
-			a.setVivo(vivo);
+			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueAzul")) {
 			a = new BloqueAzul(x,y,width,height,this);
-			a.setVivo(vivo);
+			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueGris")) {
 			a = new BloqueGris(x,y,width,height,this);
-			a.setVivo(vivo);
+			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueNaranja")) {
 			a = new BloqueNaranja(x,y,width,height,this);
-			a.setVivo(vivo);
+			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueNegro")) {
 			a = new BloqueNegro(x,y,width,height,this);
-			a.setVivo(vivo);
+			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueRosa")) {
 			a = new BloqueRosa(x,y,width,height,this);
-			a.setVivo(vivo);
+			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueVerde")) {
 			a = new BloqueVerde(x,y,width,height,this);
-			a.setVivo(vivo);
+			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 	}
@@ -570,27 +611,33 @@ public class ArkaPOOB implements Serializable{
 		Jugador a = null;
 		if(jugador.equals("Jugador")) {
 			a = new Jugador(x,y,width,height);
-			a.setScor(score);
-			a.setVida(vidas);
+			//a.setScor(score);
+			//a.setVida(vidas);
 			a.setColor(color);
 			a.setNombre(nombre);
 			naves.add(a);
 		}
 		if(jugador.equals("JugadorDestructor")) {
 			a = new JugadorDestructor(x,y,width,height,this);
-			a.setVida(vidas);
-			a.setScor(score);
+			//a.setVida(vidas);
+			//a.setScor(score);
 			a.setColor(color);
 			maquina = a;
 		}
 		if(jugador.equals("JugadorMimo")) {
 			a = new JugadorMimo(x,y,width,height,this);
-			a.setVida(vidas);
-			a.setScor(score);
+			//a.setVida(vidas);
+			//a.setScor(score);
 			a.setColor(color);
 			maquina = a;
 		}
-		//if(jugador.equals("JugadorCurioso")) naves.add(new JugadorCurioso(x,y,width,height,this));
+		if(jugador.equals("JugadorCurioso")) {
+			a = new JugadorCurioso(x,y,width,height,this);
+			//a.setVida(vidas);
+			//a.setScor(score);
+			a.setColor(color);
+			maquina = a;
+		}
 	}
 	
 	public void addBola(int x, int y) throws ArkaPoobException{

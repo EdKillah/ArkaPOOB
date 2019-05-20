@@ -77,7 +77,6 @@ public class ArkaPoobDAO implements Serializable{
 			
 			ark = new ArkaPOOB(jugadores,Boolean.valueOf(ar[0]),Boolean.valueOf(ar[1]),Boolean.valueOf(ar[2]),Boolean.valueOf(ar[3]),Boolean.valueOf(ar[4]));
 			ark.setNivel(nivel);
-			System.out.println(ark.getNivel());
 			
 			String ln = in.readLine();
 			ark.setBloques(new ArrayList<ArrayList<Bloque>>());
@@ -86,10 +85,9 @@ public class ArkaPoobDAO implements Serializable{
 				ar = ln.split(" ");
 				
 				try {
-					if(ar[0].equals("BloqueGris") || ar[0].equals("BloqueRojo") || ar[0].equals("BloqueVerde") || ar[0].equals("BloqueAmarillo") || ar[0].equals("BloqueAzul") || ar[0].equals("BloqueNaranja") || ar[0].equals("BloqueNegro")|| ar[0].equals("BloqueNegro")){
-						//System.out.println(Boolean.valueOf(ar[5]));
+					if(ar[0].equals("BloqueGris") || ar[0].equals("BloqueRojo") || ar[0].equals("BloqueVerde") || ar[0].equals("BloqueAmarillo") || ar[0].equals("BloqueAzul") || ar[0].equals("BloqueNaranja") || ar[0].equals("BloqueNegro")|| ar[0].equals("BloqueNegro")|| ar[0].equals("BloqueRosa")){
 						ark.addBloque(Integer.parseInt(ar[1]),Integer.parseInt(ar[2]),Integer.parseInt(ar[3]),Integer.parseInt(ar[4]),Boolean.valueOf(ar[5]),ar[0]);
-					}else if(ar[0].equals("Jugador") || ar[0].equals("JugadorMimo") || ar[0].equals("JugadorDestructor") || ar[0].equals("JugadorCuriosos") ) {  
+					}else if(ar[0].equals("Jugador") || ar[0].equals("JugadorMimo") || ar[0].equals("JugadorDestructor") || ar[0].equals("JugadorCurioso") ) {  
 						ark.addJugador(Integer.parseInt(ar[1]),Integer.parseInt(ar[2]),Integer.parseInt(ar[3]),Integer.parseInt(ar[4]),Integer.parseInt(ar[5]),ar[6],Integer.parseInt(ar[7]),ar[8],ar[0]);
 					}else if(ar[0].equals("Bola")) {
 						ark.addBola(Integer.parseInt(ar[1]),Integer.parseInt(ar[2]));

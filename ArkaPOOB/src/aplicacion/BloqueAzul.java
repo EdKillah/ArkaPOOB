@@ -42,6 +42,7 @@ public class BloqueAzul extends Bloque{
 	public boolean isChocado(Bola bola) {
         isChocado = bola.getBounds().intersects(this.getBounds());
         if(isChocado) {
+        	ark.setUltimoBloque(new BloqueAzul(getX(),getY(),getWidth(),getHeight(),ark));
         	creeSorpresa();
         	setVivo(false);
         }
@@ -53,11 +54,12 @@ public class BloqueAzul extends Bloque{
 		double x = Math.random()*3;
 		int azar = (int)x;
 		if(azar%2==0) {  
-			//poder = new SorpresaPlataforma(getX(),getY(),ark);
-			poder = new SorpresaBola(getX(),getY(),ark);
+			poder = new SorpresaPlataforma(getX(),getY(),ark);
+			//poder = new SorpresaBola(getX(),getY(),ark);
 		}
 		else {
-			poder = new SorpresaBola(getX(),getY(),ark);
+			poder = new SorpresaPlataforma(getX(),getY(),ark);
+			//poder = new SorpresaBola(getX(),getY(),ark);
 		}
 		//else if(azar%3==0) tipo = "minus";
 		//else tipo = "plus";

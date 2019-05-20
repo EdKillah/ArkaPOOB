@@ -38,6 +38,7 @@ public class BloqueAmarillo extends Bloque{
 	public boolean isChocado(Bola bola) {
         isChocado = bola.getBounds().intersects(this.getBounds());
         if(isChocado) {
+        	ark.setUltimoBloque(new BloqueAmarillo(getX(),getY(),getWidth(),getHeight(),ark));
         	ark.adicioneVida();
         	setVivo(false);
         }

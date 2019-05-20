@@ -40,7 +40,10 @@ public class BloqueRojo extends Bloque{
 	@Override
 	public boolean isChocado(Bola bola) {
         isChocado = bola.getBounds().intersects(this.getBounds());
-        if(isChocado) setVivo(false);
+        if(isChocado) {
+        	setVivo(false);
+        	ark.setUltimoBloque(new BloqueRojo(getX(),getY(),getWidth(),getHeight(),ark));
+        }
         return isChocado;
     }
 	

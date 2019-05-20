@@ -24,11 +24,13 @@ public class SorpresaPlataforma extends Sorpresa{
 	
 	
 	private void escojaTipo() {
-		double x = Math.random()*3;
+		double x = Math.random()*10;
 		int azar = (int)x;
-		System.out.println("Numero escojido al azar nave: "+azar);
-		if(azar%2==0) tipo="Laser";
-		else tipo = "pegajosa";
+		
+		if(azar%3==0) setTipo("grande");
+		else if(azar%4==0) setTipo("chica");
+		else if(azar%2==0) setTipo("especial");
+		else setTipo("pegajosa");
 		
 	}
 	

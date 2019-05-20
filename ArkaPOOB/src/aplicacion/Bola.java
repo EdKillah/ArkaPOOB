@@ -54,12 +54,10 @@ public class Bola implements Elemento, Serializable{
 	
 	public void moverX(String type) {
 		if(type.equals("-")) {
-			System.out.println("minuuuus");
 			dx = 2;
 			dy = 2;
 		}
 		else {
-			System.out.println("MAXIMUUUUM");
 			dx = 0.5;
 			dy = 0.5;
 		}
@@ -111,14 +109,25 @@ public class Bola implements Elemento, Serializable{
 		}
 		
 		if(y + TAMY>heightT){
-			if(ark.getJugador().get(0).isChocado(this)) {
-				System.out.println("EXTA GOLPEANDO LA NAVE");
+			
+			if(nave.isChocado(this)) {
 				y=(int)heightT-TAMY;
 				dy=-(dy);
+				setUltimo(nave);
 			}
+			else if(nave2 != null && nave2.isChocado(this) &&  nave2.getVidas()>=0) {
+				y=(int)heightT-TAMY;
+				dy=-(dy);
+				setUltimo(nave2);
+			}/*
+			else if(ark.getMaquina()!=null && ark.getMaquina().isChocado(this)) {
+				y=(int)heightT-TAMY;
+				dy=-(dy);
+			}*/
+			
 			/*
 			if(isInNave()) {
-				System.out.println("EXTA GOLPEANDO LA NAVE");
+				//System.out.println("EXTA GOLPEANDO LA NAVE");
 				y=(int)heightT-TAMY-10;
 				dy=-(dy);
 				//dy=-dy;
@@ -130,7 +139,6 @@ public class Bola implements Elemento, Serializable{
 		Bloque b = confirmeChoque();
 		if(b!=null) {
 			if(this.getX()<=b.getX() || b.getX()+b.getWidth()<=this.getX()+1) {
-				System.out.println("EGOLPEA CHOQUE BLOQUE X: ");
 				dx=-dx;
 			}
 			else dy=-dy;

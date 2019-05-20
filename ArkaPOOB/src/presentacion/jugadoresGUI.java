@@ -1,6 +1,7 @@
 package presentacion;
 
 import javax.swing.*;
+import aplicacion.ArkaPoobException;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -27,6 +28,7 @@ public class jugadoresGUI extends JFrame{
 	private JComboBox<String> naveColor;
 	private JComboBox<String> naveColor1;
 	private JComboBox<String> naveColor2;
+	private JComboBox<String> naveColor3;
 	private JComboBox<String> tipoMaquina;
 	private JCheckBox bloqueRosado;
 	private JCheckBox bloqueNegro;
@@ -338,9 +340,9 @@ public class jugadoresGUI extends JFrame{
 		nave.setBounds(15, 65, 80, 18);
 		contenido.add(nave);
 		
-		naveColor1 = new JComboBox<>(colores);
-		naveColor1.setBounds(90, 65, 121, 20);
-		contenido.add(naveColor1);
+		naveColor3 = new JComboBox<>(colores);
+		naveColor3.setBounds(90, 65, 121, 20);
+		contenido.add(naveColor3);
 		
 		prepareBloquesJugador2(contenido);
 		
@@ -399,20 +401,32 @@ public class jugadoresGUI extends JFrame{
 		
 		ActionListener jugarUno = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				jugar(1,false);
+				try {
+					jugar(1,false);
+				}catch(ArkaPoobException e1){
+					JOptionPane.showMessageDialog(null,e1.getMessage());
+				}
 			}
 		};
 		jugar1.addActionListener(jugarUno);
 		
 		ActionListener jugarDos = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				try {
 				jugar(2,false);
+				}catch(ArkaPoobException e1){
+					JOptionPane.showMessageDialog(null,e1.getMessage());
+				}
 			}
 		};
 		
 		ActionListener jugarDosCPU = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				try {
 				jugar(1,true);
+				}catch(ArkaPoobException e1){
+					JOptionPane.showMessageDialog(null,e1.getMessage());
+				}
 			}
 		};
 		
@@ -457,17 +471,30 @@ public class jugadoresGUI extends JFrame{
 		setLocationRelativeTo(null);
 	}
 	
-	private void jugar(int jugadores,boolean cpu) {
+	private void jugar(int jugadores,boolean cpu) throws ArkaPoobException {
 		dispose();
 		PantallaDeJuego pdj = null;
 		if(jugadores == 1 && !cpu) {
-			pdj = new PantallaDeJuego(jugadores,textNombre.getText(),(String)naveColor.getSelectedItem(),bloqueRosado.isSelected(), bloqueAzul.isSelected(), bloqueAmarillo.isSelected(), bloqueNaranja.isSelected(), bloqueNegro.isSelected());
+			if(!textNombre.getText().equals(""))
+				pdj = new PantallaDeJuego(jugadores,textNombre.getText(),(String)naveColor.getSelectedItem(),bloqueRosado.isSelected(), bloqueAzul.isSelected(), bloqueAmarillo.isSelected(), bloqueNaranja.isSelected(), bloqueNegro.isSelected());
+			else 
+				throw new ArkaPoobException(ArkaPoobException.NO_HAY_NOMBRE);
 		}else if(jugadores == 2 && !cpu) {
-			pdj = new PantallaDeJuego(jugadores,false,textNombre1.getText(),textNombre2.getText(),(String)naveColor1.getSelectedItem(),(String)naveColor2.getSelectedItem(),bloqueRosado2.isSelected(), bloqueAzul2.isSelected(), bloqueAmarillo2.isSelected(), bloqueNaranja2.isSelected(), bloqueNegro2.isSelected());
+			if(!textNombre1.getText().equals("") && !textNombre2.getText().equals("")) {
+				if(!((String)naveColor1.getSelectedItem()).equals(((String)naveColor2.getSelectedItem())))
+					pdj = new PantallaDeJuego(jugadores,false,textNombre1.getText(),textNombre2.getText(),(String)naveColor1.getSelectedItem(),(String)naveColor2.getSelectedItem(),bloqueRosado2.isSelected(), bloqueAzul2.isSelected(), bloqueAmarillo2.isSelected(), bloqueNaranja2.isSelected(), bloqueNegro2.isSelected());
+				else
+					throw new ArkaPoobException(ArkaPoobException.COLORES_IGUALES);
+			}
+			else 
+				throw new ArkaPoobException(ArkaPoobException.NO_HAY_NOMBRE);
 		}else if(jugadores == 1 && cpu) {
-			pdj = new PantallaDeJuego(jugadores,true,textNombre4.getText(),null,(String)naveColor1.getSelectedItem(),null,bloqueRosado2.isSelected(), bloqueAzul2.isSelected(), bloqueAmarillo2.isSelected(), bloqueNaranja2.isSelected(), bloqueNegro2.isSelected());
-			System.out.println((String)tipoMaquina.getSelectedItem());
-			pdj.maquina((String)tipoMaquina.getSelectedItem());
+			if(!textNombre4.getText().equals("")) {
+				pdj = new PantallaDeJuego(jugadores,true,textNombre4.getText(),null,(String)naveColor3.getSelectedItem(),null,bloqueRosado2.isSelected(), bloqueAzul2.isSelected(), bloqueAmarillo2.isSelected(), bloqueNaranja2.isSelected(), bloqueNegro2.isSelected());
+				pdj.maquina((String)tipoMaquina.getSelectedItem());
+			}
+			else 
+				throw new ArkaPoobException(ArkaPoobException.NO_HAY_NOMBRE);
 		}
 		pdj.setVisible(true);
 	}

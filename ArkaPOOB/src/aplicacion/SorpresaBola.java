@@ -4,8 +4,6 @@ public class SorpresaBola extends Sorpresa{
 	private String tipo;
 	private ArkaPOOB ark;
 	private boolean isChocado;
-	private int turnos;
-	private boolean activo;
 	private int nave;
 	
 	public SorpresaBola(int x, int y,ArkaPOOB ark) { 
@@ -31,7 +29,6 @@ public class SorpresaBola extends Sorpresa{
 	private void escojaTipo() {
 		double x = Math.random()*3;
 		int azar = (int)x;
-		System.out.println("Numero escojido al azar: "+azar);
 		if(azar%2==0) tipo="minus";
 		else tipo = "plus";
 		

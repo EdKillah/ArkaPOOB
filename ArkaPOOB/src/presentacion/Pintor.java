@@ -33,6 +33,7 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 	private boolean usaNegro;
 	private String nombre1;
 	private String nombre2;
+	private Image img;
 	
 	public Pintor(int w, int h , int jugadores, boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
 		this.jugadores = jugadores;
@@ -61,22 +62,26 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 		for(int i=0;i<bloques.size();i++) {
 			for(int j=0;j<bloques.get(i).size();j++) {
 				b = bloques.get(i).get(j);
-				
 				if(b.isVivo()) {
-					Image img =  new ImageIcon(getClass().getResource("/imagenes/bloque_"+b.getTipo()+".png")).getImage();
+					img =  new ImageIcon(getClass().getResource("/imagenes/bloque_"+b.getTipo()+".png")).getImage();
 					g.drawImage(img, b.getX(), b.getY(),b.getWidth(),b.getHeight(), this);	
 				}
 			}
 		}
 		Jugador maquina = ark.getMaquina();
-		if(maquina != null) if(maquina.getVidas() >0) g.drawImage(maquina.getImagen(), maquina.getX(), maquina.getY(),maquina.getWidth(),maquina.getHeight(), this);
+		if(maquina != null) {
+			img =  new ImageIcon(getClass().getResource("/imagenes/vaus_"+maquina.getColor()+".gif")).getImage();
+			if(maquina.getVidas() >0) g.drawImage(img, maquina.getX(), maquina.getY(),maquina.getWidth(),maquina.getHeight(), this);
+		}
 		
 		
 		Jugador nave = ark.getJugador().get(0);
-		if(nave.getVidas() >0) g.drawImage(nave.getImagen(), nave.getX(), nave.getY(),nave.getWidth(),nave.getHeight(), this);
+		img =  new ImageIcon(getClass().getResource("/imagenes/vaus_"+ark.getJugador().get(0).getColor()+".gif")).getImage();
+		if(nave.getVidas() >0) g.drawImage(img, nave.getX(), nave.getY(),nave.getWidth(),nave.getHeight(), this);
 		if(jugadores == 2)  {
 			Jugador nave2 = ark.getJugador().get(1);
-			if(nave2.getVidas() >0) g.drawImage(nave2.getImagen(), nave2.getX(), nave2.getY(),nave2.getWidth(),nave2.getHeight(), this);
+			img =  new ImageIcon(getClass().getResource("/imagenes/vaus_"+nave2.getColor()+".gif")).getImage();
+			if(nave2.getVidas() >0) g.drawImage(img, nave2.getX(), nave2.getY(),nave2.getWidth(),nave2.getHeight(), this);
 		}
 		
 		g.setColor(Color.RED);
@@ -88,20 +93,21 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 		
 		Sorpresa poder = ark.getSorpresa();
 		if(poder!= null) {
-			Image img = new ImageIcon(getClass().getResource("/imagenes/sorpresa_"+poder.getTipo()+".gif")).getImage();
+			img = new ImageIcon(getClass().getResource("/imagenes/sorpresa_"+poder.getTipo()+".gif")).getImage();
 			g.drawImage(img, poder.getX(),poder.getY() ,poder.getWidth(),poder.getHeight(), this);
 		}
 		
 		Bola bola = ark.getBola();
 		if(bola.isVivo()) {
-			Image img =  new ImageIcon(getClass().getResource("/imagenes/pelota.png")).getImage();
+			img =  new ImageIcon(getClass().getResource("/imagenes/pelota.png")).getImage();
 			g.drawImage(img, bola.getX(),bola.getY() ,Bola.getTamX(),Bola.getTamY(), this);			//(int)d.getHeight()-125
 		}
 		int pos =750;
 		for(int j=0;j<ark.getJugador().get(0).getVidas();j++) {
 			Jugador vida = new Jugador(pos-30,500,40,15);
-			vida.setColor(ark.getJugador().get(0).getColor());
-			if(vida != null )g.drawImage(vida.getImagen(), vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);
+			//vida.setColor(ark.getJugador().get(0).getColor());
+			img =  new ImageIcon(getClass().getResource("/imagenes/vaus_"+ark.getJugador().get(0).getColor()+".gif")).getImage();
+			if(vida != null )g.drawImage(img, vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);
 			pos-=40;
 		}
 		
@@ -109,8 +115,9 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 			pos = 0;
 			for(int j=0;j<ark.getJugador().get(1).getVidas();j++) {
 				Jugador vida = new Jugador(30+pos,500,40,15);
+				img =  new ImageIcon(getClass().getResource("/imagenes/vaus_"+ark.getJugador().get(1).getColor()+".gif")).getImage();
 				vida.setColor(ark.getJugador().get(1).getColor());
-				if(vida != null )g.drawImage(vida.getImagen(), vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);
+				if(vida != null )g.drawImage(img, vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);
 				pos+=40;
 			}
 		}
@@ -119,8 +126,9 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 			pos = 0;
 			for(int j=0;j<ark.getMaquina().getVidas();j++) {
 				Jugador vida = new Jugador(30+pos,500,40,15);
-				vida.setColor(ark.getMaquina().getColor());
-				if(vida != null )g.drawImage(vida.getImagen(), vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);
+				img =  new ImageIcon(getClass().getResource("/imagenes/vaus_"+ark.getMaquina().getColor()+".gif")).getImage();
+				//vida.setColor(ark.getMaquina().getColor());
+				if(vida != null )g.drawImage(img, vida.getX(),vida.getY() ,vida.getWidth(),vida.getHeight(), this);
 				pos+=40;
 			}
 		}
@@ -142,9 +150,9 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 	}
 	
 	public void colores(String color1,String color2) {
-		ArrayList<Jugador> naves = ark.getJugador();
-		if(color1 != null) naves.get(0).setColor(color1);
-		if(color2 != null) naves.get(1).setColor(color2);
+		//ArrayList<Jugador> naves = ark.getJugador();
+		if(color1 != null) ark.getJugador().get(0).setColor(color1);
+		if(color2 != null) ark.getJugador().get(1).setColor(color2);
 		//ark.prepareVidas();
 	}
 	
@@ -267,17 +275,13 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 		task = new TimerTask() {
 			@Override
 			public void run() {
-				//System.out.println("Score: "+ark.getJugador().get(0).getVidas());
-				//System.out.println("Score2: "+ark.getJugador().get(1).getVidas());
 				ark.juegue(width, ark.getJugador().get(( ark.getJugador().get(0)!=null?0:1)).getY());
 				
 				if(ark.gano()) {
 					mensaje();
 					cancel();
 				}
-				//System.out.println(ark.getNivel());
 				if(ark.avanzaNivel()) {
-					System.out.println(ark.getNivel());
 					ark.prepareBloques(usaRosa, usaAzul, usaAmarillo, usaNaranja, usaNegro);
 					ark.estatico(0);
 					ark.prepareBola();
@@ -366,11 +370,9 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 		c = ark.getJugador().get(0).getColor();
 		if(ark.getMaquina()!= null) maqui = ark.getMaquina().getTipo();
 		if(jugadores == 2) {c2 = ark.getJugador().get(1).getColor();}
-		int nivel = ark.getNivel();
-		System.out.println(nivel);
+		int nivel = ark.getNivel()-1;
 		ark = new ArkaPOOB(jugadores,usaRosa, usaAzul, usaAmarillo, usaNaranja, usaNegro);
 		if(maqui!=null)maquina(maqui);
-		System.out.println(nivel);
 		ark.setNivel(nivel);
 		colores(c,c2);
 		hilo= new Thread(this);

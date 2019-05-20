@@ -44,6 +44,7 @@ public class BloqueVerde extends Bloque{
 	    if(isChocado) con++;
 	    
 	    if(con>1) {
+	    	ark.setUltimoBloque(new BloqueVerde(getX(),getY(),getWidth(),getHeight(),ark));
 	    	setVivo(false);
 	    	return isChocado;
 	    }

@@ -45,6 +45,7 @@ public class BloqueNaranja extends Bloque{
 	    		setY(getY()-getHeight()-3);
 	    		return false;
 	    	}
+	    	ark.setUltimoBloque(new BloqueNaranja(getX(),getY(),getWidth(),getHeight(),ark));
 	    	setVivo(false);
 	    }
 	    
