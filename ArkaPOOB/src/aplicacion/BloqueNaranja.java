@@ -45,6 +45,7 @@ public class BloqueNaranja extends Bloque{
 	    		setY(getY()-getHeight()-3);
 	    		return false;
 	    	}
+	    	setVivo(false);
 	    }
 	    
 	    return isChocado;
