@@ -34,6 +34,7 @@ public class BloqueRosa extends Bloque{
 	
 	/**
 	 * Metodo sobreescrito que realiza los procedimientos necesarios para considerar si fue chocado por una bola o no.
+	 * @return true si lo choca,false dlc.
 	 */
 	@Override
 	public boolean isChocado(Bola bola) {
@@ -42,7 +43,6 @@ public class BloqueRosa extends Bloque{
         	setVivo(false);
         	ark.setUltimoBloque(new BloqueRosa(getX(),getY(),getWidth(),getHeight(),ark));
         }
-        //if(isChocado) ark.prepareBloques();
         return isChocado;
     }
 	

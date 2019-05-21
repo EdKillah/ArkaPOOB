@@ -13,7 +13,6 @@ import java.util.*;
  * @author Jimenez Eduard
  * @author Murillo Carlos
  */
-
 public class ArkaPOOB implements Serializable{
 	private ArrayList<ArrayList<Bloque>> bloques;
 	private ArrayList<Jugador> naves;
@@ -33,7 +32,6 @@ public class ArkaPOOB implements Serializable{
 	private Jugador maquina;
 	private int direccion;
 	
-	
 	/**
 	 * Crea una instancia del tablero de juego
 	 * 
@@ -50,13 +48,11 @@ public class ArkaPOOB implements Serializable{
 		prepareBola();
 	}
 	
-	
 	/**
 	 * Metodo encargado de activar el movimiento de la bola. 
 	 * @param width
 	 * @param height
 	 */
-	
 	public void juegue(double width, double height) {
 		if(bola.isVivo()) {
 			bola.muevase(width,height);
@@ -64,38 +60,30 @@ public class ArkaPOOB implements Serializable{
 			for(int i=0;i<bloques.size();i++) {
 				for(int j=0;j<bloques.get(i).size();j++) {
 					activeSorpresa();
-					//isJugadorActiva();
 					if(bloques.get(i).get(j).isVivo() && bloques.get(i).get(j).isChocado(bola)) {
 						bola.getUltimo().setScore(bloques.get(i).get(j).getPuntos());
-						//if(!bloques.get(i).get(j).getTipo().equals("negro"))ultimoBloque = bloques.get(i).get(j);
-						
 					}
 					if(jugadores  == 2) naves.get(0).isChocado(naves.get(1));
 					if(maquina != null) {
 						maquina.moverX(3);
 						maquina.isChocado(naves.get(0));
 					}
-					
-					
 				}
 			}
-				
 		}
-		
 	}
 	
-	public void setDireccion(int i) {
-		direccion = i;
-	}
-	
-	public int getDireccion() {
-		return direccion;
-	}
-	
+	/**
+	 * Obtiene un el ultimo bloque que toca la bola
+	 * @return ultimoBloque
+	 */
 	public Bloque getUltimoBloque() {
 		return ultimoBloque;
 	}
 	
+	/**
+	 * Cambia el ultimo bloque que toca la bola
+	 */
 	public void setUltimoBloque(Bloque a) {
 		ultimoBloque = a;
 	}
@@ -144,6 +132,10 @@ public class ArkaPOOB implements Serializable{
 			naves.get(1).setVidas(1);
 	}
 		
+	/**
+	 * Mira si la bola esta viva
+	 * @return vivo
+	 */
 	public boolean isVivo() {
 		return bola.isVivo();
 	}
@@ -205,7 +197,7 @@ public class ArkaPOOB implements Serializable{
 	/**
 	 * Metodo que determina si el jugador perdio.
 	 * El jugador pierde si esta no cuenta con vidas suficientes (mayor a 0).
-	 * @return
+	 * @return true si perdio, false dlc.
 	 */
 	public boolean perdio(Jugador p) {
 		if(p.getVidas()<=0) return true;
@@ -230,6 +222,10 @@ public class ArkaPOOB implements Serializable{
 		}
 	}
 	
+	/**
+	 * Metodo que prepara la bola dandole unos atributos iniciales.
+	 * @param plat es el jugador donde se va poner la bola inicialmente.
+	 */
 	public void prepareBola(Jugador plat){ 
 		int i = naves.indexOf(plat);
 		if(jugadores==1) {
@@ -243,7 +239,7 @@ public class ArkaPOOB implements Serializable{
 	
 	/**
 	 * Metodo que retorna si los bloques rosa,azul,amarillo,naranja,negro estan activados o no.
-	 * @return
+	 * @return lista de booleanos que representan que bloques se usan
 	 */
 	public boolean[] getColores(){
 		boolean[] colores = {bloqueRosa,bloqueAzul,bloqueAmarillo,bloqueNaranja,bloqueNegro};
@@ -252,16 +248,31 @@ public class ArkaPOOB implements Serializable{
 	
 	
 	
+	/**
+	 * Metodo que prepara que color de bloques se van a usar
+	 * @param rosa
+	 * @param azul
+	 * @param amarillo
+	 * @param naranja
+	 * @param negro
+	 */
 	private void prepareColorBloques(boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
 		bloqueRosa = rosa;
 		bloqueAzul = azul;
 		bloqueAmarillo = amarillo;
 		bloqueNaranja = naranja;
 		bloqueNegro = negro;
-		
 	}
 	
-	
+	/**
+	 * Metodo que alista los bloques 
+	 * @param posicionAux
+	 * @param contador
+	 * @param posX
+	 * @param posY
+	 * @param bloque
+	 * @return el bloque aleatorio que para poner
+	 */
 	private Bloque alisteBloques(int posicionAux,int contador,int posX,int posY,Bloque bloque) {
 		String[] mComunes = {"Rojo","Verde","Naranja","Gris"};
 		String[] pComunes = {"Rosa","Azul","Amarillo","Negro"};
@@ -296,12 +307,20 @@ public class ArkaPOOB implements Serializable{
 		return bloque;
 	}
 	
+	/**
+	 * Metodo que consigue un numero aleatorio para poner el bloque
+	 * @param posicionAux
+	 * @return una posicion aleatorio
+	 */
 	private int compruebePosicionArreglo(int posicionAux) {
 		if(posicionAux>=4)
 			posicionAux=0;
 		return posicionAux;
 	}
 	
+	/**
+	 * Metodo que prepara la estructura del primer nivel
+	 */
 	private void prepareNivelUno() {
 		Bloque bloque=null;
 		bloques = new ArrayList<ArrayList<Bloque>>();
@@ -317,7 +336,6 @@ public class ArkaPOOB implements Serializable{
 				if(i==0) 
 					bloque = new BloqueGris(posX, posY,70,35,this);
 				else if(i==1) {
-					//bloque = alisteBloques(posicionAux,contador,posX,posY,bloque);
 					bloque = new BloqueRosa(posX, posY, 70, 35, this);
 				}
 				else 
@@ -333,6 +351,9 @@ public class ArkaPOOB implements Serializable{
 		}
 	}
 	
+	/**
+	 * Metodo que prepara la estructura del segundo nivel
+	 */
 	private void prepareNivelDos() {
 		Bloque bloque=null;
 		bloques = new ArrayList<ArrayList<Bloque>>();
@@ -360,6 +381,9 @@ public class ArkaPOOB implements Serializable{
 		ultimoBloque = new BloqueGris(0,0,70,35,this);
 	}
 	
+	/**
+	 * Metodo que prepara la estructura del cuartro nivel
+	 */
 	private void prepareNivelCuatro() {
 		Bloque bloque=null;
 		bloques = new ArrayList<ArrayList<Bloque>>();
@@ -398,6 +422,9 @@ public class ArkaPOOB implements Serializable{
 		ultimoBloque = new BloqueGris(0,0,70,35,this);
 	}
 	
+	/**
+	 * Metodo que prepara la estructura del tercer nivel
+	 */
 	private void prepareNivelTres() {
 		Bloque bloque=null;
 		bloques = new ArrayList<ArrayList<Bloque>>();
@@ -420,6 +447,9 @@ public class ArkaPOOB implements Serializable{
 		ultimoBloque = new BloqueGris(0,0,70,35,this);
 	}
 	
+	/**
+	 * Metodo que prepara la estructura del quinto nivel
+	 */
 	private void prepareNivelCinco() {
 		Bloque bloque = null;
 		int posY=30,posX=20;int step = 70; int posicionAux=0;int contador = 0; int x=1;
@@ -466,8 +496,14 @@ public class ArkaPOOB implements Serializable{
 		ultimoBloque = new BloqueGris(0,0,70,35,this);
 	}
 	
+	
 	/**
 	 * Metodo que prepara los bloques iniciales del juego, distribuyendolos de una manera especifica.
+	 * @param rosa
+	 * @param azul
+	 * @param amarillo
+	 * @param naranja
+	 * @param negro
 	 */
 	public void prepareBloques(boolean rosa, boolean azul, boolean amarillo, boolean naranja, boolean negro) {
 		if(nivel == 1) {prepareNivelUno(); nivel++;}		
@@ -476,21 +512,10 @@ public class ArkaPOOB implements Serializable{
 		else if(nivel == 4) {prepareNivelCuatro();nivel++;}
 		else if(nivel == 5) {prepareNivelCinco();nivel++;}
 	}
-	
-	/*
-	public void prepareBloques() {
-		prepareBloques(bloqueRosa,bloqueAzul,bloqueAmarillo,bloqueNaranja,bloqueNegro);
-	}
-	*/
-	
-	/*
-	public void isJugadorActiva() {
-		if(naves.get(0).isPoderActivo()) {
-			naves.get(0).hagaTalCosa(this);
-		}
-	}
-	*/
-	
+
+	/**
+	 * Metodo que activa una sorpresa
+	 */
 	public void activeSorpresa() {
 		if(getSorpresa()!=null) {
 			if(naves.get(0)!= null && sorpresa.isChocado(naves.get(0))){
@@ -507,7 +532,11 @@ public class ArkaPOOB implements Serializable{
 		}
 	}
 	
-	
+	/**
+	 * Metodo que revisa si existe un bloque en la parte superio de otro bloque
+	 * @param bloque
+	 * @return true si existe un bloque, false dlc.
+	 */
 	public boolean existeBloque(Bloque bloque) {
 		boolean band = true; 
 		for(int i=0;i<getBloques().size();i++) {
@@ -523,6 +552,10 @@ public class ArkaPOOB implements Serializable{
 		return band;
 	}
 
+	/**
+	 * Metodo que crea los diferentes tipos de maquinas
+	 * @param tipo
+	 */
 	public void maquina(String tipo) {
 		if(tipo.equals("destructor")) maquina = new JugadorDestructor(750/2 + 80,480,90,20,this);
 		else if(tipo.equals("mimo")) maquina = new JugadorMimo(750/2 + 60,480,90,20,this);
@@ -554,6 +587,16 @@ public class ArkaPOOB implements Serializable{
 		return elemns;
 	}
 	
+	/**
+	 * Metodo que crea un bloque dependiendo del tipo
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param vivo
+	 * @param bloque
+	 * @throws ArkaPoobException
+	 */
 	public void addBloque(int x,int y,int width,int height,boolean vivo,String bloque) throws ArkaPoobException{
 		int i=0;
 		Bloque a = null;
@@ -597,6 +640,17 @@ public class ArkaPOOB implements Serializable{
 		}
 	}
 	
+	/**
+	 * Metodo que crea un jugador dependiendo del tipo
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param color
+	 * @param nombre
+	 * @param jugador
+	 * @throws ArkaPoobException
+	 */
 	public void addJugador(int x,int y,int width,int height,int score,String color,int vidas,String nombre,String jugador) throws ArkaPoobException{
 		Jugador a = null;
 		if(jugador.equals("Jugador")) {
@@ -622,6 +676,12 @@ public class ArkaPOOB implements Serializable{
 		}
 	}
 	
+	/**
+	 * Metodo que crea una bola dependiendo del tipo
+	 * @param x
+	 * @param y
+	 * @throws ArkaPoobException
+	 */
 	public void addBola(int x, int y) throws ArkaPoobException{
 		if(jugadores==1 && naves.get(0).getVidas() > 0) {
 			if(maquina!=null)bola = new Bola(maquina.getX()+maquina.getWidth()/2-15,maquina.getY()-maquina.getHeight(),maquina,naves.get(0),45,1,45,this);
@@ -637,34 +697,58 @@ public class ArkaPOOB implements Serializable{
 		}
 	}
 	
+	/**
+	 * Metodo que obtiene la maquina en uso
+	 * @return maquina si existe, null dlc.
+	 */
 	public Jugador getMaquina() {
 		return maquina;	
 	}
 	
+	/**
+	 * Metodo que actualiza el poder activo
+	 * @param a
+	 */
 	public void setPoder(boolean a) {
 		poderActivo = a;
 	}
 
+	/**
+	 * Metodo que obtiene el poder activo
+	 * @return poder, null dlc.
+	 */
 	public boolean getPoder() {
 		return poderActivo;
 	}
-	
-	public String getColorNave() {
-		return colorNave;
-	}
 
+	/**
+	 * Metodo que consulta los jugadores actuales
+	 * @return naves
+	 */
 	public ArrayList<Jugador> getJugador() {
 		return naves;
 	}
 	
+	/**
+	 * Metodo que obtiene la bola
+	 * @return bola
+	 */
 	public Bola getBola() {
 		return bola;
 	}
 
+	/**
+	 * Metodo que obtiene el arreglo de bloques
+	 * @return bloques
+	 */
 	public ArrayList<ArrayList<Bloque>> getBloques() {
 		return bloques;
 	}
 	
+	/**
+	 * Metodo que actualiza los bloques
+	 * @param bloques
+	 */
 	public void setBloques(ArrayList<ArrayList<Bloque>> bloques) {
 		this.bloques = bloques;
 		this.bloques.add(new ArrayList<Bloque>());
@@ -675,31 +759,76 @@ public class ArkaPOOB implements Serializable{
 		this.bloques.add(new ArrayList<Bloque>());
 	}
 	
+	/**
+	 * Metodo que actualiza el nivel
+	 * @param a
+	 */
 	public void setNaves(ArrayList<Jugador> a) {
 		this.naves = a;
 	}
 	
+	/**
+	 * Metodo que actualiza la sorpresa
+	 * @param a
+	 */
 	public void setSorpresa(Sorpresa a) {
 		sorpresa = a;	
 	}
 	
+	/**
+	 * Metodo que obtiene la sorpresa activa
+	 * @return sorpresa
+	 */
 	public Sorpresa getSorpresa() {
 		return sorpresa;
 	}
 	
+	/**
+	 * Metodo que obtine los jugadores
+	 * @return jugadores
+	 */
 	public int getJugadores() {
 		return jugadores;
 	}
 	
+	/**
+	 * Metodo que obtine el nivel
+	 * @return nivel
+	 */
 	public int getNivel() {
 		return nivel;
 	}
 	
+	/** 
+	 * Metodo que actualiza la direccion
+	 * @param i
+	 */
+	public void setDireccion(int i) {
+		direccion = i;
+	}
+	
+	/**
+	 * Metodo que obtiene la direccion
+	 * @return direccion
+	 */
+	public int getDireccion() {
+		return direccion;
+	}
+	
+	/**
+	 * Metodo que actualiza el nivel
+	 * @param a
+	 */
 	public void setNivel(int a) {
 		this.nivel = a;
 		prepareBloques(bloqueRosa,bloqueAzul,bloqueAmarillo,bloqueNaranja,bloqueNegro);
 	}
 	
+	/**
+	 * Metodo que guarda el tablero actual
+	 * @param file
+	 * @throws ArkaPoobException
+	 */
 	public void guardar(File file) throws ArkaPoobException {
 		dao.guardar(this,file);
 	}

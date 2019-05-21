@@ -37,6 +37,7 @@ public class BloqueVerde extends Bloque{
 	
 	/**
 	 * Metodo sobreescrito que realiza los procedimientos necesarios para considerar si fue chocado por una bola o no.
+	 * @return true si lo choca,false dlc.
 	 */
 	@Override
 	public boolean isChocado(Bola bola) {

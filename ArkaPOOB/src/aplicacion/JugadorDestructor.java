@@ -1,7 +1,5 @@
 package aplicacion;
 
-import javax.swing.ImageIcon;
-
 public class JugadorDestructor extends Jugador {
 	
 	private ArkaPOOB ark;
@@ -15,22 +13,39 @@ public class JugadorDestructor extends Jugador {
 		this.color = "green";
 		
 	}
+	
+	/**
+	 * Metodo que mueve el jugador
+	 * @param i
+	 */
 	@Override
 	public void moverX(int i) {
 		if(i == 3)
 			setX(ark.getBola().getX()-getWidth()/2+10);
 	}
 	
+	/**
+	 * Metodo que obtine el tipo de jugador
+	 * @return tipo
+	 */
 	@Override
 	public String getTipo() {
 		return tipo;
 	}
 	
+	/**
+	 * Metodo que obtine el color de jugador
+	 * @return color
+	 */
 	@Override
 	public String getColor() {
 		return color;
 	}
 	
+	/**
+	 * Metodo que mira si el jugador es chocado con otro
+	 * @return plat
+	 */
 	@Override	
 	public void isChocado(Jugador plat) {
 		if(plat.getVidas() > 0 && plat.getX() <= this.getX() && plat.getX()+plat.getWidth()+1>=this.getX()) {

@@ -4,8 +4,6 @@ package aplicacion;
 import java.awt.Rectangle;
 import java.io.Serializable;
 
-import javax.swing.ImageIcon;
-
 public class Bola implements Elemento, Serializable{
 	private int x;
 	private int y;
@@ -22,7 +20,6 @@ public class Bola implements Elemento, Serializable{
 	private double angulo;
 	private boolean isInAire;
 	private boolean isChocado;
-	private ImageIcon imagen;
 	private Jugador ultimo;
 	
 	public Bola(int x, int y, Jugador nave,Jugador nave2, int velocidad, int damage,int angulo, ArkaPOOB ark) {
@@ -124,15 +121,6 @@ public class Bola implements Elemento, Serializable{
 				y=(int)heightT-TAMY;
 				dy=-(dy);
 			}
-			
-			/*
-			if(isInNave()) {
-				//System.out.println("EXTA GOLPEANDO LA NAVE");
-				y=(int)heightT-TAMY-10;
-				dy=-(dy);
-				//dy=-dy;
-			}
-			*/
 			else setVivo(false);
 		}
 		

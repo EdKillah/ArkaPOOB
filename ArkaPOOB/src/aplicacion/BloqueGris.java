@@ -33,6 +33,7 @@ public class BloqueGris extends Bloque{
 	
 	/**
 	 * Metodo sobreescrito que realiza los procedimientos necesarios para considerar si fue chocado por una bola o no.
+	 * @return false
 	 */
 	@Override
 	public boolean isChocado(Bola bola) {

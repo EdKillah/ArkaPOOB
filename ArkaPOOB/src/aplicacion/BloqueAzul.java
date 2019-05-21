@@ -1,8 +1,6 @@
 package aplicacion;
 
 
-
-
 /**
  * Clase BloqueAmarillo que extiende de la clase Bloque para obtener todos sus atributos. 
  * @author Jimenez Eduard- Murillo Carlos
@@ -37,6 +35,7 @@ public class BloqueAzul extends Bloque{
 	
 	/**
 	 * Metodo sobreescrito que realiza los procedimientos necesarios para considerar si fue chocado por una bola o no.
+	 * @return true si lo choca,false dlc.
 	 */
 	@Override
 	public boolean isChocado(Bola bola) {
@@ -50,26 +49,20 @@ public class BloqueAzul extends Bloque{
         return isChocado;
     }
 	
+	/**
+	 * Metodo que crea la sorpresa
+	 */
 	private void creeSorpresa() {
 		double x = Math.random()*3;
 		int azar = (int)x;
 		if(azar%2==0) {  
 			poder = new SorpresaPlataforma(getX(),getY(),ark);
-			//poder = new SorpresaBola(getX(),getY(),ark);
 		}
 		else {
 			poder = new SorpresaPlataforma(getX(),getY(),ark);
-			//poder = new SorpresaBola(getX(),getY(),ark);
 		}
-		//else if(azar%3==0) tipo = "minus";
-		//else tipo = "plus";
-		//Sorpresa poder = new SorpresaPlataforma(getX(),getY(),ark);
-		//Sorpresa poder = new SorpresaBola(getX(),getY(),ark);
 		ark.setSorpresa(poder);
 	}
-	
-	
-	
 	
 	@Override
 	public int getPuntos() {

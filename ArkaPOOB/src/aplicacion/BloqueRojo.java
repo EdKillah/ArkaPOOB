@@ -30,12 +30,10 @@ public class BloqueRojo extends Bloque{
 		this.ark = ark;
 		setVivo(true);
 	}
-	
 
-	
-	
 	/**
 	 * Metodo sobreescrito que realiza los procedimientos necesarios para considerar si fue chocado por una bola o no.
+	 * @return true si lo choca,false dlc.
 	 */
 	@Override
 	public boolean isChocado(Bola bola) {
@@ -47,8 +45,6 @@ public class BloqueRojo extends Bloque{
         return isChocado;
     }
 	
-	
-
 	@Override
 	public int getPuntos() {
 		return puntos;

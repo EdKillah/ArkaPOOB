@@ -36,6 +36,7 @@ public class BloqueNaranja extends Bloque{
 	
 	/**
 	 * Metodo sobreescrito que realiza los procedimientos necesarios para considerar si fue chocado por una bola o no.
+	 * @return true si lo choca,false dlc.
 	 */
 	@Override
 	public boolean isChocado(Bola bola) {
@@ -48,11 +49,8 @@ public class BloqueNaranja extends Bloque{
 	    	ark.setUltimoBloque(new BloqueNaranja(getX(),getY(),getWidth(),getHeight(),ark));
 	    	setVivo(false);
 	    }
-	    
 	    return isChocado;
     }
-	
-
 	
 	@Override
 	public int getPuntos() {

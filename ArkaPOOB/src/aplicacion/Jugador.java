@@ -2,7 +2,6 @@ package aplicacion;
 
 import java.awt.*;
 import java.io.Serializable;
-
 import javax.swing.*;
 
 
@@ -63,6 +62,10 @@ public class Jugador implements Elemento,Serializable{
 		this.x = x;
 	}
 	
+	/**
+	 * Metodo que mueve el jugador
+	 * @param x
+	 */
 	public void moverX(int x) {
 		if(x==2)
 			this.x -= 20;
@@ -75,30 +78,58 @@ public class Jugador implements Elemento,Serializable{
 		this.y = y;
 	}
 	
+	/**
+	 * Metodo que obtiene las vidas del jugador
+	 * @return vidas
+	 */
 	public int getVidas() {
 		return vidas;
 	}
 
+	/**
+	 * Metodo que actualiza las vidas
+	 * @param vidas
+	 */
 	public void setVidas(int vidas) {
 		this.vidas += vidas;
 	}
 	
+	/**
+	 * Metodoq que asigna el numero de vidas
+	 * @param vidas
+	 */
 	public void setVida(int vidas) {
 		this.vidas = vidas;
 	}
 
+	/**
+	 * Metodo que obtiene las balas
+	 * @return balas
+	 */
 	public int getBalas() {
 		return balas;
 	}
 
+	/**
+	 * Metodo que actualiza las balas
+	 * @param balas
+	 */
 	public void setBalas(int balas) {
 		this.balas = balas;
 	}
-
+	
+	/**
+	 * Metodo que obtiene el color del jugador
+	 * @return color
+	 */
 	public String getColor() {
 		return color;
 	}
 
+	/**
+	 * Metodo que actualiza el color del jugador
+	 * @param color
+	 */
 	public void setColor(String color) {
 		this.color = color;
 	}
@@ -137,7 +168,6 @@ public class Jugador implements Elemento,Serializable{
 		this.tipo = a;
 	}
 	
-	
 	public void setPoderActivo(boolean poder) {
 		poderActivo = poder;
 	}
@@ -145,7 +175,6 @@ public class Jugador implements Elemento,Serializable{
 	public boolean isPoderActivo() {
 		return poderActivo;
 	}
-	
 	
 	public void hagaTalCosa(ArkaPOOB ark) {
 		if(contador>3) {
@@ -177,18 +206,25 @@ public class Jugador implements Elemento,Serializable{
 		return nombre;
 	}
 	
+	/**
+	 * Metodo que calcula el area de este objeto
+	 * @return rectangle
+	 */
 	public Rectangle getBounds() {
         Rectangle borde = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         return borde;
     }  
 	
+	/**
+	 * Metodo que activa una sorpresa
+	 * @param tipo
+	 * @param ark
+	 */
 	public void activeSorpresa(String tipo,ArkaPOOB ark) {
 		if(tipo.equals("pegajosa")) {
 			if(ark.getPoder() && ark.getBola().getY()+ Bola.getTamY() + height >= getY()-1) {
 				contador=0;
 				this.setPoderActivo(true);
-				//ark.prepareBola(); //this
-				//ark.setPoder(false);
 			}
 		}
 		else if(tipo.equals("chica")) {
@@ -199,9 +235,11 @@ public class Jugador implements Elemento,Serializable{
 		}
 	}
 	
-	
-	
-	
+	/**
+	 * Metodo que mira si es chocado por la bola
+	 * @param bola
+	 * @return true si se choca , false dlc.
+	 */
 	public boolean isChocado(Bola bola) {
         boolean isChocado = bola.getBounds().intersects(this.getBounds());
         if(isChocado && isPoderActivo()) {
@@ -214,6 +252,10 @@ public class Jugador implements Elemento,Serializable{
         return isChocado;
     }
 
+	/**
+	 * Metodo que mira si se choca con otro jugador
+	 * @param plat
+	 */
 	public void isChocado(Jugador plat) {
 		if(plat.getVidas() > 0 && plat.getX() <= this.getX() && plat.getX()+plat.getWidth()+1>=this.getX()) {
 			this.setX(this.getX());

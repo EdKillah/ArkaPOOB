@@ -38,22 +38,42 @@ public abstract class Bloque implements Elemento, Serializable{
 		this.y = y;
 	}
 	
+	/**
+	 * Metodo que obtiene los golpes
+	 * @return
+	 */
 	public int getGolpes() {
 		return golpes;
 	}
 	
+	/**
+	 * Metodo que actualiza los bloques
+	 * @param golpes
+	 */
 	public void setGolpes(int golpes) {
 		this.golpes = golpes;
 	}
 	
+	/**
+	 * Metodo que actualiza los puntos
+	 * @return puntos
+	 */
 	public int getPuntos() {
 		return puntos;
 	}
 	
+	/**
+	 * Metodo que actualiza si esta vivo el bloque
+	 * @param a
+	 */
 	public void setVivo(boolean a) {
 		this.vivo = a;
 	}
 	
+	/**
+	 * Metodo que revisa si esta vivo el bloque
+	 * @return vivo
+	 */
 	public boolean isVivo() {
 		return vivo;
 	}
@@ -63,22 +83,42 @@ public abstract class Bloque implements Elemento, Serializable{
 		return width;
 	}
 	
+	/**
+	 * Metodo que actualiza el ancho del bloque
+	 * @param width
+	 */
 	public void setWidth(int width) {
 		this.width = width;
 	}
 
+	/**
+	 * Metodo que obtiene la altura del bloque
+	 * @return height
+	 */
 	public int getHeight() {
 		return height;
 	}
 
+	/**
+	 * Metodo que actualiza si es chocado
+	 * @param isChocado
+	 */
 	public void setIsChocado(boolean isChocado) {
 		this.isChocado = isChocado;
 	}
 	
+	/**
+	 * Metodo que actualiza la altura del bloque
+	 * @param height
+	 */
 	public void setHeight(int height) {
 		this.height = height;
 	}
 	
+	/** 
+	 * Metodo que obtiene el area del bloque
+	 * @return borde
+	 */
 	public Rectangle getBounds() {
         Rectangle borde = new Rectangle(this.getX(), this.getY(), 70, 35);
         return borde;

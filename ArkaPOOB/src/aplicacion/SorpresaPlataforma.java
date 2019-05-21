@@ -1,8 +1,5 @@
 package aplicacion;
 
-
-
-
 public class SorpresaPlataforma extends Sorpresa{
 	private String tipo;
 	private ArkaPOOB ark;
@@ -34,6 +31,10 @@ public class SorpresaPlataforma extends Sorpresa{
 		
 	}
 	
+	/**
+	 * Metodo que  mira si es chocado con una nave
+	 * @param isChocado
+	 */
 	@Override
 	public boolean isChocado(Jugador nave) { //mirar si le damos la nave o con arkgetPlataforma
         isChocado =nave.getBounds().intersects(this.getBounds());
@@ -44,23 +45,42 @@ public class SorpresaPlataforma extends Sorpresa{
         return isChocado;
     }
 	
+	/**
+	 * Metodo que activa la sorpresa
+	 * @param nave
+	 */
 	private void activeSorpresa(Jugador nave) {
 		nave.activeSorpresa(tipo,ark);
 	}
 	
+	/**
+	 * Metodo que actualiza la nave en la que choca
+	 * @param i
+	 */
 	public void setNave(int i) {
 		nave = i;
 	}
 	
+	/**
+	 * Metodo que obtiene la nave que choco
+	 * @return nave
+	 */
 	public int getNave() {
 		return nave;
 	}
 	
-	
+	/**
+	 * Metodo que obtiene el tipo de sorpresa
+	 * @return tipo
+	 */
 	public String getTipo() {
 		return tipo;
 	}
 	
+	/**
+	 * Metodo que actualiza el tipo de sorpresa
+	 * @param type
+	 */
 	@Override
 	public void setTipo(String type) {
 		tipo = type;

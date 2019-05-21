@@ -14,11 +14,18 @@ public class JugadorCurioso extends Jugador{
 		tipo = "curioso";
 		this.color = "green";
 	}
-	
+	/**
+	 * Metodo que obtine el tipo de jugador
+	 * @return tipo
+	 */
 	public String getTipo() {
 		return tipo;
 	}
 	
+	/**
+	 * Metodo que mueve el jugador
+	 * @param i
+	 */
 	@Override
 	public void moverX(int i) {
 		if(ark.getSorpresa()!=null && ark.getSorpresa().getX() != getX() ) {
@@ -38,11 +45,19 @@ public class JugadorCurioso extends Jugador{
 		
 	}
 	
+	/**
+	 * Metodo que obtine el color de jugador
+	 * @return color
+	 */
 	@Override
 	public String getColor() {
 		return color;
 	}
 	
+	/**
+	 * Metodo que mira si el jugador es chocado con otro
+	 * @return plat
+	 */
 	@Override	
 	public void isChocado(Jugador plat) {
 		if(plat.getVidas() > 0 && plat.getX() <= this.getX() && plat.getX()+plat.getWidth()+1>=this.getX()) {
