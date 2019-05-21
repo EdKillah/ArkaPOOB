@@ -39,12 +39,8 @@ public class BloqueNegro extends Bloque{
         isChocado = bola.getBounds().intersects(this.getBounds());       	
         if(isChocado) {
         	setVivo(false);
-        	System.out.println(ark.getUltimoBloque()+ " W" +ark.getUltimoBloque().getTipo());
-        	System.out.println(ark.getUltimoBloque()+ " W");
         	ark.getUltimoBloque().setX(this.getX());
         	ark.getUltimoBloque().setY(this.getY());
-        	System.out.println(ark.getUltimoBloque().getX());
-        	System.out.println(ark.getUltimoBloque().getY());
         	ark.getUltimoBloque().setVivo(true);
         	ark.getBloques().get(0).add(ark.getUltimoBloque());
         }

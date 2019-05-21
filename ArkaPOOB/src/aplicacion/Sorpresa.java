@@ -71,9 +71,5 @@ public abstract class Sorpresa implements Elemento,Serializable{
 	}
 	
 	public abstract boolean isChocado(Jugador nave);
-	//public String getTipo() {
-	//	return tipo;
-	//}
 	public abstract String getTipo();
-	//public abstract void setTipo(String type);
 }

@@ -17,7 +17,8 @@ public class JugadorDestructor extends Jugador {
 	}
 	@Override
 	public void moverX(int i) {
-		setX(ark.getBola().getX()-getWidth()/2+10);
+		if(i == 3)
+			setX(ark.getBola().getX()-getWidth()/2+10);
 	}
 	
 	@Override
@@ -29,17 +30,12 @@ public class JugadorDestructor extends Jugador {
 	public String getColor() {
 		return color;
 	}
-	@Override
-	public void imitar(int i) {
-	}
 	
 	@Override	
 	public void isChocado(Jugador plat) {
 		if(plat.getVidas() > 0 && plat.getX() <= this.getX() && plat.getX()+plat.getWidth()+1>=this.getX()) {
-			//System.out.println("W");
 			this.setX(this.getX());
 			int ax = this.getX(),ax2 = plat.getX();
-			//this.setX(ax2-2);
 			if(ark.getDireccion()==1)
 				plat.setX(ax+80);
 			else
@@ -48,7 +44,6 @@ public class JugadorDestructor extends Jugador {
 		else if(plat.getVidas() > 0 && this.getX() <= plat.getX() && this.getX()+this.getWidth()+1>=plat.getX()) {
 			plat.setX(plat.getX());
 			int ax = this.getX(),ax2 = plat.getX();
-			//this.setX(ax2+2);
 			if(ark.getDireccion()==1)
 				plat.setX(ax+80);
 			else

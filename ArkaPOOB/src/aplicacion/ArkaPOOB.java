@@ -72,7 +72,7 @@ public class ArkaPOOB implements Serializable{
 					}
 					if(jugadores  == 2) naves.get(0).isChocado(naves.get(1));
 					if(maquina != null) {
-						maquina.moverX(getDireccion());
+						maquina.moverX(3);
 						maquina.isChocado(naves.get(0));
 					}
 					
@@ -495,15 +495,14 @@ public class ArkaPOOB implements Serializable{
 		if(getSorpresa()!=null) {
 			if(naves.get(0)!= null && sorpresa.isChocado(naves.get(0))){
 				//setPoder(true);
-				//prepareBola();
 				sorpresa = null;
-				//naves.get(0).setPoderActivado(false);
 				
 			}else if(jugadores == 2 && naves.get(1)!= null && sorpresa.isChocado(naves.get(1))) {
 				setPoder(true);
-				//prepareBola();
 				sorpresa = null;
-				//naves.get(0).setPoderActivado(false);
+			}else if(maquina!=null && sorpresa.isChocado(maquina)) {
+				setPoder(true);
+				sorpresa = null;
 			}
 		}
 	}
@@ -526,7 +525,6 @@ public class ArkaPOOB implements Serializable{
 
 	public void maquina(String tipo) {
 		if(tipo.equals("destructor")) maquina = new JugadorDestructor(750/2 + 80,480,90,20,this);
-		//else if(tipo.equals("curioso")) maquina = tipo;
 		else if(tipo.equals("mimo")) maquina = new JugadorMimo(750/2 + 60,480,90,20,this);
 		else if(tipo.equals("curioso")) maquina = new JugadorCurioso(750/2 + 60,480,90,20,this);
 		prepareBola();
@@ -567,42 +565,34 @@ public class ArkaPOOB implements Serializable{
 		
 		if(bloque.equals("BloqueRojo")) {
 			a = new BloqueRojo(x,y,width,height,this);
-			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueAmarillo")) {
 			a = new BloqueAmarillo(x,y,width,height,this);
-			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueAzul")) {
 			a = new BloqueAzul(x,y,width,height,this);
-			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueGris")) {
 			a = new BloqueGris(x,y,width,height,this);
-			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueNaranja")) {
 			a = new BloqueNaranja(x,y,width,height,this);
-			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueNegro")) {
 			a = new BloqueNegro(x,y,width,height,this);
-			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueRosa")) {
 			a = new BloqueRosa(x,y,width,height,this);
-			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 		if(bloque.equals("BloqueVerde")) {
 			a = new BloqueVerde(x,y,width,height,this);
-			//a.setVivo(vivo);
 			bloques.get(i).add(a);
 		}
 	}
@@ -611,30 +601,22 @@ public class ArkaPOOB implements Serializable{
 		Jugador a = null;
 		if(jugador.equals("Jugador")) {
 			a = new Jugador(x,y,width,height);
-			//a.setScor(score);
-			//a.setVida(vidas);
 			a.setColor(color);
 			a.setNombre(nombre);
 			naves.add(a);
 		}
 		if(jugador.equals("JugadorDestructor")) {
 			a = new JugadorDestructor(x,y,width,height,this);
-			//a.setVida(vidas);
-			//a.setScor(score);
 			a.setColor(color);
 			maquina = a;
 		}
 		if(jugador.equals("JugadorMimo")) {
 			a = new JugadorMimo(x,y,width,height,this);
-			//a.setVida(vidas);
-			//a.setScor(score);
 			a.setColor(color);
 			maquina = a;
 		}
 		if(jugador.equals("JugadorCurioso")) {
 			a = new JugadorCurioso(x,y,width,height,this);
-			//a.setVida(vidas);
-			//a.setScor(score);
 			a.setColor(color);
 			maquina = a;
 		}

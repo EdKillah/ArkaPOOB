@@ -206,7 +206,7 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 				if (ark.getJugador().get(0).getX()>15&& !pausa) {  
 					ark.getJugador().get(0).moverX(2);
 					ark.setDireccion(2);
-					if(ark.getMaquina()!=null)ark.getMaquina().imitar(2);
+					if(ark.getMaquina()!=null)ark.getMaquina().moverX(2);
 				}
 				if(ark.getMaquina()!=null && !ark.getBola().isInAire()&& !pausa) ark.getBola().setX(ark.getMaquina().getX()+ark.getMaquina().getWidth()/2-15);
 				else if(ark.getBola().getX()>ark.getJugador().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa) {
@@ -220,7 +220,7 @@ public class Pintor extends myPanel implements ActionListener, KeyListener, Runn
 				if (ark.getJugador().get(0).getX()<width-ark.getJugador().get(0).getWidth()&& !pausa) {
 					ark.getJugador().get(0).moverX(1);
 					ark.setDireccion(1);
-					if(ark.getMaquina()!=null) ark.getMaquina().imitar(1);
+					if(ark.getMaquina()!=null) ark.getMaquina().moverX(1);
 				}
 				if(ark.getMaquina()!=null && !ark.getBola().isInAire()&& !pausa) ark.getBola().setX(ark.getMaquina().getX()+ark.getMaquina().getWidth()/2-15);
 				else if(ark.getBola().getX()+15<width-ark.getJugador().get(0).getWidth()/2 && !ark.getBola().isInAire()&& !pausa)

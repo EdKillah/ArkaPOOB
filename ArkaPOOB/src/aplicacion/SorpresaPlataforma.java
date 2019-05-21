@@ -17,8 +17,8 @@ public class SorpresaPlataforma extends Sorpresa{
 		setWidth(70);
 		setHeight(34);
 		setIsChocado(false);
-		//escojaTipo();
-		setTipo("pegajosa");
+		escojaTipo();
+		//setTipo("pegajosa");
 		this.ark = ark;
 	}
 	

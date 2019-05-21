@@ -119,11 +119,11 @@ public class Bola implements Elemento, Serializable{
 				y=(int)heightT-TAMY;
 				dy=-(dy);
 				setUltimo(nave2);
-			}/*
+			}
 			else if(ark.getMaquina()!=null && ark.getMaquina().isChocado(this)) {
 				y=(int)heightT-TAMY;
 				dy=-(dy);
-			}*/
+			}
 			
 			/*
 			if(isInNave()) {
@@ -175,15 +175,6 @@ public class Bola implements Elemento, Serializable{
 	public void setX(int x) {
 		this.x = x;
 	}
-	
-	/*
-	public void moverX(int x) {
-		if(x==2)
-			this.x -= 20;
-		else
-			this.x += 20;
-	}
-	*/
 	
 	@Override
 	public int getY() {
