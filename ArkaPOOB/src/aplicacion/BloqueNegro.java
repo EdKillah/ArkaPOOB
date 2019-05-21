@@ -47,7 +47,6 @@ public class BloqueNegro extends Bloque{
         return isChocado;
     }
 	
-	
 	@Override
 	public int getPuntos() {
 		return puntos;
