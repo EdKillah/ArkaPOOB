@@ -229,13 +229,6 @@ public class Jugador implements Elemento,Serializable{
 		}
 	}
 	
-	public void imitar(int x) {
-		if(x==2)
-			this.x -= 20;
-		else
-			this.x += 20;
-	}
-	
 	@Override
 	public String toString(){
 		return x+" "+y+ " "+width+" "+height+" "+score+" "+color+" "+vidas+ " "+ nombre;
